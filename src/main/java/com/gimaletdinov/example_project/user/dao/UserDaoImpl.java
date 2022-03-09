@@ -1,6 +1,6 @@
-package com.gimaletdinov.example_project.dao;
+package com.gimaletdinov.example_project.user.dao;
 
-import com.gimaletdinov.example_project.model.User;
+import com.gimaletdinov.example_project.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

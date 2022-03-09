@@ -1,7 +1,7 @@
-package com.gimaletdinov.example_project.controller.user;
+package com.gimaletdinov.example_project.user.controller;
 
-import com.gimaletdinov.example_project.model.User;
-import com.gimaletdinov.example_project.service.UserService;
+import com.gimaletdinov.example_project.user.model.User;
+import com.gimaletdinov.example_project.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

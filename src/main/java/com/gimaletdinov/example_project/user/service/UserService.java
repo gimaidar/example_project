@@ -1,10 +1,10 @@
-package com.gimaletdinov.example_project.dao;
+package com.gimaletdinov.example_project.user.service;
 
-import com.gimaletdinov.example_project.model.User;
+import com.gimaletdinov.example_project.user.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
     public List<User> getAll();
     public User getUser(int id);
     public void saveUser(User user);

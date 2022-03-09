@@ -1,7 +1,6 @@
-package com.gimaletdinov.example_project.model;
+package com.gimaletdinov.example_project.user.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "Office")

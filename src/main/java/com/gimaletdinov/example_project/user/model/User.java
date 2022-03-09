@@ -1,4 +1,4 @@
-package com.gimaletdinov.example_project.model;
+package com.gimaletdinov.example_project.user.model;
 
 import javax.persistence.*;
 
@@ -9,6 +9,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @Version
+    private Integer version;
 
     @Column(name = "first_name", length = 15, nullable = false)
     private String first_name;

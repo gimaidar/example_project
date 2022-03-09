@@ -1,7 +1,7 @@
-package com.gimaletdinov.example_project.service;
+package com.gimaletdinov.example_project.user.service;
 
-import com.gimaletdinov.example_project.dao.UserDao;
-import com.gimaletdinov.example_project.model.User;
+import com.gimaletdinov.example_project.user.dao.UserDao;
+import com.gimaletdinov.example_project.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
