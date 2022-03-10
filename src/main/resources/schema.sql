@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS Office (
         org_id     INTEGER     NOT NULL COMMENT 'Уникальный идентификатор организации'
 );
 COMMENT ON TABLE Office IS 'Офис';
-ALTER TABLE Office  ADD FOREIGN KEY (org_id)     REFERENCES Organization(id);
 CREATE INDEX IX_Office_Id ON Office (id);
 
 CREATE TABLE IF NOT EXISTS User (
@@ -40,9 +39,6 @@ CREATE TABLE IF NOT EXISTS User (
 );
 COMMENT ON TABLE User IS 'Пользователь';
 CREATE INDEX IX_User_Id ON User (id);
-ALTER TABLE User    ADD FOREIGN KEY (office_id)         REFERENCES Office(id);
-ALTER TABLE User    ADD FOREIGN KEY (doc_id)            REFERENCES Document(id);
-ALTER TABLE User    ADD FOREIGN KEY (citizenship_id)    REFERENCES Citizenship(id);
 
 CREATE TABLE IF NOT EXISTS Document (
         id              INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
@@ -74,3 +70,8 @@ CREATE TABLE IF NOT EXISTS Country (
 
 COMMENT ON TABLE Country IS 'Страна';
 CREATE INDEX IX_Country_Id ON Country (id);
+
+ALTER TABLE Office  ADD FOREIGN KEY (org_id)     REFERENCES Organization(id);
+ALTER TABLE User    ADD FOREIGN KEY (office_id)         REFERENCES Office(id);
+ALTER TABLE User    ADD FOREIGN KEY (doc_id)            REFERENCES Document(id);
+ALTER TABLE User    ADD FOREIGN KEY (citizenship_id)    REFERENCES Citizenship(id);
