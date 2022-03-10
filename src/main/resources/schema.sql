@@ -35,17 +35,19 @@ CREATE TABLE IF NOT EXISTS User (
         phone           VARCHAR(11)          COMMENT 'Телефон пользователя',
         is_identified   BOOLEAN              COMMENT 'Статус идентификации',
         office_id       INTEGER     NOT NULL COMMENT 'Уникальный идентификатор офиса',
-        doc_id          INTEGER     NOT NULL COMMENT 'Уникальный идентификатор документа'
+        doc_id          INTEGER     NOT NULL COMMENT 'Уникальный идентификатор документа',
+        citizenship_id  INTEGER     NOT NULL COMMENT 'Уникальный идентификатор гражданства'
 );
 COMMENT ON TABLE User IS 'Пользователь';
 CREATE INDEX IX_User_Id ON User (id);
-ALTER TABLE User    ADD FOREIGN KEY (office_id)  REFERENCES Office(id);
-ALTER TABLE User    ADD FOREIGN KEY (doc_id)     REFERENCES Document(id);
+ALTER TABLE User    ADD FOREIGN KEY (office_id)         REFERENCES Office(id);
+ALTER TABLE User    ADD FOREIGN KEY (doc_id)            REFERENCES Document(id);
+ALTER TABLE User    ADD FOREIGN KEY (citizenship_id)    REFERENCES Citizenship(id);
 
 CREATE TABLE IF NOT EXISTS Document (
         id              INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
         version         INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
-        doc_name        INTEGER     NOT NULL COMMENT 'Имя документа',
+        doc_name        VARCHAR(25) NOT NULL COMMENT 'Имя документа',
         doc_number      INTEGER     NOT NULL COMMENT 'Номер документа',
         doc_date        DATE        NOT NULL COMMENT 'Дата окончания действия документа'
 );
@@ -56,7 +58,7 @@ CREATE INDEX IX_Document_Id ON Document (id);
 CREATE TABLE IF NOT EXISTS Citizenship (
         id               INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
         version          INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
-        citizenship_name INTEGER     NOT NULL COMMENT 'Название гражданства',
+        citizenship_name VARCHAR(25) NOT NULL COMMENT 'Название гражданства',
         citizenship_code INTEGER     NOT NULL COMMENT 'Номер гражданства'
 );
 

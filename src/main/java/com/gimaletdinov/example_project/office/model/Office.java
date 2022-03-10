@@ -1,10 +1,12 @@
-package com.gimaletdinov.example_project.organization.model;
+package com.gimaletdinov.example_project.office.model;
+
+import com.gimaletdinov.example_project.organization.model.Organization;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Organization")
-public class Organization {
+@Table(name = "Office")
+public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,15 +18,6 @@ public class Organization {
     @Column(name = "name", length = 25, nullable = false)
     private String name;
 
-    @Column(name = "full_name", length = 50, nullable = false)
-    private String full_name;
-
-    @Column(name = "inn", length = 12, nullable = false)
-    private String inn;
-
-    @Column(name = "kpp", length = 12, nullable = false)
-    private String kpp;
-
     @Column(name = "adress", length = 50, nullable = false)
     private String adress;
 
@@ -33,6 +26,10 @@ public class Organization {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "org_id")
+    private Organization organization;
 
 
 }

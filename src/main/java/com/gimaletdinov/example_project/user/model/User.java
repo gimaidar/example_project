@@ -1,5 +1,9 @@
 package com.gimaletdinov.example_project.user.model;
 
+import com.gimaletdinov.example_project.citizenship.model.Citizenship;
+import com.gimaletdinov.example_project.document.model.Document;
+import com.gimaletdinov.example_project.office.model.Office;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,13 +17,13 @@ public class User {
     @Version
     private Integer version;
 
-    @Column(name = "first_name", length = 15, nullable = false)
+    @Column(name = "first_name", length = 25, nullable = false)
     private String first_name;
 
-    @Column(name = "second_name", length = 50, nullable = false)
+    @Column(name = "second_name", length = 25)
     private String second_name;
 
-    @Column(name = "middle_name", length = 50, nullable = false)
+    @Column(name = "middle_name", length = 25)
     private String middle_name;
 
     @Column(name = "position", nullable = false)
@@ -28,66 +32,18 @@ public class User {
     @Column(name = "phone", length = 11)
     private String phone;
 
-    public User() {
-    }
+    @Column(name = "is_identified")
+    private boolean isIdentified;
 
-    public int getId() {
-        return id;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "office_id")
+    private Office office;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_id")
+    private Document document;
 
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getSecond_name() {
-        return second_name;
-    }
-
-    public void setSecond_name(String second_name) {
-        this.second_name = second_name;
-    }
-
-    public String getMiddle_name() {
-        return middle_name;
-    }
-
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", second_name='" + second_name + '\'' +
-                ", middle_name='" + middle_name + '\'' +
-                ", position=" + position +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "citizenship_id")
+    private Citizenship citizenship;
 }

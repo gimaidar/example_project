@@ -11,17 +11,9 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private final EntityManager em;
-
-    @Autowired
-    public UserDaoImpl(EntityManager em) {
-        this.em = em;
-    }
-
     @Override
     public List<User> getAll() {
-        TypedQuery<User> query = em.createQuery("SELECT p FROM User p", User.class);
-        return query.getResultList();
+        return null;
     }
 
     @Override
