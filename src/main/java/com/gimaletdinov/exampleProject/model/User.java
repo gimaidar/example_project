@@ -1,10 +1,7 @@
-package com.gimaletdinov.example_project.user.model;
-
-import com.gimaletdinov.example_project.citizenship.model.Citizenship;
-import com.gimaletdinov.example_project.document.model.Document;
-import com.gimaletdinov.example_project.office.model.Office;
+package com.gimaletdinov.exampleProject.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -39,9 +36,9 @@ public class User {
     @JoinColumn(name = "office_id")
     private Office office;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_id")
-    private Document document;
+    private Set<Document> document;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "citizenship_id")

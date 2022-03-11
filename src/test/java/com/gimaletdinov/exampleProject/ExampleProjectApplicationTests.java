@@ -1,4 +1,4 @@
-package com.gimaletdinov.example_project;
+package com.gimaletdinov.exampleProject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

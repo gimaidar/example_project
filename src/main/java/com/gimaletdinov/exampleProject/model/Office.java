@@ -1,6 +1,5 @@
-package com.gimaletdinov.example_project.office.model;
+package com.gimaletdinov.exampleProject.model;
 
-import com.gimaletdinov.example_project.organization.model.Organization;
 
 import javax.persistence.*;
 

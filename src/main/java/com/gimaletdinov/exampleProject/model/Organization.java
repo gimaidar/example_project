@@ -1,4 +1,4 @@
-package com.gimaletdinov.example_project.organization.model;
+package com.gimaletdinov.exampleProject.model;
 
 import javax.persistence.*;
 

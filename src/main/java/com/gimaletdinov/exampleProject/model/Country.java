@@ -1,10 +1,10 @@
-package com.gimaletdinov.example_project.citizenship.model;
+package com.gimaletdinov.exampleProject.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Citizenship")
-public class Citizenship {
+@Table(name = "Country")
+public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -13,9 +13,9 @@ public class Citizenship {
     @Version
     private Integer version;
 
-    @Column(name = "citizenship_name", length = 25, nullable = false)
+    @Column(name = "country_name", length = 25, nullable = false)
     private String name;
 
-    @Column(name = "citizenship_code", nullable = false)
+    @Column(name = "country_code", nullable = false)
     private Integer number;
 }

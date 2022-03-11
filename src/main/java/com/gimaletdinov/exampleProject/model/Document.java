@@ -1,8 +1,7 @@
-package com.gimaletdinov.example_project.document.model;
+package com.gimaletdinov.exampleProject.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "Document")

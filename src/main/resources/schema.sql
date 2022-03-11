@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS Organization (
 );
 COMMENT ON TABLE Organization IS 'Организация';
 CREATE INDEX IX_Organization_Id ON Organization (id);
+CREATE INDEX IX_Organization_Inn ON Organization (inn);
+CREATE INDEX IX_Organization_Is_active ON Organization (is_active);
 
 CREATE TABLE IF NOT EXISTS Office (
         id         INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
@@ -23,6 +25,9 @@ CREATE TABLE IF NOT EXISTS Office (
 );
 COMMENT ON TABLE Office IS 'Офис';
 CREATE INDEX IX_Office_Id ON Office (id);
+CREATE INDEX IX_Office_Name ON Office (name);
+CREATE INDEX IX_Office_Phone ON Office (phone);
+CREATE INDEX IX_Office_Is_Active ON Office (is_active);
 
 CREATE TABLE IF NOT EXISTS User (
         id              INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
@@ -39,6 +44,12 @@ CREATE TABLE IF NOT EXISTS User (
 );
 COMMENT ON TABLE User IS 'Пользователь';
 CREATE INDEX IX_User_Id ON User (id);
+CREATE INDEX IX_User_First_name ON User (first_name);
+CREATE INDEX IX_User_Second_name ON User (second_name);
+CREATE INDEX IX_User_Middle_name ON User (middle_name);
+CREATE INDEX IX_User_Position ON User (position);
+CREATE INDEX UX_User_Doc_id ON User (doc_id);
+CREATE INDEX UX_User_Citizenship_id ON User (citizenship_id);
 
 CREATE TABLE IF NOT EXISTS Document (
         id              INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
