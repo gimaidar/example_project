@@ -1,9 +1,22 @@
 package com.gimaletdinov.exampleProject.model;
 
-import javax.persistence.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
-@Table(name = "Citizenship")
+@Table(name = "citizenship")
+@Data
+@NoArgsConstructor
 public class Citizenship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +26,8 @@ public class Citizenship {
     @Version
     private Integer version;
 
+
+    @NonNull
     @Column(name = "citizenship_name", length = 25, nullable = false)
     private String name;
 
