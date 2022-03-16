@@ -1,6 +1,7 @@
 package com.gimaletdinov.exampleProject.model.mapper;
 
-import com.gimaletdinov.exampleProject.dto.OrganizationDto;
+import com.gimaletdinov.exampleProject.dto.OrganizationRequestDto;
+import com.gimaletdinov.exampleProject.dto.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,7 +10,9 @@ import org.mapstruct.Mapping;
 public interface OrganizationMapper {
 
     @Mapping(source = "adress", target = "address")
-    OrganizationDto toDto(Organization organization);
+    OrganizationResponseDto toResponseDto(Organization organization);
 
-    Organization toModel(OrganizationDto organizationDto);
+    Organization toModel(OrganizationResponseDto organizationResponseDto);
+
+    Organization toModel(OrganizationRequestDto organizationRequestDto);
 }

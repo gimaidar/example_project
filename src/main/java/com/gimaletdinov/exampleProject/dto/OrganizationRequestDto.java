@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrganizationDto {
+public class OrganizationRequestDto {
 
     private int id;
 
