@@ -30,19 +30,19 @@ public class User {
     @Version
     private Integer version;
 
-    @Column(name = "first_name", length = 25, nullable = false)
+    @Column(name = "first_name")
     private String first_name;
 
-    @Column(name = "second_name", length = 25)
+    @Column(name = "second_name")
     private String second_name;
 
-    @Column(name = "middle_name", length = 25)
+    @Column(name = "middle_name")
     private String middle_name;
 
-    @Column(name = "position", nullable = false)
+    @Column(name = "position")
     private int position;
 
-    @Column(name = "phone", length = 11)
+    @Column(name = "phone")
     private String phone;
 
     @Column(name = "is_identified")

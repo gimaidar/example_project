@@ -25,22 +25,22 @@ public class Organization {
     @Version
     private Integer version;
 
-    @Column(name = "name", length = 25, nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "full_name", length = 50, nullable = false)
+    @Column(name = "full_name")
     private String full_name;
 
-    @Column(name = "inn", length = 12, nullable = false)
+    @Column(name = "inn")
     private String inn;
 
-    @Column(name = "kpp", length = 12, nullable = false)
+    @Column(name = "kpp")
     private String kpp;
 
-    @Column(name = "adress", length = 50, nullable = false)
+    @Column(name = "adress")
     private String adress;
 
-    @Column(name = "phone", length = 11)
+    @Column(name = "phone")
     private String phone;
 
     @Column(name = "is_active")

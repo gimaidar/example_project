@@ -25,9 +25,9 @@ public class Country {
     @Version
     private Integer version;
 
-    @Column(name = "country_name", length = 25, nullable = false)
+    @Column(name = "country_name")
     private String name;
 
-    @Column(name = "country_code", nullable = false)
+    @Column(name = "country_code")
     private Integer number;
 }

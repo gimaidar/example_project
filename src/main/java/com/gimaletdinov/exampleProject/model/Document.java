@@ -25,12 +25,12 @@ public class Document {
     @Version
     private Integer version;
 
-    @Column(name = "doc_name", length = 25, nullable = false)
+    @Column(name = "doc_name")
     private String name;
 
-    @Column(name = "doc_number", nullable = false)
+    @Column(name = "doc_number")
     private Integer number;
 
-    @Column(name = "doc_date", nullable = false)
+    @Column(name = "doc_date")
     private LocalDate date;
 }

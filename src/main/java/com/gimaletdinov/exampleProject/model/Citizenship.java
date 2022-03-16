@@ -28,9 +28,9 @@ public class Citizenship {
 
 
     @NonNull
-    @Column(name = "citizenship_name", length = 25, nullable = false)
+    @Column(name = "citizenship_name")
     private String name;
 
-    @Column(name = "citizenship_code", nullable = false)
+    @Column(name = "citizenship_code")
     private Integer number;
 }

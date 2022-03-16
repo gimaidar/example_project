@@ -20,11 +20,13 @@ public class OrganizationDto {
 
     private String kpp;
 
-    private String adress;
+    private String address;
 
     private String phone;
 
     private boolean isActive;
+
+
 
 
 }
