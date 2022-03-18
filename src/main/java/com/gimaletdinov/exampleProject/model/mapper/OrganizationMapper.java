@@ -1,18 +1,23 @@
 package com.gimaletdinov.exampleProject.model.mapper;
 
-import com.gimaletdinov.exampleProject.dto.OrganizationRequestDto;
-import com.gimaletdinov.exampleProject.dto.OrganizationResponseDto;
+import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
+import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
+import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
+import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
+import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface OrganizationMapper {
 
-    @Mapping(source = "adress", target = "address")
+    OrganizationListResponseDto toListResponseDto(Organization organization);
+
     OrganizationResponseDto toResponseDto(Organization organization);
 
-    Organization toModel(OrganizationResponseDto organizationResponseDto);
+    Organization toModel(OrganizationListRequestDto organizationListRequestDto);
 
-    Organization toModel(OrganizationRequestDto organizationRequestDto);
+    Organization toModel(OrganizationUpdateRequestDto organizationUpdateRequestDto);
+
+    Organization toModel(OrganizationSaveRequestDto organizationSaveRequestDto);
 }

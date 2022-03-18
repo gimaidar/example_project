@@ -1,5 +1,4 @@
-package com.gimaletdinov.exampleProject.dto;
-
+package com.gimaletdinov.exampleProject.dto.response;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,14 +6,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class OrganizationResponseDto {
-
     private int id;
-
-    private Integer version;
 
     private String name;
 
-    private String full_name;
+    private String fullName;
 
     private String inn;
 
@@ -25,8 +21,4 @@ public class OrganizationResponseDto {
     private String phone;
 
     private boolean isActive;
-
-
-
-
 }

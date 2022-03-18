@@ -1,32 +1,34 @@
-package com.gimaletdinov.exampleProject.dto;
-
+package com.gimaletdinov.exampleProject.dto.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @NoArgsConstructor
-public class OrganizationRequestDto {
+public class OrganizationUpdateRequestDto {
 
+    @NotNull
     private int id;
 
-    private Integer version;
-
+    @NotNull
     private String name;
 
-    private String full_name;
+    @NotNull
+    private String fullName;
 
+    @NotNull
     private String inn;
 
+    @NotNull
     private String kpp;
 
+    @NotNull
     private String address;
 
     private String phone;
 
     private boolean isActive;
-
-
-
 
 }

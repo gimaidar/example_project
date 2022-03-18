@@ -29,7 +29,7 @@ public class Organization {
     private String name;
 
     @Column(name = "full_name")
-    private String full_name;
+    private String fullName;
 
     @Column(name = "inn")
     private String inn;
