@@ -5,12 +5,10 @@ import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class OrganizationServiceImpl implements  OrganizationService{
-
 
     private final OrganizationRepository organizationRepository;
 

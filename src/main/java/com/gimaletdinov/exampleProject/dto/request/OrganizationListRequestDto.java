@@ -1,9 +1,7 @@
 package com.gimaletdinov.exampleProject.dto.request;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -16,5 +14,4 @@ public class OrganizationListRequestDto {
     private String inn;
 
     private boolean isActive;
-
 }

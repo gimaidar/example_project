@@ -2,7 +2,6 @@ package com.gimaletdinov.exampleProject.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +16,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

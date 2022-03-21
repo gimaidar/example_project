@@ -88,4 +88,3 @@ CREATE INDEX IX_User_Middle_name    ON User (middle_name);
 CREATE INDEX IX_User_Position       ON User (position);
 CREATE INDEX UX_User_Doc_id         ON User (id, doc_id);
 CREATE INDEX UX_User_Citizenship_id ON User (id, citizenship_id);
-

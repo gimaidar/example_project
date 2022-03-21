@@ -1,10 +1,8 @@
 package com.gimaletdinov.exampleProject.model;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +16,7 @@ import javax.persistence.Version;
 @Data
 @NoArgsConstructor
 public class Citizenship {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,7 +24,6 @@ public class Citizenship {
 
     @Version
     private Integer version;
-
 
     @NonNull
     @Column(name = "citizenship_name")

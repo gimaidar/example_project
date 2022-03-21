@@ -1,6 +1,5 @@
 package com.gimaletdinov.exampleProject.dto.response;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,5 +12,4 @@ public class OrganizationListResponseDto {
     private String name;
 
     private boolean isActive;
-
 }

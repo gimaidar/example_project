@@ -2,7 +2,6 @@ package com.gimaletdinov.exampleProject.dto.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -30,5 +29,4 @@ public class OrganizationUpdateRequestDto {
     private String phone;
 
     private boolean isActive;
-
 }

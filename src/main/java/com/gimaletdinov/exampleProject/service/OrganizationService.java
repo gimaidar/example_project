@@ -2,7 +2,6 @@ package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.model.Organization;
-
 import java.util.List;
 
 public interface OrganizationService {
