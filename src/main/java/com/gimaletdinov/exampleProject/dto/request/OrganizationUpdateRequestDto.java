@@ -28,5 +28,5 @@ public class OrganizationUpdateRequestDto {
 
     private String phone;
 
-    private boolean isActive;
+    private Boolean isActive;
 }

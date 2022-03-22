@@ -13,5 +13,5 @@ public class OrganizationListRequestDto {
 
     private String inn;
 
-    private boolean isActive;
+    private Boolean isActive;
 }

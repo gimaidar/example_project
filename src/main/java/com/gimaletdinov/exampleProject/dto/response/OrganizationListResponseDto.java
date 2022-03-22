@@ -11,5 +11,5 @@ public class OrganizationListResponseDto {
 
     private String name;
 
-    private boolean isActive;
+    private Boolean isActive;
 }

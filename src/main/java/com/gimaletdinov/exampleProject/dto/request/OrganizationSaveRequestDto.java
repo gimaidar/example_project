@@ -25,5 +25,5 @@ public class OrganizationSaveRequestDto {
 
     private String phone;
 
-    private boolean isActive;
+    private Boolean isActive;
 }

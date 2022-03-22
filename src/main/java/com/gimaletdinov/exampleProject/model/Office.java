@@ -37,7 +37,7 @@ public class Office {
     private String phone;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id")

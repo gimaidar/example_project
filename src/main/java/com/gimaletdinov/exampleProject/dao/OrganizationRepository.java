@@ -1,9 +1,16 @@
 package com.gimaletdinov.exampleProject.dao;
 
 import com.gimaletdinov.exampleProject.model.Organization;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 
-public interface OrganizationRepository extends JpaRepository<Organization, Integer> {
+public interface OrganizationRepository  {
+    public List<Organization> getAllOrganizationByPredicat(Organization organization);
 
+    public Organization getOrganizationById(int id);
+
+    public void updateOrganization(Organization organization);
+
+    public void saveOrganization(Organization organization);
 }

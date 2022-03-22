@@ -46,7 +46,7 @@ public class User {
     private String phone;
 
     @Column(name = "is_identified")
-    private boolean isIdentified;
+    private Boolean isIdentified;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id")

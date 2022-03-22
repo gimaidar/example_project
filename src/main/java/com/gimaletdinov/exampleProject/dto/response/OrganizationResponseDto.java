@@ -20,5 +20,5 @@ public class OrganizationResponseDto {
 
     private String phone;
 
-    private boolean isActive;
+    private Boolean isActive;
 }
