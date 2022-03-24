@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrganizationSuccessResponseDto {
+public class ObjectSuccessResponseDto {
 
     private String result = "success";
 }

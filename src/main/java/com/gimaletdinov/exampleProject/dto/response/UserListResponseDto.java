@@ -5,11 +5,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrganizationListResponseDto {
+public class UserListResponseDto {
 
     private Integer id;
 
-    private String name;
+    private String first_name;
 
-    private Boolean isActive;
+    private String second_name;
+
+    private String middle_name;
+
+    private Integer position;
 }

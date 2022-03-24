@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = OrganizationMapper.class)
 public interface OrganizationListMapper {
 
-    List<Organization> toModelList(List<OrganizationListRequestDto> organizationListRequestDtoList);
-
-    List<OrganizationListResponseDto> toResponseDtoList(List<Organization> organizationList);
+//    List<Organization> toModelList(List<OrganizationListRequestDto> organizationListRequestDtoList);
+//
+//    List<OrganizationListResponseDto> toResponseDtoList(List<Organization> organizationList);
 }

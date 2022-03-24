@@ -5,17 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrganizationResponseDto {
+public class OfficeResponseDto {
 
     private Integer id;
 
     private String name;
-
-    private String fullName;
-
-    private String inn;
-
-    private String kpp;
 
     private String address;
 

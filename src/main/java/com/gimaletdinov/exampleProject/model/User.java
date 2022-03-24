@@ -25,7 +25,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Version
     private Integer version;
@@ -40,7 +40,7 @@ public class User {
     private String middle_name;
 
     @Column(name = "position")
-    private int position;
+    private Integer position;
 
     @Column(name = "phone")
     private String phone;

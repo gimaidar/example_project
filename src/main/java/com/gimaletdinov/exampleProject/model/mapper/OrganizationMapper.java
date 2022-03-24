@@ -7,8 +7,9 @@ import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface OrganizationMapper {
@@ -19,9 +20,9 @@ public interface OrganizationMapper {
 
     Organization toModel(OrganizationListRequestDto organizationListRequestDto);
 
-    Organization toModel(OrganizationUpdateRequestDto organizationUpdateRequestDto);
-
     Organization toModel(OrganizationSaveRequestDto organizationSaveRequestDto);
 
     void updateModel(OrganizationUpdateRequestDto organizationUpdateRequestDto, @MappingTarget Organization organization);
+
+    List<OrganizationListResponseDto> toResponseDtoList(List<Organization> organizationList);
 }

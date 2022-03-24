@@ -7,7 +7,6 @@ import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
-import com.gimaletdinov.exampleProject.model.mapper.OrganizationListMapper;
 import com.gimaletdinov.exampleProject.model.mapper.OrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,23 +20,20 @@ public class OrganizationServiceImpl implements  OrganizationService{
 
     private final OrganizationMapper organizationMapper;
 
-    private final OrganizationListMapper organizationListMapper;
-
     @Autowired
-    public OrganizationServiceImpl(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper, OrganizationListMapper organizationListMapper) {
+    public OrganizationServiceImpl(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper) {
         this.organizationRepository = organizationRepository;
         this.organizationMapper = organizationMapper;
-        this.organizationListMapper = organizationListMapper;
     }
 
     @Override
     @Transactional
-    public List<OrganizationListResponseDto> getAllOrganizationByPredicat(OrganizationListRequestDto organizationListRequestDto) {
+    public List<OrganizationListResponseDto> getAllOrganizationsByPredicat(OrganizationListRequestDto organizationListRequestDto) {
         //Получение списка организаций
-        List<Organization> organizationList = organizationRepository.getAllOrganizationByPredicat(organizationMapper.toModel(organizationListRequestDto));
+        List<Organization> organizationList = organizationRepository.getAllOrganizationsByPredicat(organizationMapper.toModel(organizationListRequestDto));
 
         //Преобразование в формат ответа и возврат
-        List<OrganizationListResponseDto> organizationListResponseDtoList = organizationListMapper.toResponseDtoList(organizationList);
+        List<OrganizationListResponseDto> organizationListResponseDtoList = organizationMapper.toResponseDtoList(organizationList);
         return organizationListResponseDtoList;
     }
 

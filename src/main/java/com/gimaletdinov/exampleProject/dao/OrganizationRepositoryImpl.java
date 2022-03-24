@@ -1,11 +1,8 @@
 package com.gimaletdinov.exampleProject.dao;
 
-import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
-import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,7 +21,7 @@ public class OrganizationRepositoryImpl implements OrganizationRepository{
     }
 
     @Override
-    public List<Organization> getAllOrganizationByPredicat(Organization organization) {
+    public List<Organization> getAllOrganizationsByPredicat(Organization organization) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteriaQuery = criteriaBuilder.createQuery(Organization.class);
 

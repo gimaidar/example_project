@@ -1,22 +1,21 @@
-package com.gimaletdinov.exampleProject.dto.response;
+package com.gimaletdinov.exampleProject.dto.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @NoArgsConstructor
-public class OrganizationResponseDto {
+public class OfficeUpdateRequestDto {
 
+    @NotEmpty
     private Integer id;
 
+    @NotEmpty
     private String name;
 
-    private String fullName;
-
-    private String inn;
-
-    private String kpp;
-
+    @NotEmpty
     private String address;
 
     private String phone;
