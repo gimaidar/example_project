@@ -17,11 +17,11 @@ public class UserSaveRequestDto {
     private Integer officeId;
 
     @NotBlank
-    private String first_name;
+    private String firstName;
 
-    private String second_name;
+    private String secondName;
 
-    private String middle_name;
+    private String middleName;
 
     @NotNull
     @Range(min = 1)
@@ -31,13 +31,15 @@ public class UserSaveRequestDto {
 
     private Boolean isIdentified;
 
+    private Integer docCode;
+
     private String docName;
 
     private String docNumber;
 
     private LocalDate docDate;
 
-    private String citizenshipName;
+    private String countryName;
 
-    private String citizenshipCode;
+    private String countryCode;
 }

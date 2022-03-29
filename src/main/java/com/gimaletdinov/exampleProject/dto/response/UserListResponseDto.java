@@ -9,11 +9,11 @@ public class UserListResponseDto {
 
     private Integer id;
 
-    private String first_name;
+    private String firstName;
 
-    private String second_name;
+    private String secondName;
 
-    private String middle_name;
+    private String middleName;
 
     private Integer position;
 }

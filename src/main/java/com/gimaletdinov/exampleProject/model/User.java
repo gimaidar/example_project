@@ -2,6 +2,8 @@ package com.gimaletdinov.exampleProject.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import java.util.Set;
@@ -31,13 +34,13 @@ public class User {
     private Integer version;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "second_name")
-    private String second_name;
+    private String secondName;
 
     @Column(name = "middle_name")
-    private String middle_name;
+    private String middleName;
 
     @Column(name = "position")
     private Integer position;
@@ -48,15 +51,15 @@ public class User {
     @Column(name = "is_identified")
     private Boolean isIdentified;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "office_id")
     private Office office;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_id")
-    private Set<Document> document;
+    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Document document;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "citizenship_id")
-    private Citizenship citizenship;
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id")
+    private Country country;
 }

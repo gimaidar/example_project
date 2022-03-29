@@ -19,11 +19,11 @@ public class UserUpdateRequestDto {
     private Integer officeId;
 
     @NotBlank
-    private String first_name;
+    private String firstName;
 
-    private String second_name;
+    private String secondName;
 
-    private String middle_name;
+    private String middleName;
 
     @NotBlank
     private Integer position;
@@ -38,7 +38,7 @@ public class UserUpdateRequestDto {
 
     private LocalDate docDate;
 
-    private String citizenshipName;
+    private String countryName;
 
-    private String citizenshipCode;
+    private String countryCode;
 }

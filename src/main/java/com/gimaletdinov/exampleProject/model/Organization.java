@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;

@@ -1,15 +1,11 @@
 package com.gimaletdinov.exampleProject.dto.response;
 
-import com.gimaletdinov.exampleProject.model.Citizenship;
-import com.gimaletdinov.exampleProject.model.Document;
-import com.gimaletdinov.exampleProject.model.Office;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -19,11 +15,11 @@ public class UserResponseDto {
     @Range(min = 1)
     private Integer officeId;
 
-    private String first_name;
+    private String firstName;
 
-    private String second_name;
+    private String secondName;
 
-    private String middle_name;
+    private String middleName;
 
     private Integer position;
 
@@ -37,7 +33,7 @@ public class UserResponseDto {
 
     private LocalDate docDate;
 
-    private String citizenshipName;
+    private String countryName;
 
-    private String citizenshipCode;
+    private String countryCode;
 }

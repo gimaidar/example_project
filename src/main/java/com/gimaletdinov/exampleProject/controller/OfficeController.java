@@ -35,7 +35,6 @@ public class OfficeController {
 
     @GetMapping("/{id}")
     public OfficeResponseDto getOrganizationById(@PathVariable Integer id) {
-        System.out.println();
         return officeService.getOfficeById(id);
     }
 

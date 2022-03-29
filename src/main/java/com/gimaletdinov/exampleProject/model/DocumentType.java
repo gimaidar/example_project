@@ -1,29 +1,24 @@
 package com.gimaletdinov.exampleProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 @Entity
-@Table(name = "Country")
+@Table(name = "Document_type")
 @Data
 @NoArgsConstructor
-public class Country {
+public class DocumentType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Version
-    private Integer version;
-
-    @Column(name = "country_name")
+    @Column(name = "name")
     private String name;
 }
