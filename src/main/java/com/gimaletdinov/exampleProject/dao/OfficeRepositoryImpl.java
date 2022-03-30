@@ -1,7 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
 import com.gimaletdinov.exampleProject.model.Office;
-import com.gimaletdinov.exampleProject.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

@@ -2,14 +2,18 @@ package com.gimaletdinov.exampleProject.dto.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
 public class OrganizationUpdateRequestDto {
 
-    @NotBlank
+    @NotNull
+    @Range(min = 1)
     private Integer id;
 
     @NotBlank(message = "Name can't be blank")

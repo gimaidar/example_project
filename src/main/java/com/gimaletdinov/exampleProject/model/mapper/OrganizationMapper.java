@@ -14,13 +14,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OrganizationMapper {
 
-    OrganizationListResponseDto toListResponseDto(Organization organization);
-
-    OrganizationResponseDto toResponseDto(Organization organization);
+    Organization toModel(OrganizationSaveRequestDto organizationSaveRequestDto);
 
     Organization toModel(OrganizationListRequestDto organizationListRequestDto);
 
-    Organization toModel(OrganizationSaveRequestDto organizationSaveRequestDto);
+    OrganizationResponseDto toResponseDto(Organization organization);
 
     void updateModel(OrganizationUpdateRequestDto organizationUpdateRequestDto, @MappingTarget Organization organization);
 

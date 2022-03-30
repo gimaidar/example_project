@@ -5,10 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
 @Data
 @NoArgsConstructor
 public class OfficeSaveRequestDto {

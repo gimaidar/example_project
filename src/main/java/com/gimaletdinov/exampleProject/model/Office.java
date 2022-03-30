@@ -1,6 +1,5 @@
 package com.gimaletdinov.exampleProject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -42,7 +41,7 @@ public class Office {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "org_id")
     private Organization organization;
 }

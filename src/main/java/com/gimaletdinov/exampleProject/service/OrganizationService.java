@@ -8,6 +8,7 @@ import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import java.util.List;
 
 public interface OrganizationService {
+
     List<OrganizationListResponseDto> getAllOrganizationsByPredicat(OrganizationListRequestDto organizationListRequestDto);
 
     OrganizationResponseDto getOrganizationById(int id);
