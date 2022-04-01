@@ -25,6 +25,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public List<CountryListResponseDto> getAllCountries() {
         List<Country> countryList = countryRepository.findAll();
+
         return countryMapper.toResponseDtoList(countryList);
     }
 }

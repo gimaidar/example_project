@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class DataResponseDto {
+public class ObjectDataResponseDto {
 
     private Object data;
 }

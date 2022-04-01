@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
+import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.OrganizationRepository;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
@@ -32,6 +33,10 @@ public class OrganizationServiceImpl implements  OrganizationService{
         //Получение списка организаций
         List<Organization> organizationList = organizationRepository.getAllOrganizationsByPredicat(organizationMapper.toModel(organizationListRequestDto));
 
+        if (organizationList.isEmpty()){
+            throw new NoSuchObjectException("Нет организаций с такими параметрами.");
+        }
+
         //Преобразование в формат ответа и возврат
         List<OrganizationListResponseDto> organizationListResponseDtoList = organizationMapper.toResponseDtoList(organizationList);
         return organizationListResponseDtoList;
@@ -43,6 +48,10 @@ public class OrganizationServiceImpl implements  OrganizationService{
         //Получение организации
         Organization organization = organizationRepository.getOrganizationById(id);
 
+        if (organization == null){
+            throw new NoSuchObjectException("Нет организации с id = " + id);
+        }
+
         //Преобразование в формат ответа и возврат
         OrganizationResponseDto organizationResponseDto = organizationMapper.toResponseDto(organization);
         return organizationResponseDto;
@@ -53,6 +62,10 @@ public class OrganizationServiceImpl implements  OrganizationService{
     public void updateOrganization(OrganizationUpdateRequestDto organizationUpdateRequestDto) {
         //получение entity organization
         Organization organization = organizationRepository.getOrganizationById(organizationUpdateRequestDto.getId());
+
+        if (organization == null){
+            throw new NoSuchObjectException("Нет организации с id = " + organizationUpdateRequestDto.getId());
+        }
 
         //обновление данных у entity данными которые пришли
         organizationMapper.updateModel(organizationUpdateRequestDto, organization);

@@ -25,6 +25,7 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     @Override
     public List<DocumentTypeListResponseDto> getAllDocumentTypes() {
         List<DocumentType> documentTypeList=documentTypeRepository.findAll();
+
         return documentTypeMapper.toResponseDtoList(documentTypeList);
     }
 }

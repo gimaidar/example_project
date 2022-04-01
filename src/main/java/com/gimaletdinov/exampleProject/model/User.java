@@ -57,7 +57,7 @@ public class User {
     @PrimaryKeyJoinColumn
     private Document document;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "country_id")
     private Country country;
 }
