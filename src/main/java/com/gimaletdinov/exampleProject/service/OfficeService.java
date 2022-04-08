@@ -5,6 +5,8 @@ import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeResponseDto;
+import com.gimaletdinov.exampleProject.model.Office;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,4 +19,7 @@ public interface OfficeService {
     void updateOffice(OfficeUpdateRequestDto officeUpdateRequestDto);
 
     void saveOffice(OfficeSaveRequestDto officeSaveRequestDto);
+
+    @Transactional
+    Office getOfficeByIdFromRepository(int id);
 }

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ *Контроллер для сущности Страна
+ */
 @RestController
 @RequestMapping("api/countries")
 public class CountryController {
@@ -20,6 +23,10 @@ public class CountryController {
         this.countryService = countryService;
     }
 
+    /**
+     * Метод возвращает список стран, найденных в БД по определенному предикату
+     * @return список стран, найденных в БД по определенному придикату
+     */
     @GetMapping()
     public List<CountryListResponseDto> getAllOrganizationsByPredicat() {
         return countryService.getAllCountries();

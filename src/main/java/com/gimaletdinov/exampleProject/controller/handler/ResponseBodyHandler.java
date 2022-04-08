@@ -11,6 +11,9 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+/**
+ * Перехватчик ответов от контроллеров
+ */
 @RestControllerAdvice
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 
@@ -19,6 +22,17 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
         return true;
     }
 
+    /**
+     * Метоад проверяет тело ответа от контроллера, если ответ типа ObjectErrorResponseDto, ObjectSuccessResponseDto,
+     * то отправляет ответ пользователю напрямую, если нет, то оборачивает ответ в ObjectDataResponseDto
+     * @param body Тело ответа от контроллера
+     * @param returnType
+     * @param selectedContentType
+     * @param selectedConverterType
+     * @param request
+     * @param response
+     * @return ObjectDataResponseDto
+     */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 

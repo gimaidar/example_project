@@ -5,6 +5,8 @@ import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserResponseDto;
+import com.gimaletdinov.exampleProject.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,4 +19,7 @@ public interface UserService {
     void updateUser(UserUpdateRequestDto userUpdateRequestDto);
 
     void saveUser(UserSaveRequestDto userSaveRequestDto);
+
+    @Transactional
+    User getUserByIdFromRepository(int id);
 }

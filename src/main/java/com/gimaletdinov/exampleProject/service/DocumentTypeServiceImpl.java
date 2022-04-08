@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
+import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.DocumentTypeRepository;
 import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.model.DocumentType;
@@ -27,5 +28,14 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
         List<DocumentType> documentTypeList=documentTypeRepository.findAll();
 
         return documentTypeMapper.toResponseDtoList(documentTypeList);
+    }
+
+    @Override
+    public DocumentType getDocumentTypeById(int id) {
+        DocumentType documentType = documentTypeRepository.getById(id);
+        if (documentType == null){
+            throw new NoSuchObjectException("Нет типа документа с code = " + id);
+        }
+        return documentType;
     }
 }

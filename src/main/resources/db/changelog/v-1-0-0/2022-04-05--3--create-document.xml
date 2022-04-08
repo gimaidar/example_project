@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="2022-04-05--3" author="Aidar">
+        <createTable tableName="document">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_document"/>
+            </column>
+            <column name="version" type="INT"/>
+            <column name="doc_number" type="INT"/>
+            <column name="doc_date" type="DATE"/>
+            <column name="doc_type_id" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2022-04-05--3.1" author="Aidar">
+        <addForeignKeyConstraint baseColumnNames="doc_type_id" baseTableName="document"
+                                 constraintName="FK_DOCUMENT_ON_DOC_TYPE" referencedColumnNames="id"
+                                 referencedTableName="document_type"/>
+    </changeSet>
+
+    <changeSet id="2022-04-05--3.2" author="Aidar">
+        <createIndex indexName="IX_Document_Id" tableName="document">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

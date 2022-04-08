@@ -1,11 +1,11 @@
 package com.gimaletdinov.exampleProject.dto.request;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -41,5 +41,5 @@ public class UserSaveRequestDto {
 
     private String countryName;
 
-    private String countryCode;
+    private Integer countryCode;
 }

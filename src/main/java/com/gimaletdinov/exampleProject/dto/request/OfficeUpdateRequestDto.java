@@ -2,14 +2,17 @@ package com.gimaletdinov.exampleProject.dto.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 public class OfficeUpdateRequestDto {
 
-    @NotEmpty
+    @NotNull
+    @Range(min = 1)
     private Integer id;
 
     @NotEmpty

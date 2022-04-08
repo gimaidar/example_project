@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ *Контроллер для сущности Тип документа
+ */
 @RestController
 @RequestMapping("api/docs")
 public class DocumentTypeController {
@@ -20,6 +23,10 @@ public class DocumentTypeController {
         this.documentTypeService = documentTypeService;
     }
 
+    /**
+     * Метод возвращает список всех типов документа(справочник)
+     * @return список всех типов документа(справочник)
+     */
     @GetMapping()
     public List<DocumentTypeListResponseDto> getAllOrganizationsByPredicat() {
         return documentTypeService.getAllDocumentTypes();

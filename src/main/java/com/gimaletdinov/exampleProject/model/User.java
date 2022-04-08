@@ -53,7 +53,7 @@ public class User {
     @JoinColumn(name = "office_id")
     private Office office;
 
-    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Document document;
 

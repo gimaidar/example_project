@@ -25,7 +25,8 @@ public class UserUpdateRequestDto {
 
     private String middleName;
 
-    @NotBlank
+    @NotNull
+    @Range(min = 1)
     private Integer position;
 
     private String phone;
@@ -40,5 +41,5 @@ public class UserUpdateRequestDto {
 
     private String countryName;
 
-    private String countryCode;
+    private Integer countryCode;
 }

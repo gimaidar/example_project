@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ *Контроллер для сущности Организация
+ */
 @RestController
 @RequestMapping("api/organization")
 public class OrganizationController {
@@ -29,23 +32,42 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
+    /**
+     * Метод возвращает список организаций, найденных в БД по определенному предикату
+     * @return список организаций, найденных в БД по определенному придикату
+     */
     @GetMapping("/list")
     public List<OrganizationListResponseDto> getAllOrganizationsByPredicat(@Valid @RequestBody OrganizationListRequestDto organizationListRequestDto) {
         return organizationService.getAllOrganizationsByPredicat(organizationListRequestDto);
     }
 
+    /**
+     * Метод возвращает организацию по id
+     * @param id id организации
+     * @return организация
+     */
     @GetMapping("/{id}")
     public OrganizationResponseDto getOrganizationById(@PathVariable Integer id) {
         System.out.println();
         return organizationService.getOrganizationById(id);
     }
 
+    /**
+     * Метод для обновления данных организации
+     * @param organizationUpdateRequestDto
+     * @return ObjectSuccessResponseDto [result : success]
+     */
     @PostMapping("/update")
     public ObjectSuccessResponseDto updateOrganization(@Valid @RequestBody OrganizationUpdateRequestDto organizationUpdateRequestDto) {
         organizationService.updateOrganization(organizationUpdateRequestDto);
         return new ObjectSuccessResponseDto();
     }
 
+    /**
+     * Метод для сохранения новой организации
+     * @param organizationSaveRequestDto
+     * @return ObjectSuccessResponseDto [result : success]
+     */
     @PostMapping("/save")
     public ObjectSuccessResponseDto saveOrganization(@Valid @RequestBody OrganizationSaveRequestDto organizationSaveRequestDto) {
         organizationService.saveOrganization(organizationSaveRequestDto);

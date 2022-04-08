@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ *Контроллер для сущности Пользователь
+ */
 @RestController
 @RequestMapping("api/user")
 public class UserController {
@@ -29,6 +32,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Метод возвращает список пользователей, найденных в БД по определенному предикату
+     * @return список пользователей, найденных в БД по определенному придикату
+     */
     @GetMapping("/list")
     public List<UserListResponseDto> getAllUsersByPredicat(@Valid @RequestBody UserListRequestDto userListRequestDto) {
         return userService.getAllUsersByPredicat(userListRequestDto);

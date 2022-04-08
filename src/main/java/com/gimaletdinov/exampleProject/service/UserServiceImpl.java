@@ -1,8 +1,8 @@
 package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
-import com.gimaletdinov.exampleProject.dao.CountryRepository;
-import com.gimaletdinov.exampleProject.dao.OfficeRepository;
+import com.gimaletdinov.exampleProject.dao.DocumentRepository;
+import com.gimaletdinov.exampleProject.dao.DocumentTypeRepository;
 import com.gimaletdinov.exampleProject.dao.UserRepository;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
@@ -10,6 +10,8 @@ import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
+import com.gimaletdinov.exampleProject.model.Document;
+import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
 import com.gimaletdinov.exampleProject.model.mapper.UserMapper;
@@ -24,17 +26,23 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final OfficeRepository officeRepository;
+    private final OfficeService officeService;
 
-    private final CountryRepository countryRepository;
+    private final CountryService countryService;
+
+    private final DocumentTypeService documentTypeService;
+
+    private final DocumentRepository documentRepository;
 
     private final UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository, CountryRepository countryRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, OfficeService officeService, CountryService countryService, DocumentTypeService documentTypeService, DocumentRepository documentRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.officeRepository = officeRepository;
-        this.countryRepository = countryRepository;
+        this.officeService = officeService;
+        this.countryService = countryService;
+        this.documentTypeService = documentTypeService;
+        this.documentRepository = documentRepository;
         this.userMapper = userMapper;
     }
 
@@ -57,11 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponseDto getUserById(int id) {
-        User user = userRepository.getUserById(id);
-
-        if (user == null){
-            throw new NoSuchObjectException("Нет пользователя с id = " + id);
-        }
+        User user = this.getUserByIdFromRepository(id);
 
         UserResponseDto userResponseDto = userMapper.toResponseDto(user);
         return userResponseDto;
@@ -71,22 +75,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(UserUpdateRequestDto userUpdateRequestDto) {
 
-        User user = userRepository.getUserById(userUpdateRequestDto.getId());
-        if (user == null){
-            throw new NoSuchObjectException("Нет пользователя с id = " + userUpdateRequestDto.getId());
-        }
+        User user = this.getUserByIdFromRepository(userUpdateRequestDto.getId());
 
         userMapper.updateModel(userUpdateRequestDto, user);
 
-        Office office = officeRepository.getOfficeById(user.getOffice().getId());
-        if (office == null){
-            throw new NoSuchObjectException("Нет офиса с id = " + user.getOffice().getId());
-        }
+        Office office = officeService.getOfficeByIdFromRepository(userUpdateRequestDto.getId());
+        user.setOffice(office);
 
-        Country country = countryRepository.getById(user.getCountry().getId());
-        if (country == null){
-            throw new NoSuchObjectException("Нет страны с id = " + user.getOffice().getId());
-        }
+        Country country = countryService.getCountryById(userUpdateRequestDto.getCountryCode());
+        user.setCountry(country);
 
         userRepository.updateUser(user);
     }
@@ -97,16 +94,31 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toModel(userSaveRequestDto);
 
-        Office office = officeRepository.getOfficeById(user.getOffice().getId());
-        if (office == null){
-            throw new NoSuchObjectException("Нет офиса с id = " + user.getOffice().getId());
-        }
+        Office office = officeService.getOfficeByIdFromRepository(userSaveRequestDto.getOfficeId());
+        user.setOffice(office);
 
-        Country country = countryRepository.getById(user.getCountry().getId());
-        if (country == null){
-            throw new NoSuchObjectException("Нет страны с id = " + user.getOffice().getId());
-        }
+        Country country = countryService.getCountryById(userSaveRequestDto.getCountryCode());
+        user.setCountry(country);
+
+        DocumentType documentType = documentTypeService.getDocumentTypeById(userSaveRequestDto.getDocCode());
+        Document document = user.getDocument();
+        document.setDocumentType(documentType);
+        document.setUser(user);
+
+        user.setDocument(document);
 
         userRepository.saveUser(user);
+    }
+
+    @Override
+    @Transactional
+    public User getUserByIdFromRepository(int id) {
+        User user = userRepository.getUserById(id);
+
+        if (user == null){
+            throw new NoSuchObjectException("Нет пользователя с id = " + id);
+        }
+
+        return user;
     }
 }

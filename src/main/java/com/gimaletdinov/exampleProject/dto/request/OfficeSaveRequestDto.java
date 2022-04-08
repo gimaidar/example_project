@@ -1,9 +1,10 @@
 package com.gimaletdinov.exampleProject.dto.request;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor

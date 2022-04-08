@@ -2,20 +2,36 @@ package com.gimaletdinov.exampleProject.controller.handler;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dto.response.ObjectErrorResponseDto;
+import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Обработчик ошибок, возникших в программе
+ * Все ошибки отпраляются пользователю в видео объекта ObjectErrorResponseDto
+ */
 @RestControllerAdvice
+@Log4j2
 public class ExceptionHandlerController {
 
+    /**
+     * Обработчик исключения NoSuchObjectException
+     * @param exception
+     * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
+     */
     @ExceptionHandler
     public ResponseEntity<ObjectErrorResponseDto> handleException(NoSuchObjectException exception) {
         ObjectErrorResponseDto objectErrorResponseDto = new ObjectErrorResponseDto();
@@ -24,11 +40,16 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Обработчик исключения MethodArgumentNotValidException, возникающий при валидации DTO, используемые при запросе
+     * В методе фильтруется текст ошибки, для отправки ошибки в удобном для пользователя виде
+     * @param exception
+     * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
+     */
     @ExceptionHandler
     public ResponseEntity<ObjectErrorResponseDto> handleException(MethodArgumentNotValidException exception) {
         ObjectErrorResponseDto objectErrorResponseDto = new ObjectErrorResponseDto();
 
-        // Получить все ошибки валидации в удобном для пользователя виде
         List errors = exception.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -40,10 +61,27 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(objectErrorResponseDto, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Обработчик всех остальных исключений
+     * В методе генерируется код ошибки, записывается в лог код ошибки с текстом ошибки,
+     * пользователю отправляется ответ в виде "[код ошибки] - Неожиданная ошибка - [Время ошибки]"
+     * @param exception
+     * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
+     */
     @ExceptionHandler
     public ResponseEntity<ObjectErrorResponseDto> handleException(Exception exception) {
+
+        //генерация кода ошибки и получение времени ошибки
+        String errorCode = RandomStringUtils.randomAlphanumeric(10);
+        LocalDateTime errorDateTime = LocalDateTime.now();
+
+        //формирование сообщени об ошибке и запись в лог полной информации
+        String errorMessage = errorCode + " - Неожиданная ошибка - ";
+        log.error(errorMessage + exception.getMessage());
+
+        //формирование ответа пользователю "[код ошибки] - Неожиданная ошибка - [Время ошибки]"
         ObjectErrorResponseDto objectErrorResponseDto = new ObjectErrorResponseDto();
-        objectErrorResponseDto.setError(exception.getMessage());
+        objectErrorResponseDto.setError(errorMessage + " [" + errorDateTime + "]");
 
         return new ResponseEntity<>(objectErrorResponseDto, HttpStatus.BAD_REQUEST);
     }

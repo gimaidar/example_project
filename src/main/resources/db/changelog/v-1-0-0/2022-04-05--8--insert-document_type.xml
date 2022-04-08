@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="2022-04-05--8" author="Aidar">
+        <insert tableName="document_type">
+            <column name="id" value="21"/>
+            <column name="name" value="Паспорт"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -6,10 +6,11 @@ INSERT INTO Office (version, name, address, phone, is_active, org_id) VALUES (1,
 
 INSERT INTO Country (id, version, country_name) VALUES    (643, 1, 'Российская Федерация');
 
+
+
+INSERT INTO User (version, first_name, second_name, middle_name, position, phone, is_identified, office_id, country_id) VALUES  (1, 'Гималетдинов', 'Айдар', 'Ильмирович', 1, '79177481998', true, 1, 643),
+                                                                                                                                (1, 'Иванов', 'Иван', 'Иванович', 1, '79177481998', true, 2, 643);
 INSERT INTO Document_type (id, name) VALUES    (21, 'Паспорт');
 
 INSERT INTO Document (id, version, doc_number, doc_date, doc_type_id) VALUES    (1, 1, 123456, CURRENT_DATE(), 21),
                                                                                 (2, 1, 123456, CURRENT_DATE(), 21);
-
-INSERT INTO User (version, first_name, second_name, middle_name, position, phone, is_identified, office_id, country_id) VALUES  (1, 'Гималетдинов', 'Айдар', 'Ильмирович', 1, '79177481998', true, 1, 643),
-                                                                                                                                (1, 'Иванов', 'Иван', 'Иванович', 1, '79177481998', true, 2, 643);

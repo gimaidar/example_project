@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="2022-04-05--5" author="Aidar">
+        <createTable tableName="office">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_office"/>
+            </column>
+            <column name="version" type="INT"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="is_active" type="BOOLEAN"/>
+            <column name="org_id" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2022-04-05--5.1" author="Aidar">
+        <addForeignKeyConstraint baseColumnNames="org_id" baseTableName="office" constraintName="FK_OFFICE_ON_ORG"
+                                 referencedColumnNames="id" referencedTableName="organization"/>
+    </changeSet>
+
+    <changeSet id="2022-04-05--5.2" author="Aidar">
+        <createIndex indexName="IX_Office_Id" tableName="office">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="2022-04-05--5.3" author="Aidar">
+        <createIndex indexName="IX_Office_Name" tableName="office">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="2022-04-05--5.4" author="Aidar">
+        <createIndex indexName="IX_Office_Phone" tableName="office">
+            <column name="phone"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="2022-04-05--5.5" author="Aidar">
+        <createIndex indexName="IX_Office_Is_Active" tableName="office">
+            <column name="is_active"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

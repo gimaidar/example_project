@@ -46,11 +46,7 @@ public class OrganizationServiceImpl implements  OrganizationService{
     @Transactional
     public OrganizationResponseDto getOrganizationById(int id) {
         //Получение организации
-        Organization organization = organizationRepository.getOrganizationById(id);
-
-        if (organization == null){
-            throw new NoSuchObjectException("Нет организации с id = " + id);
-        }
+        Organization organization = this.getOrganizationByIdFromRepository(id);
 
         //Преобразование в формат ответа и возврат
         OrganizationResponseDto organizationResponseDto = organizationMapper.toResponseDto(organization);
@@ -61,11 +57,7 @@ public class OrganizationServiceImpl implements  OrganizationService{
     @Transactional
     public void updateOrganization(OrganizationUpdateRequestDto organizationUpdateRequestDto) {
         //получение entity organization
-        Organization organization = organizationRepository.getOrganizationById(organizationUpdateRequestDto.getId());
-
-        if (organization == null){
-            throw new NoSuchObjectException("Нет организации с id = " + organizationUpdateRequestDto.getId());
-        }
+        Organization organization = this.getOrganizationByIdFromRepository(organizationUpdateRequestDto.getId());
 
         //обновление данных у entity данными которые пришли
         organizationMapper.updateModel(organizationUpdateRequestDto, organization);
@@ -82,5 +74,18 @@ public class OrganizationServiceImpl implements  OrganizationService{
 
         //сохронение новой записи
         organizationRepository.saveOrganization(organization);
+    }
+
+    @Override
+    @Transactional
+    public Organization getOrganizationByIdFromRepository(int id) {
+        //Получение организации
+        Organization organization = organizationRepository.getOrganizationById(id);
+
+        if (organization == null){
+            throw new NoSuchObjectException("Нет организации с id = " + id);
+        }
+
+        return organization;
     }
 }

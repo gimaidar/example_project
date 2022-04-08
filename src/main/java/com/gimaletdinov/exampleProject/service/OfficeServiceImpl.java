@@ -2,7 +2,6 @@ package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.OfficeRepository;
-import com.gimaletdinov.exampleProject.dao.OrganizationRepository;
 import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
@@ -22,14 +21,14 @@ public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeRepository officeRepository;
 
-    private final OrganizationRepository organizationRepository;
+    private final OrganizationService organizationService;
 
     private final OfficeMapper officeMapper;
 
     @Autowired
-    public OfficeServiceImpl(OfficeRepository officeRepository, OrganizationRepository organizationRepository, OfficeMapper officeMapper) {
+    public OfficeServiceImpl(OfficeRepository officeRepository, OrganizationService organizationService, OfficeMapper officeMapper) {
         this.officeRepository = officeRepository;
-        this.organizationRepository = organizationRepository;
+        this.organizationService = organizationService;
         this.officeMapper = officeMapper;
     }
 
@@ -37,10 +36,14 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public List<OfficeListResponseDto> getAllOfficesByPredicat(OfficeListRequestDto officeListRequestDto) {
         //Создание организации для добавления в атрибуты офиса
-        Organization organization = organizationRepository.getOrganizationById(officeListRequestDto.getOrgId());
+        Organization organization = organizationService.getOrganizationByIdFromRepository(officeListRequestDto.getOrgId());
+
+        Office office = officeMapper.toModel(officeListRequestDto);
+        office.setOrganization(organization);
+
 
         //Получение списка офисов
-        List<Office> officeList = officeRepository.getAllOfficesByPredicat(officeMapper.toModel(officeListRequestDto, organization));
+        List<Office> officeList = officeRepository.getAllOfficesByPredicat(office);
 
         if (officeList.isEmpty()){
             throw new NoSuchObjectException("Нет офисов с такими параметрами.");
@@ -55,11 +58,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public OfficeResponseDto getOfficeById(int id) {
         //Получение офиса
-        Office office = officeRepository.getOfficeById(id);
-
-        if (office == null){
-            throw new NoSuchObjectException("Нет офиса с id = " + id);
-        }
+        Office office = this.getOfficeByIdFromRepository(id);
 
         //Преобразование в формат ответа и возврат
         OfficeResponseDto officeResponseDto = officeMapper.toResponseDto(office);
@@ -70,11 +69,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public void updateOffice(OfficeUpdateRequestDto officeUpdateRequestDto) {
         //получение entity office
-        Office office = officeRepository.getOfficeById(officeUpdateRequestDto.getId());
-
-        if (office == null){
-            throw new NoSuchObjectException("Нет офиса с id = " + officeUpdateRequestDto.getId());
-        }
+        Office office = this.getOfficeByIdFromRepository(officeUpdateRequestDto.getId());
 
         //обновление данных у entity данными которые пришли
         officeMapper.updateModel(officeUpdateRequestDto, office);
@@ -87,16 +82,26 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public void saveOffice(OfficeSaveRequestDto officeSaveRequestDto) {
         //Создание организации для добавления в атрибуты офиса
-        Organization organization = organizationRepository.getOrganizationById(officeSaveRequestDto.getOrgId());
-
-        if (organization == null){
-            throw new NoSuchObjectException("Нет организации с id = " + officeSaveRequestDto.getOrgId());
-        }
+        Organization organization = organizationService.getOrganizationByIdFromRepository(officeSaveRequestDto.getOrgId());
 
         //Преобразование из формата запроса в entity
-        Office office = officeMapper.toModel(officeSaveRequestDto, organization);
+        Office office = officeMapper.toModel(officeSaveRequestDto);
+        office.setOrganization(organization);
 
         //сохронение новой записи
         officeRepository.saveOffice(office);
+    }
+
+    @Override
+    @Transactional
+    public Office getOfficeByIdFromRepository(int id) {
+        //Получение офиса
+        Office office = officeRepository.getOfficeById(id);
+
+        if (office == null){
+            throw new NoSuchObjectException("Нет офиса с id = " + id);
+        }
+
+        return office;
     }
 }

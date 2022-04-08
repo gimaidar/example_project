@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
+import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.CountryRepository;
 import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
@@ -27,5 +28,15 @@ public class CountryServiceImpl implements CountryService {
         List<Country> countryList = countryRepository.findAll();
 
         return countryMapper.toResponseDtoList(countryList);
+    }
+
+    @Override
+    public Country getCountryById(int id) {
+        Country country = countryRepository.getById(id);
+        if (country == null){
+            throw new NoSuchObjectException("Нет страны с code = " + id);
+        }
+
+        return country;
     }
 }

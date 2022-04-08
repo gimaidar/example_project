@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="2022-04-05--10" author="Aidar">
+        <insert tableName="office">
+            <column name="version" value="1"/>
+            <column name="name" value="Бэлл Интегратор Уфа"/>
+            <column name="address" value="г.Уфа ул. Свердлова 92"/>
+            <column name="phone" value="79171111111"/>
+            <column name="is_active" value="true"/>
+            <column name="org_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2022-04-05--10.1" author="Aidar">
+        <insert tableName="office">
+            <column name="version" value="1"/>
+            <column name="name" value="Рога и копыта Уфа"/>
+            <column name="address" value="г.Уфа ул. Свердлова 100"/>
+            <column name="phone" value="79171111111"/>
+            <column name="is_active" value="true"/>
+            <column name="org_id" value="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
