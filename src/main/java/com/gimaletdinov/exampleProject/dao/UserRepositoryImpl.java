@@ -11,6 +11,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса UserRepository. Реализация методов  для доступа к БД
+ */
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
@@ -21,6 +24,11 @@ public class UserRepositoryImpl implements UserRepository {
         this.em = em;
     }
 
+    /**
+     * @see UserRepository#getAllUsersByPredicat(User) 
+     * @param user
+     * @return список пользователей
+     */
     @Override
     public List<User> getAllUsersByPredicat(User user) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -75,16 +83,29 @@ public class UserRepositoryImpl implements UserRepository {
         return result;
     }
 
+    /**
+     * @see UserRepository#getUserById(int) 
+     * @param id
+     * @return полльзователь
+     */
     @Override
     public User getUserById(int id) {
         return em.find(User.class, id);
     }
 
+    /**
+     * @see UserRepository#updateUser(User) 
+     * @param user
+     */
     @Override
     public void updateUser(User user) {
         em.merge(user);
     }
 
+    /**
+     * @see UserRepository#saveUser(User) 
+     * @param user
+     */
     @Override
     public void saveUser(User user) {
         em.persist(user);

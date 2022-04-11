@@ -10,6 +10,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса OrganizationRepository. Реализация методов  для доступа к БД
+ */
 @Repository
 public class OrganizationRepositoryImpl implements OrganizationRepository{
 
@@ -20,6 +23,11 @@ public class OrganizationRepositoryImpl implements OrganizationRepository{
         this.em = em;
     }
 
+    /**
+     * @see OrganizationRepository#getAllOrganizationsByPredicat(Organization)
+     * @param organization
+     * @return список организаций
+     */
     @Override
     public List<Organization> getAllOrganizationsByPredicat(Organization organization) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -49,16 +57,29 @@ public class OrganizationRepositoryImpl implements OrganizationRepository{
         return result;
     }
 
+    /**
+     * @see OrganizationRepository#getOrganizationById(int)
+     * @param id id организации
+     * @return организация
+     */
     @Override
     public Organization getOrganizationById(int id) {
         return em.find(Organization.class, id);
     }
 
+    /**
+     * @see  OrganizationRepository#updateOrganization(Organization)
+     * @param organization
+     */
     @Override
     public void updateOrganization(Organization organization) {
         em.merge(organization);
     }
 
+    /**
+     * @see OrganizationRepository#saveOrganization(Organization)
+     * @param organization
+     */
     @Override
     public void saveOrganization(Organization organization) {
         em.persist(organization);

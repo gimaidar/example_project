@@ -11,6 +11,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса OfficeRepository. Реализация методов  для доступа к БД
+ */
 @Repository
 public class OfficeRepositoryImpl implements OfficeRepository {
 
@@ -21,6 +24,11 @@ public class OfficeRepositoryImpl implements OfficeRepository {
         this.em = em;
     }
 
+    /**
+     * @see OfficeRepository#getAllOfficesByPredicat(Office) 
+     * @param office
+     * @return список офисов
+     */
     @Override
     public List<Office> getAllOfficesByPredicat(Office office) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -56,16 +64,29 @@ public class OfficeRepositoryImpl implements OfficeRepository {
         return result;
     }
 
+    /**
+     * @see OfficeRepository#getOfficeById(int)
+     * @param id
+     * @return офис
+     */
     @Override
     public Office getOfficeById(int id) {
         return em.find(Office.class, id);
     }
 
+    /**
+     * @see OfficeRepository#updateOffice(Office)
+     * @param office
+     */
     @Override
     public void updateOffice(Office office) {
         em.merge(office);
     }
 
+    /**
+     * @see OfficeRepository#saveOffice(Office)
+     * @param office
+     */
     @Override
     public void saveOffice(Office office) {
         em.persist(office);
