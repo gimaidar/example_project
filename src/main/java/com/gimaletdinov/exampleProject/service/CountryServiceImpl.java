@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса CountryService. Реализация методов получения данных с БД и преобразования данных в формат ответа
+ */
 @Service
 public class CountryServiceImpl implements CountryService {
 
@@ -23,6 +26,10 @@ public class CountryServiceImpl implements CountryService {
         this.countryMapper = countryMapper;
     }
 
+    /**
+     * @see CountryService#getAllCountries()
+     * @return
+     */
     @Override
     public List<CountryListResponseDto> getAllCountries() {
         List<Country> countryList = countryRepository.findAll();
@@ -30,6 +37,13 @@ public class CountryServiceImpl implements CountryService {
         return countryMapper.toResponseDtoList(countryList);
     }
 
+    /**
+     * @see CountryService#getCountryById(int)
+     * @param id
+     * @throws NoSuchObjectException ("Нет страны с code = " + id);
+     * @return
+     *
+     */
     @Override
     public Country getCountryById(int id) {
         Country country = countryRepository.getById(id);

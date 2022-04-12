@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса OrganizationService. Реализация методов получения данных с БД и преобразования данных в формат ответа
+ */
 @Service
 public class OrganizationServiceImpl implements  OrganizationService{
 
@@ -27,6 +30,11 @@ public class OrganizationServiceImpl implements  OrganizationService{
         this.organizationMapper = organizationMapper;
     }
 
+    /**
+     * {@link OrganizationService#getAllOrganizationsByPredicat(OrganizationListRequestDto)}
+     * @param organizationListRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public List<OrganizationListResponseDto> getAllOrganizationsByPredicat(OrganizationListRequestDto organizationListRequestDto) {
@@ -42,6 +50,11 @@ public class OrganizationServiceImpl implements  OrganizationService{
         return organizationListResponseDtoList;
     }
 
+    /**
+     * {@link OrganizationService#getOrganizationById(int)}
+     * @param id
+     * @return
+     */
     @Override
     @Transactional
     public OrganizationResponseDto getOrganizationById(int id) {
@@ -53,6 +66,11 @@ public class OrganizationServiceImpl implements  OrganizationService{
         return organizationResponseDto;
     }
 
+    /**
+     * {@link OrganizationService#updateOrganization(OrganizationUpdateRequestDto)}
+     * @param organizationUpdateRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public void updateOrganization(OrganizationUpdateRequestDto organizationUpdateRequestDto) {
@@ -66,6 +84,11 @@ public class OrganizationServiceImpl implements  OrganizationService{
         organizationRepository.updateOrganization(organization);
     }
 
+    /**
+     * {@link OrganizationService#saveOrganization(OrganizationSaveRequestDto)}
+     * @param organizationSaveRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public void saveOrganization(OrganizationSaveRequestDto organizationSaveRequestDto) {
@@ -76,6 +99,12 @@ public class OrganizationServiceImpl implements  OrganizationService{
         organizationRepository.saveOrganization(organization);
     }
 
+    /**
+     * {@link OrganizationService#getOrganizationByIdFromRepository(int)}
+     * @param id
+     * @throws NoSuchObjectException ("Нет организации с id = " + id)
+     * @return
+     */
     @Override
     @Transactional
     public Organization getOrganizationByIdFromRepository(int id) {

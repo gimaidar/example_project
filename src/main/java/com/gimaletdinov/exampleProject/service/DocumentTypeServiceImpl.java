@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса DocumentTypeService. Реализация методов получения данных с БД и преобразования данных в формат ответа
+ */
 @Service
 public class DocumentTypeServiceImpl implements DocumentTypeService {
 
@@ -23,6 +26,10 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
         this.documentTypeMapper = documentTypeMapper;
     }
 
+    /**
+     * @see DocumentTypeService#getAllDocumentTypes()
+     * @return
+     */
     @Override
     public List<DocumentTypeListResponseDto> getAllDocumentTypes() {
         List<DocumentType> documentTypeList=documentTypeRepository.findAll();
@@ -30,6 +37,11 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
         return documentTypeMapper.toResponseDtoList(documentTypeList);
     }
 
+    /**
+     * @see DocumentTypeService#getDocumentTypeById(int)
+     * @throws NoSuchObjectException ("Нет типа документа с code = " + id)
+     * @return
+     */
     @Override
     public DocumentType getDocumentTypeById(int id) {
         DocumentType documentType = documentTypeRepository.getById(id);

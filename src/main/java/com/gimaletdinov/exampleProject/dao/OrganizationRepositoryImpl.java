@@ -72,7 +72,8 @@ public class OrganizationRepositoryImpl implements OrganizationRepository{
      * @param organization
      */
     @Override
-    public void updateOrganization(Organization organization) {
+    public void updateOrganization(Organization organization)
+    {
         em.merge(organization);
     }
 

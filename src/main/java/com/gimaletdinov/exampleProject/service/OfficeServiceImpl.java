@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса OfficeService. Реализация методов получения данных с БД и преобразования данных в формат ответа
+ */
 @Service
 public class OfficeServiceImpl implements OfficeService {
 
@@ -32,6 +35,11 @@ public class OfficeServiceImpl implements OfficeService {
         this.officeMapper = officeMapper;
     }
 
+    /**
+     * @see OfficeService#getAllOfficesByPredicat(OfficeListRequestDto)
+     * @param officeListRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public List<OfficeListResponseDto> getAllOfficesByPredicat(OfficeListRequestDto officeListRequestDto) {
@@ -54,6 +62,11 @@ public class OfficeServiceImpl implements OfficeService {
         return officeListResponseDtos;
     }
 
+    /**
+     * @see OfficeService#getOfficeById(int)
+     * @param id
+     * @return
+     */
     @Override
     @Transactional
     public OfficeResponseDto getOfficeById(int id) {
@@ -65,6 +78,11 @@ public class OfficeServiceImpl implements OfficeService {
         return officeResponseDto;
     }
 
+    /**
+     * @see OfficeService#updateOffice(OfficeUpdateRequestDto)
+     * @param officeUpdateRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public void updateOffice(OfficeUpdateRequestDto officeUpdateRequestDto) {
@@ -78,6 +96,11 @@ public class OfficeServiceImpl implements OfficeService {
         officeRepository.updateOffice(office);
     }
 
+    /**
+     * @see OfficeService#saveOffice(OfficeSaveRequestDto)
+     * @param officeSaveRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public void saveOffice(OfficeSaveRequestDto officeSaveRequestDto) {
@@ -92,6 +115,12 @@ public class OfficeServiceImpl implements OfficeService {
         officeRepository.saveOffice(office);
     }
 
+    /**
+     * @see OfficeService#getOfficeByIdFromRepository(int)
+     * @param id
+     * @throws NoSuchObjectException ("Нет офиса с id = " + id)
+     * @return
+     */
     @Override
     @Transactional
     public Office getOfficeByIdFromRepository(int id) {

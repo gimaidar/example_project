@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Класс реализация интерфейса UserService. Реализация методов получения данных с БД и преобразования данных в формат ответа
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -46,6 +49,11 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+    /**
+     * @see UserService#getAllUsersByPredicat(UserListRequestDto)
+     * @param userListRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public List<UserListResponseDto> getAllUsersByPredicat(UserListRequestDto userListRequestDto) {
@@ -62,6 +70,11 @@ public class UserServiceImpl implements UserService {
         return userListResponseDtoList;
     }
 
+    /**
+     * @see UserService#getUserById(int)
+     * @param id
+     * @return
+     */
     @Override
     @Transactional
     public UserResponseDto getUserById(int id) {
@@ -71,6 +84,11 @@ public class UserServiceImpl implements UserService {
         return userResponseDto;
     }
 
+    /**
+     * @see UserService#updateUser(UserUpdateRequestDto)
+     * @param userUpdateRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public void updateUser(UserUpdateRequestDto userUpdateRequestDto) {
@@ -88,6 +106,11 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUser(user);
     }
 
+    /**
+     * @see UserService#saveUser(UserSaveRequestDto)
+     * @param userSaveRequestDto
+     * @return
+     */
     @Override
     @Transactional
     public void saveUser(UserSaveRequestDto userSaveRequestDto) {
@@ -110,6 +133,12 @@ public class UserServiceImpl implements UserService {
         userRepository.saveUser(user);
     }
 
+    /**
+     * @see UserService#getUserByIdFromRepository(int)
+     * @param id NoSuchObjectException ("Нет пользователя с id = " + id)
+     * @throws
+     * @return
+     */
     @Override
     @Transactional
     public User getUserByIdFromRepository(int id) {
