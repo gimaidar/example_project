@@ -35,7 +35,7 @@ public class UserSaveRequestDto {
 
     private String docName;
 
-    private String docNumber;
+    private Integer docNumber;
 
     private LocalDate docDate;
 

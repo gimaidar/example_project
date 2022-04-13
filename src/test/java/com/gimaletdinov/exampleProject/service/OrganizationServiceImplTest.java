@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,11 +29,16 @@ class OrganizationServiceImplTest {
 
 
     @Test
+    @Transactional
     void getAllOrganizationsByPredicat() {
         OrganizationListRequestDto requestDto = new OrganizationListRequestDto();
-        requestDto.setName("test org name");
+        requestDto.setName("test_org name");
+
         List<OrganizationListResponseDto> resultList = organizationService.getAllOrganizationsByPredicat(requestDto);
         assertTrue(resultList.size() > 0);
+
+        requestDto.setName("not exist");
+        assertThrows(NoSuchObjectException.class, () -> organizationService.getAllOrganizationsByPredicat(requestDto));
     }
 
     @Test
@@ -41,6 +47,7 @@ class OrganizationServiceImplTest {
     }
 
     @Test
+    @Transactional
     void updateOrganization() {
         OrganizationUpdateRequestDto requestDto = new OrganizationUpdateRequestDto();
         requestDto.setId(1);
@@ -68,6 +75,7 @@ class OrganizationServiceImplTest {
     }
 
     @Test
+    @Transactional
     void saveOrganization() {
         OrganizationSaveRequestDto requestDto = new OrganizationSaveRequestDto();
         requestDto.setName("save name");
@@ -95,6 +103,7 @@ class OrganizationServiceImplTest {
     }
 
     @Test
+    @Transactional
     void getOrganizationByIdFromRepository() {
         Organization organization = organizationService.getOrganizationByIdFromRepository(1);
         assertEquals(organization.getId(), 1);

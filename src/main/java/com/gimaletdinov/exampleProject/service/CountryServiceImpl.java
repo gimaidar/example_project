@@ -47,7 +47,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public Country getCountryById(int id) {
         Country country = countryRepository.getById(id);
-        if (country == null){
+        if (country.getId() == null){
             throw new NoSuchObjectException("Нет страны с code = " + id);
         }
 
