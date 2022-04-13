@@ -15,9 +15,17 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
+/**
+ * Маппер для сущности Пользователь
+ */
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+    /**
+     * Метод для маппинга запроса - userSaveRequestDto в User
+     * @param userSaveRequestDto
+     * @return User
+     */
     @Mapping(source = "officeId", target = "office.id")
     @Mapping(source = "docNumber", target = "document.number")
     @Mapping(source = "docDate", target = "document.date")
@@ -26,11 +34,21 @@ public interface UserMapper {
     @Mapping(source = "countryCode", target = "country.id")
     User toModel(UserSaveRequestDto userSaveRequestDto);
 
+    /**
+     * Метод для маппинга запроса - UserListRequestDto в User
+     * @param userListRequestDto
+     * @return User
+     */
     @Mapping(source = "officeId", target = "office.id")
     @Mapping(source = "docCode", target = "document.documentType.id")
     @Mapping(source = "countryCode", target = "country.id")
     User toModel(UserListRequestDto userListRequestDto);
 
+    /**
+     * Метод для маппинга User в формат ответа UserResponseDto
+     * @param user
+     * @return UserResponseDto
+     */
     @Mapping(source = "office.id", target = "officeId")
     @Mapping(source = "document.number", target = "docNumber")
     @Mapping(source = "document.date", target = "docDate")
@@ -39,6 +57,11 @@ public interface UserMapper {
     @Mapping(source = "country.name", target = "countryName")
     UserResponseDto toResponseDto(User user);
 
+    /**
+     * Метод для маппинга (обновления) User из запроса - UserUpdateRequestDto
+     * @param userUpdateRequestDto
+     * @param user
+     */
     @Mapping(source = "officeId", target = "office.id")
     @Mapping(source = "docNumber", target = "document.number")
     @Mapping(source = "docDate", target = "document.date")
@@ -46,5 +69,10 @@ public interface UserMapper {
     @Mapping(source = "countryCode", target = "country.id")
     void updateModel(UserUpdateRequestDto userUpdateRequestDto, @MappingTarget User user);
 
+    /**
+     * Метод для маппинга спсика User в формат ответа список UserListResponseDto
+     * @param userList
+     * @return спсиок UserListResponseDto
+     */
     List<UserListResponseDto> toResponseDtoList(List<User> userList);
 }

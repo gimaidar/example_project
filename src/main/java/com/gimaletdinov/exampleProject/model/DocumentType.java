@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Сущность Тип документа
+ */
 @Entity
 @Table(name = "Document_type")
 @Data

@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+/**
+ * Сущность Страна
+ */
 @Entity
 @Table(name = "Country")
 @Data

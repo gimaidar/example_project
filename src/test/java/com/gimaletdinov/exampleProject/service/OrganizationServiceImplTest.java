@@ -1,27 +1,22 @@
 package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
-import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest

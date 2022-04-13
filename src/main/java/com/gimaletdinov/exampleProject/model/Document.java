@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import java.time.LocalDate;
 
+/**
+ * Сущность Документ
+ */
 @Entity
 @Table(name = "Document")
 @Data

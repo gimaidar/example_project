@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+/**
+ * Сущность Организация
+ */
 @Entity
 @Table(name = "Organization")
 @Data

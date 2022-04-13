@@ -17,6 +17,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+/**
+ * Сущность Пользователь
+ */
 @Entity
 @Table(name = "User")
 @Data
