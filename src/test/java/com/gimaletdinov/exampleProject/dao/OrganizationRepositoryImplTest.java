@@ -9,7 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.assertOrganizationsEquals;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getOrganizationForUpdate;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,75 +21,49 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestPropertySource("classpath:application-test.properties")
 class OrganizationRepositoryImplTest {
 
+    private Organization newTestOrganization = getPopulateOrganization();
+
     @Autowired
     private OrganizationRepository organizationRepository;
+
 
     @Test
     @Transactional
     void getAllOrganizationsByPredicat() {
-        Organization organization = new Organization();
-        organization.setName("test_org name");
-
-        List<Organization> resultList = organizationRepository.getAllOrganizationsByPredicat(organization);
-        assertTrue(resultList.size() > 0);
+        List<Organization> organizationsFromBD = organizationRepository.getAllOrganizationsByPredicat(newTestOrganization);
+        assertFalse(organizationsFromBD.isEmpty());
+        assertTrue(organizationsFromBD.size() == 1);
+        assertOrganizationsEquals(newTestOrganization, organizationsFromBD.get(0));
     }
 
     @Test
     @Transactional
     void getOrganizationById() {
-        Organization organization = organizationRepository.getOrganizationById(1);
-        assertEquals(organization.getId(), 1);
-        assertNotNull(organization);
+        Organization organizationFromBD = organizationRepository.getOrganizationById(TEST_ORG_ID);
+        assertNotNull(organizationFromBD);
+        assertOrganizationsEquals(newTestOrganization, organizationFromBD);
     }
 
     @Test
     @Transactional
     void updateOrganization() {
-        Organization organization = organizationRepository.getOrganizationById(1);
-        organization.setName("update name");
-        organization.setFullName("update fullName");
-        organization.setInn("9999999999");
-        organization.setKpp("9999999999");
-        organization.setAddress("update address");
-        organization.setPhone("99999999999");
-        organization.setIsActive(false);
+        Organization organizationFromBD = organizationRepository.getOrganizationById(TEST_ORG_ID);
+        Organization organizationForUpdate = getOrganizationForUpdate(organizationFromBD);
 
-        organizationRepository.updateOrganization(organization);
-        Organization updatedOrganization = organizationRepository.getOrganizationById(1);
+        organizationRepository.updateOrganization(organizationForUpdate);
+        Organization updatedOrganization = organizationRepository.getOrganizationById(TEST_ORG_ID);
 
         assertNotNull(updatedOrganization);
-        assertEquals(organization.getId(), updatedOrganization.getId());
-        assertEquals(organization.getName(), updatedOrganization.getName());
-        assertEquals(organization.getFullName(), updatedOrganization.getFullName());
-        assertEquals(organization.getInn(), updatedOrganization.getInn());
-        assertEquals(organization.getKpp(), updatedOrganization.getKpp());
-        assertEquals(organization.getAddress(), updatedOrganization.getAddress());
-        assertEquals(organization.getPhone(), updatedOrganization.getPhone());
-        assertEquals(organization.getIsActive(), updatedOrganization.getIsActive());
+        assertOrganizationsEquals(organizationForUpdate, updatedOrganization);
     }
 
     @Test
     @Transactional
     void saveOrganization() {
-        Organization organization = new Organization();
-        organization.setName("save name");
-        organization.setFullName("save fullName");
-        organization.setInn("9999999999");
-        organization.setKpp("9999999999");
-        organization.setAddress("save address");
-        organization.setPhone("99999999999");
-        organization.setIsActive(false);
-
-        organizationRepository.saveOrganization(organization);
-        Organization savedOrganization = organizationRepository.getOrganizationById(3);
+        organizationRepository.saveOrganization(newTestOrganization);
+        Organization savedOrganization = organizationRepository.getOrganizationById(TEST_ORG_ID + 1);
 
         assertNotNull(savedOrganization);
-        assertEquals(organization.getName(), savedOrganization.getName());
-        assertEquals(organization.getFullName(), savedOrganization.getFullName());
-        assertEquals(organization.getInn(), savedOrganization.getInn());
-        assertEquals(organization.getKpp(), savedOrganization.getKpp());
-        assertEquals(organization.getAddress(), savedOrganization.getAddress());
-        assertEquals(organization.getPhone(), savedOrganization.getPhone());
-        assertEquals(organization.getIsActive(), savedOrganization.getIsActive());
+        assertOrganizationsEquals(newTestOrganization, savedOrganization);
     }
 }

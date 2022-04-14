@@ -8,6 +8,7 @@ import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -15,11 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.assertOfficesEquals;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getOfficeForUpdate;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOffice;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.assertOrganizationsEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class OfficeRepositoryImplTest {
+
+    private Office newTestOffice = getPopulateOffice();
 
     @Autowired
     private OfficeRepository officeRepository;
@@ -30,63 +39,46 @@ class OfficeRepositoryImplTest {
     @Test
     @Transactional
     void getAllOfficesByPredicat() {
-        Organization organization = organizationRepository.getOrganizationById(1);
-        
-        Office office = new Office();
-        office.setOrganization(organization);
+        Organization organization = organizationRepository.getOrganizationById(TEST_ORG_ID);
+        newTestOffice.setOrganization(organization);
 
-        List<Office> resultList = officeRepository.getAllOfficesByPredicat(office);
-        assertTrue(resultList.size() > 0);
+        List<Office> officesFtomBD = officeRepository.getAllOfficesByPredicat(newTestOffice);
+        assertFalse(officesFtomBD.isEmpty());
+        assertTrue(officesFtomBD.size() == 1);
+        assertOfficesEquals(newTestOffice, officesFtomBD.get(0));
     }
 
     @Test
     @Transactional
     void getOfficeById() {
-        Office office = officeRepository.getOfficeById(1);
-        assertEquals(office.getId(), 1);
-        assertNotNull(office);
+        Office officeFromBD = officeRepository.getOfficeById(TEST_OFFICE_ID);
+        assertEquals(TEST_OFFICE_ID, officeFromBD.getId());
+        assertNotNull(officeFromBD);
     }
 
     @Test
     @Transactional
     void updateOffice() {
-        Office office = officeRepository.getOfficeById(1);
-        office.setName("update name");
-        office.setAddress("update address");
-        office.setPhone("99999999999");
-        office.setIsActive(false);
+        Office officeFromBD = officeRepository.getOfficeById(TEST_OFFICE_ID);
+        Office officeForUpdate = getOfficeForUpdate(officeFromBD);
 
-        officeRepository.updateOffice(office);
-        Office updatedOffice = officeRepository.getOfficeById(1);
+        officeRepository.updateOffice(officeForUpdate);
+        Office updatedOffice = officeRepository.getOfficeById(TEST_OFFICE_ID);
 
         assertNotNull(updatedOffice);
-        assertEquals(office.getName(), updatedOffice.getName());
-        assertEquals(office.getId(), updatedOffice.getId());
-        assertEquals(office.getAddress(), updatedOffice.getAddress());
-        assertEquals(office.getPhone(), updatedOffice.getPhone());
-        assertEquals(office.getIsActive(), updatedOffice.getIsActive());
+        assertOfficesEquals(officeForUpdate, updatedOffice);
     }
 
     @Test
     @Transactional
     void saveOffice() {
-        Organization organization = organizationRepository.getOrganizationById(1);
+        Organization organization = organizationRepository.getOrganizationById(TEST_ORG_ID);
+        newTestOffice.setOrganization(organization);
 
-        Office office = new Office();
-        office.setOrganization(organization);
-        office.setName("save name");
-        office.setAddress("save address");
-        office.setPhone("99999999999");
-        office.setIsActive(false);
-
-        officeRepository.saveOffice(office);
-        Office savedOffice = officeRepository.getOfficeById(3);
+        officeRepository.saveOffice(newTestOffice);
+        Office savedOffice = officeRepository.getOfficeById(TEST_OFFICE_ID + 1);
 
         assertNotNull(savedOffice);
-        assertEquals(office.getName(), savedOffice.getName());
-        assertEquals(office.getOrganization(), savedOffice.getOrganization());
-        assertEquals(office.getAddress(), savedOffice.getAddress());
-        assertEquals(office.getPhone(), savedOffice.getPhone());
-        assertEquals(office.getIsActive(), savedOffice.getIsActive());
+        assertOfficesEquals(newTestOffice, savedOffice);
     }
 }

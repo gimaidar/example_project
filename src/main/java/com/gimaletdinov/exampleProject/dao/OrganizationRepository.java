@@ -32,4 +32,6 @@ public interface OrganizationRepository {
      * @param organization
      */
     void saveOrganization(Organization organization);
+
+    void deleteOrganization(Organization organization);
 }

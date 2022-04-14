@@ -1,14 +1,19 @@
 package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.dao.OfficeRepository;
 import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Office;
+import com.gimaletdinov.exampleProject.model.mapper.OfficeMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +23,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class OfficeServiceImplTest {
 
+    @MockBean
+    private OfficeRepository officeRepository;
+
     @Autowired
-    private OfficeService officeService;
+    private OfficeMapper oM;
+
+    @Autowired
+    private OrganizationService orgS;
+
+    @Autowired
+    private OfficeService officeService = new OfficeServiceImpl(officeRepository, orgS, oM);
 
     @Test
     @Transactional
@@ -42,7 +59,7 @@ class OfficeServiceImplTest {
     @Test
     @Transactional
     void getOfficeById() {
-        this.getOfficeByIdFromRepository();
+        getOfficeByIdFromRepository();
     }
 
     @Test
@@ -81,6 +98,8 @@ class OfficeServiceImplTest {
         officeService.saveOffice(requestDto);
         Office savedOffice = officeService.getOfficeByIdFromRepository(3);
 
+        verify(officeRepository).saveOffice(oM.toModel(requestDto));
+
         assertNotNull(savedOffice);
         assertEquals(requestDto.getName(), savedOffice.getName());
         assertEquals(requestDto.getOrgId(), savedOffice.getOrganization().getId());
@@ -92,8 +111,17 @@ class OfficeServiceImplTest {
     @Test
     @Transactional
     void getOfficeByIdFromRepository() {
-        Office office = officeService.getOfficeByIdFromRepository(1);
-        assertEquals(office.getId(), 1);
-        assertNotNull(office);
+        //Given
+        int officeId = 1;
+        Office office = new Office();
+        when(officeRepository.getOfficeById(officeId)).thenReturn(office);
+
+        //When
+        Office fromRepository = officeService.getOfficeByIdFromRepository(officeId);
+
+        //Then
+        verify(officeRepository).getOfficeById(officeId);
+        assertNotNull(fromRepository);
+        assertEquals(office, fromRepository);
     }
 }

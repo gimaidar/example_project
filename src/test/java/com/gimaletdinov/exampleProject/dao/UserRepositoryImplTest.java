@@ -14,16 +14,29 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_TYPE_ID;
+import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.getPopulateDocument;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.assertOfficesEquals;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_COUNTRY_ID;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_USER_ID;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.assertUsersEquals;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUser;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getUserForUpdate;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class UserRepositoryImplTest {
+
+    private User newTestUser = getPopulateUser();
 
     @Autowired
     private UserRepository userRepository;
@@ -40,83 +53,58 @@ class UserRepositoryImplTest {
     @Test
     @Transactional
     void getAllUsersByPredicat() {
-        Office office = officeRepository.getOfficeById(1);
-
-        User user = new User();
+        Office office = officeRepository.getOfficeById(TEST_OFFICE_ID);
+        User user = getPopulateUser();
         user.setOffice(office);
 
-        List<User> resultList = userRepository.getAllUsersByPredicat(user);
-        assertTrue(resultList.size() > 0);
+        List<User> usersFromBD = userRepository.getAllUsersByPredicat(user);
+        assertFalse(usersFromBD.isEmpty());
+        assertTrue(usersFromBD.size() == 1);
+        //assertUsersEquals(user, usersFromBD.get(0));
     }
 
     @Test
     @Transactional
     void getUserById() {
-        User user = userRepository.getUserById(1);
-        assertEquals(user.getId(), 1);
-        assertNotNull(user);
+        User userFromBD = userRepository.getUserById(TEST_USER_ID);
+        assertEquals(TEST_USER_ID, userFromBD.getId());
+        assertNotNull(userFromBD);
     }
 
     @Test
     @Transactional
     void updateUser() {
-        User user = userRepository.getUserById(1);
-        user.setFirstName("update fname");
-        user.setSecondName("update sname");
-        user.setMiddleName("update mname");
-        user.setPosition(1);
-        user.setPhone("99999999999");
-        user.setIsIdentified(false);
+        User user = userRepository.getUserById(TEST_USER_ID);
+        User userForUpdate = getUserForUpdate(user);
 
-        userRepository.updateUser(user);
-        User updatedUser = userRepository.getUserById(1);
+        userRepository.updateUser(userForUpdate);
+        User updatedUser = userRepository.getUserById(TEST_USER_ID  );
 
         assertNotNull(updatedUser);
-        assertEquals(user.getOffice(), updatedUser.getOffice());
-        assertEquals(user.getFirstName(), updatedUser.getFirstName());
-        assertEquals(user.getSecondName(), updatedUser.getSecondName());
-        assertEquals(user.getMiddleName(), updatedUser.getMiddleName());
-        assertEquals(user.getPosition(), updatedUser.getPosition());
-        assertEquals(user.getPhone(), updatedUser.getPhone());
-        assertEquals(user.getIsIdentified(), updatedUser.getIsIdentified());
+        assertUsersEquals(userForUpdate, updatedUser);
     }
 
     @Test
     @Transactional
     void saveUser() {
-        Office office = officeRepository.getOfficeById(1);
-        Country country = countryRepository.getById(643);
-        DocumentType documentType = documentTypeRepository.getById(21);
-        Document document = new Document();
+        Office office = officeRepository.getOfficeById(TEST_OFFICE_ID);
+
+        Country country = countryRepository.getById(TEST_COUNTRY_ID);
+        DocumentType documentType = documentTypeRepository.getById(TEST_DOCUMENT_TYPE_ID);
+
+        Document document = getPopulateDocument();
         document.setDocumentType(documentType);
-        document.setNumber(111111);
-        document.setDate(LocalDate.of(2022, 04, 12));
 
+        User newUser = getPopulateUser();
+        document.setUser(newUser);
+        newUser.setOffice(office);
+        newUser.setDocument(document);
+        newUser.setCountry(country);
 
-        User user = new User();
-        document.setUser(user);
-        user.setOffice(office);
-        user.setDocument(document);
-        user.setCountry(country);
-        user.setFirstName("save fname");
-        user.setSecondName("save sname");
-        user.setMiddleName("save mname");
-        user.setPosition(1);
-        user.setPhone("99999999999");
-        user.setIsIdentified(false);
-
-        userRepository.saveUser(user);
-        User savedUser = userRepository.getUserById(3);
+        userRepository.saveUser(newUser);
+        User savedUser = userRepository.getUserById(TEST_USER_ID + 1);
 
         assertNotNull(savedUser);
-        assertEquals(user.getOffice(), savedUser.getOffice());
-        assertEquals(user.getCountry(), savedUser.getCountry());
-        assertEquals(user.getDocument(), savedUser.getDocument());
-        assertEquals(user.getFirstName(), savedUser.getFirstName());
-        assertEquals(user.getSecondName(), savedUser.getSecondName());
-        assertEquals(user.getMiddleName(), savedUser.getMiddleName());
-        assertEquals(user.getPosition(), savedUser.getPosition());
-        assertEquals(user.getPhone(), savedUser.getPhone());
-        assertEquals(user.getIsIdentified(), savedUser.getIsIdentified());
+        assertUsersEquals(newUser, savedUser);
     }
 }

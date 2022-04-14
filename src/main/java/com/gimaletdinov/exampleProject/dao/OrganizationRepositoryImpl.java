@@ -85,4 +85,9 @@ public class OrganizationRepositoryImpl implements OrganizationRepository{
     public void saveOrganization(Organization organization) {
         em.persist(organization);
     }
+
+    @Override
+    public void deleteOrganization(Organization organization) {
+        em.detach(organization);
+    }
 }
