@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DocumentTestHelper {
     // Проверь файл data.sql данные должны совпадать
-    public final static Integer TEST_DOCUMENT_TYPE_ID = 21;
+        public final static Integer TEST_DOCUMENT_TYPE_ID = 21;
 
     private final static Integer TEST_DOCUMENT_NUMBER = 111111;
     private final static LocalDate TEST_DOCUMENT_DATE = LocalDate.of(2022, 04, 12);

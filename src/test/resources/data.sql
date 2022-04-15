@@ -11,7 +11,7 @@ INSERT INTO Office (id, version, name, address, phone, is_active, org_id)
         VALUES (1, 1, 'test_office_name', 'test_office_address', '99999999999', true, 1);
 
 INSERT INTO User (id, version, first_name, second_name, middle_name, position, phone, is_identified, office_id, country_id)
-        VALUES (1, 1, 'test_user_first_name', 'test_user_first_name', 'test_user_middle_name', 1, '75555555555', true, 1, 643);
+        VALUES (1, 1, 'test_user_first_name', 'test_user_second_name', 'test_user_middle_name', 1, '99999999999', true, 1, 643);
 
 INSERT INTO Document (id, version, doc_number, doc_date, doc_type_id)
         VALUES (1, 1, 111111, '2022-04-12', 21);

@@ -25,9 +25,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     /**
-     * @see UserRepository#getAllUsersByPredicat(User) 
      * @param user
      * @return список пользователей
+     * @see UserRepository#getAllUsersByPredicat(User)
      */
     @Override
     public List<User> getAllUsersByPredicat(User user) {
@@ -35,7 +35,7 @@ public class UserRepositoryImpl implements UserRepository {
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 
         Root<User> UserRoot = criteriaQuery.from(User.class);
-        criteriaQuery.select(UserRoot );
+        criteriaQuery.select(UserRoot);
 
         Predicate criteria = criteriaBuilder.conjunction();
 
@@ -68,13 +68,13 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         //countryCode
-        if (user.getCountry().getId() != null) {
+        if ((user.getCountry() != null) && (user.getCountry().getId()) != null) {
             Predicate p = criteriaBuilder.equal(UserRoot.get("country").get("id"), user.getCountry().getId());
             criteria = criteriaBuilder.and(criteria, p);
         }
 
         //docCode
-        if (user.getDocument().getDocumentType().getId() != null) {
+        if ((user.getDocument() != null) && (user.getDocument().getDocumentType() != null) && (user.getDocument().getDocumentType().getId() != null)) {
             Predicate p = criteriaBuilder.equal(UserRoot.get("document").get("documentType").get("id"), user.getDocument().getDocumentType().getId());
             criteria = criteriaBuilder.and(criteria, p);
         }
@@ -84,9 +84,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     /**
-     * @see UserRepository#getUserById(int) 
      * @param id
      * @return полльзователь
+     * @see UserRepository#getUserById(int)
      */
     @Override
     public User getUserById(int id) {
@@ -94,8 +94,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     /**
-     * @see UserRepository#updateUser(User) 
      * @param user
+     * @see UserRepository#updateUser(User)
      */
     @Override
     public void updateUser(User user) {
@@ -103,8 +103,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     /**
-     * @see UserRepository#saveUser(User) 
      * @param user
+     * @see UserRepository#saveUser(User)
      */
     @Override
     public void saveUser(User user) {

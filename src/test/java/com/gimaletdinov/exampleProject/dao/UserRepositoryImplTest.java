@@ -52,23 +52,24 @@ class UserRepositoryImplTest {
 
     @Test
     @Transactional
-    void getAllUsersByPredicat() {
+    void getAllUsersByPredicatByOfficeId() { //добавить с другими предикатами
         Office office = officeRepository.getOfficeById(TEST_OFFICE_ID);
-        User user = getPopulateUser();
-        user.setOffice(office);
 
-        List<User> usersFromBD = userRepository.getAllUsersByPredicat(user);
+        User newUser = new User();
+        newUser.setOffice(office);
+
+        List<User> usersFromBD = userRepository.getAllUsersByPredicat(newUser);
         assertFalse(usersFromBD.isEmpty());
         assertTrue(usersFromBD.size() == 1);
-        //assertUsersEquals(user, usersFromBD.get(0));
+        assertOfficesEquals(office, usersFromBD.get(0).getOffice());
     }
 
     @Test
     @Transactional
     void getUserById() {
         User userFromBD = userRepository.getUserById(TEST_USER_ID);
-        assertEquals(TEST_USER_ID, userFromBD.getId());
         assertNotNull(userFromBD);
+        assertUsersEquals(newTestUser, userFromBD);
     }
 
     @Test

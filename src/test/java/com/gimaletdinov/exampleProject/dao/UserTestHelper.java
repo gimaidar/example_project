@@ -1,8 +1,10 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
 
+import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_TYPE_ID;
 import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
 import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_UPDATED_OFFICE_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,5 +60,17 @@ public class UserTestHelper {
         assertEquals(expected.getPosition(), actual.getPosition());
         assertEquals(expected.getPhone(), actual.getPhone());
         assertEquals(expected.getIsIdentified(), actual.getIsIdentified());
+    }
+
+    public static UserListRequestDto getPopulateUserListRequestDto() {
+        UserListRequestDto userListRequestDto = new UserListRequestDto();
+        userListRequestDto.setOfficeId(TEST_OFFICE_ID);
+        userListRequestDto.setFirstName(TEST_USER_FIRST_NAME);
+        userListRequestDto.setSecondName(TEST_USER_SECOND_NAME);
+        userListRequestDto.setMiddleName(TEST_USER_MIDDLE_NAME);
+        userListRequestDto.setPosition(TEST_USER_POSITION);
+        userListRequestDto.setDocCode(TEST_DOCUMENT_TYPE_ID);
+        userListRequestDto.setCountryCode(TEST_COUNTRY_ID);
+        return userListRequestDto;
     }
 }

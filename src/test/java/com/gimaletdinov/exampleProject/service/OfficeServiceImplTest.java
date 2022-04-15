@@ -123,5 +123,5 @@ class OfficeServiceImplTest {
         verify(officeRepository).getOfficeById(officeId);
         assertNotNull(fromRepository);
         assertEquals(office, fromRepository);
-    }
+        }
 }

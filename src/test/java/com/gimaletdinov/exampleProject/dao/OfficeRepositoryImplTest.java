@@ -52,8 +52,8 @@ class OfficeRepositoryImplTest {
     @Transactional
     void getOfficeById() {
         Office officeFromBD = officeRepository.getOfficeById(TEST_OFFICE_ID);
-        assertEquals(TEST_OFFICE_ID, officeFromBD.getId());
         assertNotNull(officeFromBD);
+        assertOfficesEquals(newTestOffice, officeFromBD);
     }
 
     @Test
