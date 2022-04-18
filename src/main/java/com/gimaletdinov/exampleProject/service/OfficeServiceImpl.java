@@ -87,7 +87,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public void updateOffice(OfficeUpdateRequestDto officeUpdateRequestDto) {
         //получение entity office
-        Office office = this.getOfficeByIdFromRepository(officeUpdateRequestDto.getId());
+        Office office = getOfficeByIdFromRepository(officeUpdateRequestDto.getId());
 
         //обновление данных у entity данными которые пришли
         officeMapper.updateModel(officeUpdateRequestDto, office);

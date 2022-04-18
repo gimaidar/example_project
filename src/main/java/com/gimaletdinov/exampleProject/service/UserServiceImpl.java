@@ -35,17 +35,14 @@ public class UserServiceImpl implements UserService {
 
     private final DocumentTypeService documentTypeService;
 
-    private final DocumentRepository documentRepository;
-
     private final UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, OfficeService officeService, CountryService countryService, DocumentTypeService documentTypeService, DocumentRepository documentRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, OfficeService officeService, CountryService countryService, DocumentTypeService documentTypeService, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.officeService = officeService;
         this.countryService = countryService;
         this.documentTypeService = documentTypeService;
-        this.documentRepository = documentRepository;
         this.userMapper = userMapper;
     }
 
@@ -93,7 +90,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(UserUpdateRequestDto userUpdateRequestDto) {
 
-        User user = this.getUserByIdFromRepository(userUpdateRequestDto.getId());
+        User user = getUserByIdFromRepository(userUpdateRequestDto.getId());
 
         userMapper.updateModel(userUpdateRequestDto, user);
 

@@ -7,19 +7,26 @@ import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Office;
+import com.gimaletdinov.exampleProject.model.Organization;
 import com.gimaletdinov.exampleProject.model.mapper.OfficeMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOffice;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeListRequestDto;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeSaveRequestDto;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeUpdateRequestDto;
+import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,29 +38,43 @@ import static org.mockito.Mockito.when;
 @TestPropertySource("classpath:application-test.properties")
 class OfficeServiceImplTest {
 
+    private Office newTestOffice = getPopulateOffice();
+
+    private Organization newTestOrganization = getPopulateOrganization();
+
     @MockBean
     private OfficeRepository officeRepository;
 
     @Autowired
-    private OfficeMapper oM;
+    private OfficeMapper officeMapper;
+
+    @MockBean
+    private OrganizationService organizationService;
 
     @Autowired
-    private OrganizationService orgS;
-
-    @Autowired
-    private OfficeService officeService = new OfficeServiceImpl(officeRepository, orgS, oM);
+    private OfficeService officeService = new OfficeServiceImpl(officeRepository, organizationService, officeMapper);
 
     @Test
     @Transactional
     void getAllOfficesByPredicat() {
-        OfficeListRequestDto requestDto = new OfficeListRequestDto();
-        requestDto.setOrgId(1);
+        //Given
+        List<Office> testOfficeList = new ArrayList<>();
+        testOfficeList.add(newTestOffice);
 
-        List<OfficeListResponseDto> resultList = officeService.getAllOfficesByPredicat(requestDto);
-        assertTrue(resultList.size() > 0);
+        OfficeListRequestDto officeListRequestDto = getPopulateOfficeListRequestDto();
+        when(officeRepository.getAllOfficesByPredicat(any())).thenReturn(testOfficeList);
+        when(organizationService.getOrganizationByIdFromRepository(officeListRequestDto.getOrgId())).thenReturn(newTestOrganization);
 
-        requestDto.setOrgId(1000);
-        assertThrows(NoSuchObjectException.class, () -> officeService.getAllOfficesByPredicat(requestDto));
+        //When
+        List<OfficeListResponseDto> officeListResponseDtoFromRepository = officeService.getAllOfficesByPredicat(officeListRequestDto);
+
+        //Then
+        Office officeInService = officeMapper.toModel(officeListRequestDto);
+        officeInService.setOrganization(newTestOrganization);
+        verify(officeRepository).getAllOfficesByPredicat(officeInService);
+
+        assertFalse(officeListResponseDtoFromRepository.isEmpty());
+        assertEquals(newTestOffice.getId() , officeListResponseDtoFromRepository.get(0).getId());
     }
 
     @Test
@@ -65,63 +86,49 @@ class OfficeServiceImplTest {
     @Test
     @Transactional
     void updateOffice() {
-        OfficeUpdateRequestDto requestDto = new OfficeUpdateRequestDto();
-        requestDto.setId(1);
-        requestDto.setName("update name");
-        requestDto.setAddress("update address");
-        requestDto.setPhone("99999999999");
-        requestDto.setIsActive(false);
+        OfficeUpdateRequestDto requestDto = getPopulateOfficeUpdateRequestDto();
+        Office newOffice = getPopulateOffice();
 
+        //Given
+        when(officeRepository.getOfficeById(TEST_OFFICE_ID)).thenReturn(newOffice);
+
+        //When
         officeService.updateOffice(requestDto);
-        Office updatedOffice = officeService.getOfficeByIdFromRepository(1);
 
-        assertNotNull(updatedOffice);
-        assertEquals(requestDto.getName(), updatedOffice.getName());
-        assertEquals(requestDto.getId(), updatedOffice.getId());
-        assertEquals(requestDto.getAddress(), updatedOffice.getAddress());
-        assertEquals(requestDto.getPhone(), updatedOffice.getPhone());
-        assertEquals(requestDto.getIsActive(), updatedOffice.getIsActive());
+        //Then
+        officeMapper.updateModel(requestDto, newOffice);
+        verify(officeRepository).updateOffice(newOffice);
     }
 
     @Test
     @Transactional
     void saveOffice() {
-        OfficeSaveRequestDto requestDto = new OfficeSaveRequestDto();
-        requestDto.setOrgId(1);
-        requestDto.setName("save name");
-        requestDto.setAddress("save address");
-        requestDto.setPhone("99999999999");
-        requestDto.setIsActive(false);
+        OfficeSaveRequestDto officeSaveRequestDto = getPopulateOfficeSaveRequestDto();
 
-        assertThrows(NoSuchObjectException.class, () -> officeService.getOfficeByIdFromRepository(3));
+        //Given
+        when(organizationService.getOrganizationByIdFromRepository(officeSaveRequestDto.getOrgId())).thenReturn(newTestOrganization);
 
-        officeService.saveOffice(requestDto);
-        Office savedOffice = officeService.getOfficeByIdFromRepository(3);
+        //When
+        officeService.saveOffice(officeSaveRequestDto);
 
-        verify(officeRepository).saveOffice(oM.toModel(requestDto));
-
-        assertNotNull(savedOffice);
-        assertEquals(requestDto.getName(), savedOffice.getName());
-        assertEquals(requestDto.getOrgId(), savedOffice.getOrganization().getId());
-        assertEquals(requestDto.getAddress(), savedOffice.getAddress());
-        assertEquals(requestDto.getPhone(), savedOffice.getPhone());
-        assertEquals(requestDto.getIsActive(), savedOffice.getIsActive());
+        //Then
+        Office officeInService = officeMapper.toModel(officeSaveRequestDto);
+        officeInService.setOrganization(newTestOrganization);
+        verify(officeRepository).saveOffice(officeInService);
     }
 
     @Test
     @Transactional
     void getOfficeByIdFromRepository() {
         //Given
-        int officeId = 1;
-        Office office = new Office();
-        when(officeRepository.getOfficeById(officeId)).thenReturn(office);
+        when(officeRepository.getOfficeById(TEST_OFFICE_ID)).thenReturn(newTestOffice);
 
         //When
-        Office fromRepository = officeService.getOfficeByIdFromRepository(officeId);
+        Office officeFromService = officeService.getOfficeByIdFromRepository(TEST_OFFICE_ID);
 
         //Then
-        verify(officeRepository).getOfficeById(officeId);
-        assertNotNull(fromRepository);
-        assertEquals(office, fromRepository);
+        verify(officeRepository).getOfficeById(TEST_OFFICE_ID);
+        assertNotNull(officeFromService);
+        assertEquals(officeFromService, officeFromService);
         }
 }

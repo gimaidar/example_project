@@ -66,7 +66,7 @@ class OrganizationServiceImplTest {
 
     @Test
     void getOrganizationById() {
-        this.getOrganizationByIdFromRepository();
+        getOrganizationByIdFromRepository();
     }
 
     @Test

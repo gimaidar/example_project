@@ -1,123 +1,153 @@
 package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.dao.UserRepository;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
+import com.gimaletdinov.exampleProject.model.Country;
+import com.gimaletdinov.exampleProject.model.Document;
+import com.gimaletdinov.exampleProject.model.DocumentType;
+import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
+import com.gimaletdinov.exampleProject.model.mapper.UserMapper;
+import liquibase.pro.packaged.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.getPopulateDocumentType;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOffice;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_USER_ID;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateCountry;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUser;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserListRequestDto;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserSaveRequestDto;
+import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserUpdateRequestDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class UserServiceImplTest {
 
+    private User newTestUser = getPopulateUser();
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private OfficeService officeService;
+
+    @MockBean
+    private CountryService countryService;
+
+    @MockBean
+    private DocumentTypeService documentTypeService;
+
     @Autowired
-    private UserService userService;
+    private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService = new UserServiceImpl(userRepository, officeService, countryService, documentTypeService, userMapper);
 
     @Test
     @Transactional
     void getAllUsersByPredicat() {
-        UserListRequestDto requestDto = new UserListRequestDto();
-        requestDto.setOfficeId(1);
+        List<User> testUsetList = new ArrayList<>();
+        testUsetList.add(newTestUser);
 
-        List<UserListResponseDto> resultList = userService.getAllUsersByPredicat(requestDto);
-        assertTrue(resultList.size() > 0);
+        //Given
+        UserListRequestDto userListRequestDto = getPopulateUserListRequestDto();
+        when(userRepository.getAllUsersByPredicat(any())).thenReturn(testUsetList);
 
-        requestDto.setOfficeId(1000);
-        assertThrows(NoSuchObjectException.class, () -> userService.getAllUsersByPredicat(requestDto));
+        //When
+        List<UserListResponseDto> resultList = userService.getAllUsersByPredicat(userListRequestDto);
+
+        //Then
+        verify(userRepository).getAllUsersByPredicat(userMapper.toModel(userListRequestDto));
     }
 
     @Test
     @Transactional
     void getUserById() {
-        this.getUserByIdFromRepository();
+        getUserByIdFromRepository();
     }
 
     @Test
     @Transactional
     void updateUser() {
-        UserUpdateRequestDto requestDto = new UserUpdateRequestDto();
-        requestDto.setId(1);
-        requestDto.setOfficeId(1);
-        requestDto.setFirstName("update fname");
-        requestDto.setSecondName("update sname");
-        requestDto.setMiddleName("update mname");
-        requestDto.setPosition(1);
-        requestDto.setPhone("99999999999");
-        requestDto.setIsIdentified(false);
-        requestDto.setDocNumber(111111);
-        requestDto.setDocDate(LocalDate.of(2022, 04, 12));
-        requestDto.setCountryCode(643);
+        //Given
+        UserUpdateRequestDto userUpdateRequestDto = getPopulateUserUpdateRequestDto();
+        Office newOffice = getPopulateOffice();
+        Country newCountry = getPopulateCountry();
+        User newUser = getPopulateUser();
+        when(userRepository.getUserById(userUpdateRequestDto.getId())).thenReturn(newUser);
+        when(officeService.getOfficeByIdFromRepository(userUpdateRequestDto.getOfficeId())).thenReturn(newOffice);
+        when(countryService.getCountryById(userUpdateRequestDto.getCountryCode())).thenReturn(newCountry);
 
-        userService.updateUser(requestDto);
-        User updatedUser = userService.getUserByIdFromRepository(1);
+        //When
+        userService.updateUser(userUpdateRequestDto);
 
-        assertNotNull(updatedUser);
-        assertEquals(requestDto.getOfficeId(), updatedUser.getOffice().getId());
-        assertEquals(requestDto.getFirstName(), updatedUser.getFirstName());
-        assertEquals(requestDto.getSecondName(), updatedUser.getSecondName());
-        assertEquals(requestDto.getMiddleName(), updatedUser.getMiddleName());
-        assertEquals(requestDto.getPosition(), updatedUser.getPosition());
-        assertEquals(requestDto.getPhone(), updatedUser.getPhone());
-        assertEquals(requestDto.getIsIdentified(), updatedUser.getIsIdentified());
-        assertEquals(requestDto.getDocNumber(), updatedUser.getDocument().getNumber());
-        assertEquals(requestDto.getDocDate(), updatedUser.getDocument().getDate());
-        assertEquals(requestDto.getCountryCode(), updatedUser.getCountry().getId());
+        //Then
+        userMapper.updateModel(userUpdateRequestDto, newUser);
+        newUser.setCountry(newCountry);
+        newUser.setOffice(newOffice);
+        verify(userRepository).updateUser(newUser);
+
     }
 
     @Test
     @Transactional
     void saveUser() {
-        UserSaveRequestDto requestDto = new UserSaveRequestDto();
-        requestDto.setOfficeId(1);
-        requestDto.setFirstName("save fname");
-        requestDto.setSecondName("save sname");
-        requestDto.setMiddleName("save mname");
-        requestDto.setPosition(1);
-        requestDto.setPhone("99999999999");
-        requestDto.setIsIdentified(false);
-        requestDto.setDocCode(21);
-        requestDto.setDocNumber(111111);
-        requestDto.setDocDate(LocalDate.of(2022, 04, 12));
-        requestDto.setCountryCode(643);
+        UserSaveRequestDto userSaveRequestDto = getPopulateUserSaveRequestDto();
+        Office newOffice = getPopulateOffice();
+        Country newCountry = getPopulateCountry();
+        DocumentType newDocumentType = getPopulateDocumentType();
+        //Given
+        when(officeService.getOfficeByIdFromRepository(userSaveRequestDto.getOfficeId())).thenReturn(newOffice);
+        when(countryService.getCountryById(userSaveRequestDto.getCountryCode())).thenReturn(newCountry);
+        when(documentTypeService.getDocumentTypeById(userSaveRequestDto.getDocCode())).thenReturn(newDocumentType);
 
-        assertThrows(NoSuchObjectException.class, () -> userService.getUserByIdFromRepository(3));
+        //When
+        userService.saveUser(userSaveRequestDto);
 
-        userService.saveUser(requestDto);
-        User savedUser = userService.getUserByIdFromRepository(3);
-
-        assertNotNull(savedUser);
-        assertEquals(requestDto.getOfficeId(), savedUser.getOffice().getId());
-        assertEquals(requestDto.getFirstName(), savedUser.getFirstName());
-        assertEquals(requestDto.getSecondName(), savedUser.getSecondName());
-        assertEquals(requestDto.getMiddleName(), savedUser.getMiddleName());
-        assertEquals(requestDto.getPosition(), savedUser.getPosition());
-        assertEquals(requestDto.getPhone(), savedUser.getPhone());
-        assertEquals(requestDto.getIsIdentified(), savedUser.getIsIdentified());
-        assertEquals(requestDto.getDocCode(), savedUser.getDocument().getDocumentType().getId());
-        assertEquals(requestDto.getDocNumber(), savedUser.getDocument().getNumber());
-        assertEquals(requestDto.getDocDate(), savedUser.getDocument().getDate());
-        assertEquals(requestDto.getCountryCode(), savedUser.getCountry().getId());
+        //Then
+        User userInService = userMapper.toModel(userSaveRequestDto);
+        userInService.setOffice(newOffice);
+        userInService.setCountry(newCountry);
+        Document document = userInService.getDocument();
+        document.setDocumentType(newDocumentType);
+        document.setUser(userInService);
+        verify(userRepository).saveUser(userInService);
     }
 
     @Test
     @Transactional
     void getUserByIdFromRepository() {
-        User user = userService.getUserByIdFromRepository(1);
-        assertEquals(user.getId(), 1);
-        assertNotNull(user);
+        //Given
+        when(userRepository.getUserById(TEST_USER_ID)).thenReturn(newTestUser);
+
+        //When
+        User userFromService = userService.getUserByIdFromRepository(TEST_USER_ID);
+
+        //Then
+        verify(userRepository).getUserById(TEST_USER_ID);
+        assertNotNull(userFromService);
+        assertEquals(userFromService.getId(), newTestUser.getId());
     }
 }
