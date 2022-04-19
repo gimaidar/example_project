@@ -3,8 +3,13 @@ package com.gimaletdinov.exampleProject.dao;
 import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
+import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
+import com.gimaletdinov.exampleProject.dto.response.OfficeResponseDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
@@ -83,5 +88,26 @@ public class OfficeTestHelper {
         officeSaveRequestDto.setPhone(TEST_OFFICE_PHONE);
         officeSaveRequestDto.setIsActive(TEST_OFFICE_IS_ACTIVE);
         return officeSaveRequestDto;
+    }
+
+    public static List<OfficeListResponseDto> getPopulateOfficeListResponseDtoList() {
+        OfficeListResponseDto officeListResponseDto = new OfficeListResponseDto();
+        officeListResponseDto.setId(TEST_OFFICE_ID);
+        officeListResponseDto.setName(TEST_OFFICE_NAME);
+        officeListResponseDto.setIsActive(TEST_OFFICE_IS_ACTIVE);
+
+        List<OfficeListResponseDto> officeListResponseDtoList = new ArrayList<>();
+        officeListResponseDtoList.add(officeListResponseDto);
+        return officeListResponseDtoList;
+    }
+
+    public static OfficeResponseDto getPopulateOfficeResponseDto() {
+        OfficeResponseDto officeResponseDto = new OfficeResponseDto();
+        officeResponseDto.setId(TEST_OFFICE_ID);
+        officeResponseDto.setName(TEST_OFFICE_NAME);
+        officeResponseDto.setAddress(TEST_OFFICE_ADDRESS);
+        officeResponseDto.setPhone(TEST_OFFICE_PHONE);
+        officeResponseDto.setIsActive(TEST_OFFICE_IS_ACTIVE);
+        return officeResponseDto;
     }
 }

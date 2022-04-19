@@ -1,31 +1,32 @@
 package com.gimaletdinov.exampleProject.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
+import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
+import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
+import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectDataResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectSuccessResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
+import com.gimaletdinov.exampleProject.dto.response.OfficeResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
-import com.gimaletdinov.exampleProject.service.OrganizationService;
+import com.gimaletdinov.exampleProject.service.OfficeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationListRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationListResponseDtoList;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeListRequestDto;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeListResponseDtoList;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeResponseDto;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeSaveRequestDto;
+import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeUpdateRequestDto;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationResponseDto;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationSaveRequestDto;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationUpdateRequestDto;
@@ -36,8 +37,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(OrganizationController.class)
-class OrganizationControllerTest {
+@WebMvcTest(OfficeController.class)
+class OfficeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,30 +47,30 @@ class OrganizationControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private OrganizationService organizationService;
+    private OfficeService officeService;
 
-    private static final String BASE_URL_REQUEST = "/api/organization";
-    private static final String GET_ORGANIZATION_BY_ID_URL_REQUEST = BASE_URL_REQUEST + "/";
-    private static final String GET_ALL_ORGANIZATIONS_BY_PREDICAT_URL_REQUEST = BASE_URL_REQUEST + "/list";
-    private static final String UPDATE_ORGANIZATION_URL_REQUEST = BASE_URL_REQUEST + "/update";
-    private static final String SAVE_ORGANIZATION_URL_REQUEST = BASE_URL_REQUEST + "/save";
+    private static final String BASE_URL_REQUEST = "/api/office";
+    private static final String GET_OFFICE_BY_ID_URL_REQUEST = BASE_URL_REQUEST + "/";
+    private static final String GET_ALL_OFFICES_BY_PREDICAT_URL_REQUEST = BASE_URL_REQUEST + "/list";
+    private static final String UPDATE_OFFICE_URL_REQUEST = BASE_URL_REQUEST + "/update";
+    private static final String SAVE_OFFICE_URL_REQUEST = BASE_URL_REQUEST + "/save";
 
     @Test
-    void getAllOrganizationsByPredicat() throws Exception {
+    void getAllOfficesByPredicat() throws Exception {
         //Given
-        OrganizationListRequestDto organizationListRequestDto = getPopulateOrganizationListRequestDto();
+        OfficeListRequestDto officeListRequestDto = getPopulateOfficeListRequestDto();
 
-        List<OrganizationListResponseDto> organizationListResponseDtoList = getPopulateOrganizationListResponseDtoList();
+        List<OfficeListResponseDto> officeListResponseDtoList = getPopulateOfficeListResponseDtoList();
 
         ObjectDataResponseDto dataResponseDto = new ObjectDataResponseDto();
-        dataResponseDto.setData(organizationListResponseDtoList);
+        dataResponseDto.setData(officeListResponseDtoList);
 
-        when(organizationService.getAllOrganizationsByPredicat(organizationListRequestDto)).thenReturn(organizationListResponseDtoList);
+        when(officeService.getAllOfficesByPredicat(officeListRequestDto)).thenReturn(officeListResponseDtoList);
 
         //When
         mockMvc.perform(
-                        get(GET_ALL_ORGANIZATIONS_BY_PREDICAT_URL_REQUEST)
-                                .content(objectMapper.writeValueAsString(organizationListRequestDto))
+                        get(GET_ALL_OFFICES_BY_PREDICAT_URL_REQUEST)
+                                .content(objectMapper.writeValueAsString(officeListRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON))
                 //Then
                 .andExpect(status().isOk())
@@ -80,18 +81,18 @@ class OrganizationControllerTest {
     @Test
     void getOrganizationById() throws Exception {
         //Given
-        OrganizationResponseDto organizationResponseDto = getPopulateOrganizationResponseDto();
+        OfficeResponseDto officeResponseDto = getPopulateOfficeResponseDto();
 
         ObjectDataResponseDto dataResponseDto = new ObjectDataResponseDto();
-        dataResponseDto.setData(organizationResponseDto);
+        dataResponseDto.setData(officeResponseDto);
 
-        when(organizationService.getOrganizationById(TEST_ORG_ID)).thenReturn(organizationResponseDto);
+        when(officeService.getOfficeById(TEST_OFFICE_ID)).thenReturn(officeResponseDto);
 
         //When
         mockMvc.perform(
-                get(GET_ORGANIZATION_BY_ID_URL_REQUEST + TEST_ORG_ID)
-                        .content(objectMapper.writeValueAsString(organizationResponseDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        get(GET_OFFICE_BY_ID_URL_REQUEST + TEST_OFFICE_ID)
+                                .content(objectMapper.writeValueAsString(officeResponseDto))
+                                .contentType(MediaType.APPLICATION_JSON))
                 //Then
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -101,14 +102,14 @@ class OrganizationControllerTest {
     @Test
     void updateOrganization() throws Exception {
         //Given
-        OrganizationUpdateRequestDto organizationUpdateRequestDto = getPopulateOrganizationUpdateRequestDto();
+        OfficeUpdateRequestDto officeUpdateRequestDto = getPopulateOfficeUpdateRequestDto();
 
         ObjectSuccessResponseDto objectSuccessResponseDto = new ObjectSuccessResponseDto();
 
         //When
         mockMvc.perform(
-                        post(UPDATE_ORGANIZATION_URL_REQUEST)
-                                .content(objectMapper.writeValueAsString(organizationUpdateRequestDto))
+                        post(UPDATE_OFFICE_URL_REQUEST)
+                                .content(objectMapper.writeValueAsString(officeUpdateRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON))
                 //Then
                 .andExpect(status().isOk())
@@ -119,14 +120,14 @@ class OrganizationControllerTest {
     @Test
     void saveOrganization() throws Exception {
         //Given
-        OrganizationSaveRequestDto organizationSaveRequestDto = getPopulateOrganizationSaveRequestDto();
+        OfficeSaveRequestDto officeSaveRequestDto = getPopulateOfficeSaveRequestDto();
 
         ObjectSuccessResponseDto objectSuccessResponseDto = new ObjectSuccessResponseDto();
 
         //When
         mockMvc.perform(
-                        post(SAVE_ORGANIZATION_URL_REQUEST)
-                                .content(objectMapper.writeValueAsString(organizationSaveRequestDto))
+                        post(SAVE_OFFICE_URL_REQUEST)
+                                .content(objectMapper.writeValueAsString(officeSaveRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON))
                 //Then
                 .andExpect(status().isOk())
