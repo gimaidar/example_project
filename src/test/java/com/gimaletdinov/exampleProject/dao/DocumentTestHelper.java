@@ -1,10 +1,13 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Document;
 import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_USER_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,5 +34,15 @@ public class DocumentTestHelper {
         documentType.setId(TEST_DOCUMENT_TYPE_ID);
         documentType.setName(TEST_DOCUMENT_NAME);
         return documentType;
+    }
+
+    public static List<DocumentTypeListResponseDto> getPopulateDocumentTypeListResponseDtoList() {
+        DocumentTypeListResponseDto documentTypeListResponseDto = new DocumentTypeListResponseDto();
+        documentTypeListResponseDto.setCode(TEST_DOCUMENT_TYPE_ID);
+        documentTypeListResponseDto.setName(TEST_DOCUMENT_NAME);
+
+        List<DocumentTypeListResponseDto> documentTypeListResponseDtoList = new ArrayList<>();
+        documentTypeListResponseDtoList.add(documentTypeListResponseDto);
+        return documentTypeListResponseDtoList;
     }
 }
