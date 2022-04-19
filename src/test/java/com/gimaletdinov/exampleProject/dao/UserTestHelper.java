@@ -3,6 +3,7 @@ package com.gimaletdinov.exampleProject.dao;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
+import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
@@ -159,4 +160,15 @@ public class UserTestHelper {
         country.setName(TEST_COUNTRY_NAME);
         return country;
     }
+
+    public static List<CountryListResponseDto> getPopulateCountryListResponseDto(){
+        CountryListResponseDto countryListResponseDto = new CountryListResponseDto();
+        countryListResponseDto.setCode(TEST_COUNTRY_ID);
+        countryListResponseDto.setName(TEST_COUNTRY_NAME);
+
+        List<CountryListResponseDto> countryListResponseDtoList = new ArrayList<>();
+        countryListResponseDtoList.add(countryListResponseDto);
+        return countryListResponseDtoList;
+    }
+
 }
