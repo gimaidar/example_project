@@ -29,11 +29,11 @@ public class UserResponseDto {
 
     private String docName;
 
-    private String docNumber;
+    private Integer docNumber;
 
     private LocalDate docDate;
 
     private String countryName;
 
-    private String countryCode;
+    private Integer countryCode;
 }

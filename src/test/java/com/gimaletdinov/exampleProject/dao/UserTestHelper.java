@@ -3,9 +3,14 @@ package com.gimaletdinov.exampleProject.dao;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
+import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
+import com.gimaletdinov.exampleProject.dto.response.UserResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_DATE;
 import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_NAME;
@@ -115,6 +120,37 @@ public class UserTestHelper {
         userSaveRequestDto.setCountryCode(TEST_COUNTRY_ID);
         userSaveRequestDto.setCountryName(TEST_COUNTRY_NAME);
         return userSaveRequestDto;
+    }
+
+    public static List<UserListResponseDto> getPopulateUserListResponseDtoList() {
+        UserListResponseDto userListResponseDto = new UserListResponseDto();
+        userListResponseDto.setId(TEST_USER_ID);
+        userListResponseDto.setFirstName(TEST_USER_FIRST_NAME);
+        userListResponseDto.setSecondName(TEST_USER_SECOND_NAME);
+        userListResponseDto.setMiddleName(TEST_USER_MIDDLE_NAME);
+        userListResponseDto.setPosition(TEST_USER_POSITION);
+
+        List<UserListResponseDto> userListResponseDtoList = new ArrayList<>();
+        userListResponseDtoList.add(userListResponseDto);
+        return userListResponseDtoList;
+    }
+
+    public static UserResponseDto getPopulateUserResponseDto() {
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setOfficeId(TEST_OFFICE_ID);
+        userResponseDto.setFirstName(TEST_USER_FIRST_NAME);
+        userResponseDto.setSecondName(TEST_USER_SECOND_NAME);
+        userResponseDto.setMiddleName(TEST_USER_MIDDLE_NAME);
+        userResponseDto.setPosition(TEST_USER_POSITION);
+        userResponseDto.setPhone(TEST_USER_PHONE);
+        userResponseDto.setIsIdentified(TEST_USER_IS_IDENTIFIED);
+        userResponseDto.setOfficeId(TEST_OFFICE_ID);
+        userResponseDto.setDocName(TEST_DOCUMENT_NAME);
+        userResponseDto.setDocNumber(TEST_DOCUMENT_NUMBER);
+        userResponseDto.setDocDate(TEST_DOCUMENT_DATE);
+        userResponseDto.setCountryCode(TEST_COUNTRY_ID);
+        userResponseDto.setCountryName(TEST_COUNTRY_NAME);
+        return userResponseDto;
     }
 
     public static Country getPopulateCountry(){
