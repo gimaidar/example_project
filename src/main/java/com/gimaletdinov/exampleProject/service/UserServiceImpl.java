@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
         document.setDocumentType(documentType);
         document.setUser(user);
 
-        user.setDocument(document);
+        //user.setDocument(document);
 
         userRepository.saveUser(user);
     }

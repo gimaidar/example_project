@@ -3,7 +3,12 @@ package com.gimaletdinov.exampleProject.dao;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
+import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
+import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -93,5 +98,28 @@ public class OrganizationTestHelper {
         organizationSaveRequestDto.setPhone(TEST_ORG_PHONE);
         organizationSaveRequestDto.setIsActive(TEST_ORG_IS_ACTIVE);
         return organizationSaveRequestDto;
+    }
+
+    public static OrganizationResponseDto getPopulateOrganizationResponseDto() {
+        OrganizationResponseDto organizationResponseDto = new OrganizationResponseDto();
+        organizationResponseDto.setId(TEST_ORG_ID);
+        organizationResponseDto.setName(TEST_ORG_NAME);
+        organizationResponseDto.setFullName(TEST_ORG_FULL_NAME);
+        organizationResponseDto.setInn(TEST_ORG_INN);
+        organizationResponseDto.setKpp(TEST_ORG_KPP);
+        organizationResponseDto.setAddress(TEST_ORG_ADDRESS);
+        organizationResponseDto.setPhone(TEST_ORG_PHONE);
+        organizationResponseDto.setIsActive(TEST_ORG_IS_ACTIVE);
+        return organizationResponseDto;
+    }
+
+    public static List<OrganizationListResponseDto> getPopulateOrganizationListResponseDtoList() {
+        OrganizationListResponseDto organizationListResponseDto = new OrganizationListResponseDto();
+        organizationListResponseDto.setId(TEST_ORG_ID);
+        organizationListResponseDto.setName(TEST_ORG_NAME);
+        organizationListResponseDto.setIsActive(TEST_ORG_IS_ACTIVE);
+        List<OrganizationListResponseDto> organizationListResponseDtoList = new ArrayList<>();
+        organizationListResponseDtoList.add(organizationListResponseDto);
+        return organizationListResponseDtoList;
     }
 }

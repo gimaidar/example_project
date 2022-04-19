@@ -48,7 +48,6 @@ public class OrganizationController {
      */
     @GetMapping("/{id}")
     public OrganizationResponseDto getOrganizationById(@PathVariable Integer id) {
-        System.out.println();
         return organizationService.getOrganizationById(id);
     }
 
