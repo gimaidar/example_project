@@ -1,15 +1,17 @@
 package com.gimaletdinov.exampleProject.dao;
 
 import com.gimaletdinov.exampleProject.model.Organization;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
+import static com.gimaletdinov.exampleProject.dao.OrganizationSpecification.organizationSpecification;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.assertOrganizationsEquals;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getOrganizationForUpdate;
 import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
@@ -17,53 +19,54 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource("classpath:application-test.properties")
 class OrganizationRepositoryImplTest {
 
-    private Organization newTestOrganization = getPopulateOrganization();
+    private Organization testOrganizationInBD;
 
     @Autowired
     private OrganizationRepository organizationRepository;
 
+    @BeforeEach
+    void saveTestOrganizationInBD(){
+        testOrganizationInBD = organizationRepository.save(getPopulateOrganization());
+    }
 
     @Test
     @Transactional
     void getAllOrganizationsByPredicat() {
-        List<Organization> organizationsFromBD = organizationRepository.getAllOrganizationsByPredicat(newTestOrganization);
+        Organization findOrganization = getPopulateOrganization();
+        List<Organization> organizationsFromBD = organizationRepository.findAll(organizationSpecification(findOrganization));
         assertFalse(organizationsFromBD.isEmpty());
         assertTrue(organizationsFromBD.size() == 1);
-        assertOrganizationsEquals(newTestOrganization, organizationsFromBD.get(0));
+        assertOrganizationsEquals(testOrganizationInBD, organizationsFromBD.get(0));
     }
 
     @Test
-    @Transactional
     void getOrganizationById() {
-        Organization organizationFromBD = organizationRepository.getOrganizationById(TEST_ORG_ID);
+        Organization organizationFromBD = organizationRepository.findById(testOrganizationInBD.getId()).get();
         assertNotNull(organizationFromBD);
-        assertOrganizationsEquals(newTestOrganization, organizationFromBD);
+        assertOrganizationsEquals(testOrganizationInBD, organizationFromBD);
     }
 
     @Test
-    @Transactional
     void updateOrganization() {
-        Organization organizationFromBD = organizationRepository.getOrganizationById(TEST_ORG_ID);
-        Organization organizationForUpdate = getOrganizationForUpdate(organizationFromBD);
+        Organization organizationForUpdate = getOrganizationForUpdate(testOrganizationInBD);
 
-        organizationRepository.updateOrganization(organizationForUpdate);
-        Organization updatedOrganization = organizationRepository.getOrganizationById(TEST_ORG_ID);
+        Organization updatedOrganization = organizationRepository.save(organizationForUpdate);
 
         assertNotNull(updatedOrganization);
         assertOrganizationsEquals(organizationForUpdate, updatedOrganization);
     }
 
     @Test
-    @Transactional
     void saveOrganization() {
-        organizationRepository.saveOrganization(newTestOrganization);
-        Organization savedOrganization = organizationRepository.getOrganizationById(TEST_ORG_ID + 1);
+        Organization organizationForSave = getPopulateOrganization();
+        Organization savedOrganization = organizationRepository.save(organizationForSave);
 
         assertNotNull(savedOrganization);
-        assertOrganizationsEquals(newTestOrganization, savedOrganization);
+        assertOrganizationsEquals(organizationForSave, savedOrganization);
     }
 }
