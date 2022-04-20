@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.gimaletdinov.exampleProject.dao.OfficeSpecification.officeSpecification;
 
 /**
  * Класс реализация интерфейса OfficeService. Реализация методов получения данных с БД и преобразования данных в формат ответа
@@ -51,7 +54,7 @@ public class OfficeServiceImpl implements OfficeService {
 
 
         //Получение списка офисов
-        List<Office> officeList = officeRepository.getAllOfficesByPredicat(office);
+        List<Office> officeList = officeRepository.findAll(officeSpecification(office));
 
         if (officeList.isEmpty()){
             throw new NoSuchObjectException("Нет офисов с такими параметрами.");
@@ -71,7 +74,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public OfficeResponseDto getOfficeById(int id) {
         //Получение офиса
-        Office office = this.getOfficeByIdFromRepository(id);
+        Office office = getOfficeByIdFromRepository(id);
 
         //Преобразование в формат ответа и возврат
         OfficeResponseDto officeResponseDto = officeMapper.toResponseDto(office);
@@ -93,7 +96,7 @@ public class OfficeServiceImpl implements OfficeService {
         officeMapper.updateModel(officeUpdateRequestDto, office);
 
         //сохранение entity
-        officeRepository.updateOffice(office);
+        officeRepository.save(office);
     }
 
     /**
@@ -112,7 +115,7 @@ public class OfficeServiceImpl implements OfficeService {
         office.setOrganization(organization);
 
         //сохронение новой записи
-        officeRepository.saveOffice(office);
+        officeRepository.save(office);
     }
 
     /**
@@ -125,12 +128,11 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public Office getOfficeByIdFromRepository(int id) {
         //Получение офиса
-        Office office = officeRepository.getOfficeById(id);
+        Optional<Office> optionalOffice = officeRepository.findById(id);
 
-        if (office == null){
+        if (optionalOffice.isEmpty()){
             throw new NoSuchObjectException("Нет офиса с id = " + id);
         }
-
-        return office;
+        return optionalOffice.get();
     }
 }
