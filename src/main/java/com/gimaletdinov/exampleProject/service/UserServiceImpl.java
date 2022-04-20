@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.gimaletdinov.exampleProject.dao.UserSpecification.userSpecification;
 
 /**
  * Класс реализация интерфейса UserService. Реализация методов получения данных с БД и преобразования данных в формат ответа
@@ -57,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toModel(userListRequestDto);
 
-        List<User> userList = userRepository.getAllUsersByPredicat(user);
+        List<User> userList = userRepository.findAll(userSpecification(user));
 
         if (userList.isEmpty()){
             throw new NoSuchObjectException("Нет пользователей с такими параметрами.");
@@ -75,7 +78,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponseDto getUserById(int id) {
-        User user = this.getUserByIdFromRepository(id);
+        User user = getUserByIdFromRepository(id);
 
         UserResponseDto userResponseDto = userMapper.toResponseDto(user);
         return userResponseDto;
@@ -100,7 +103,7 @@ public class UserServiceImpl implements UserService {
         Country country = countryService.getCountryById(userUpdateRequestDto.getCountryCode());
         user.setCountry(country);
 
-        userRepository.updateUser(user);
+        userRepository.save(user);
     }
 
     /**
@@ -127,7 +130,7 @@ public class UserServiceImpl implements UserService {
 
         //user.setDocument(document);
 
-        userRepository.saveUser(user);
+        userRepository.save(user);
     }
 
     /**
@@ -139,12 +142,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User getUserByIdFromRepository(int id) {
-        User user = userRepository.getUserById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
 
-        if (user == null){
+        if (optionalUser.isEmpty()){
             throw new NoSuchObjectException("Нет пользователя с id = " + id);
         }
 
-        return user;
+        return optionalUser.get();
     }
 }
