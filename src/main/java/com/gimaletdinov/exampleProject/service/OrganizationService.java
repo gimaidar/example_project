@@ -46,5 +46,5 @@ public interface OrganizationService {
      * @param id id организации
      * @return организация
      */
-    Organization getOrganizationByIdFromRepository(int id);
+    Organization getOrganizationByIdFromRepository(Integer id);
 }

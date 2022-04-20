@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
+
+import static com.gimaletdinov.exampleProject.dao.OrganizationSpecification.organizationSpecification;
 
 /**
  * Класс реализация интерфейса OrganizationService. Реализация методов получения данных с БД и преобразования данных в формат ответа
@@ -39,7 +42,8 @@ public class OrganizationServiceImpl implements  OrganizationService{
     @Transactional
     public List<OrganizationListResponseDto> getAllOrganizationsByPredicat(OrganizationListRequestDto organizationListRequestDto) {
         //Получение списка организаций
-        List<Organization> organizationList = organizationRepository.getAllOrganizationsByPredicat(organizationMapper.toModel(organizationListRequestDto));
+        Organization findOrganization = organizationMapper.toModel(organizationListRequestDto);
+        List<Organization> organizationList = organizationRepository.findAll(organizationSpecification(findOrganization));
 
         if (organizationList.isEmpty()){
             throw new NoSuchObjectException("Нет организаций с такими параметрами.");
@@ -59,7 +63,7 @@ public class OrganizationServiceImpl implements  OrganizationService{
     @Transactional
     public OrganizationResponseDto getOrganizationById(int id) {
         //Получение организации
-        Organization organization = this.getOrganizationByIdFromRepository(id);
+        Organization organization = getOrganizationByIdFromRepository(id);
 
         //Преобразование в формат ответа и возврат
         OrganizationResponseDto organizationResponseDto = organizationMapper.toResponseDto(organization);
@@ -75,13 +79,13 @@ public class OrganizationServiceImpl implements  OrganizationService{
     @Transactional
     public void updateOrganization(OrganizationUpdateRequestDto organizationUpdateRequestDto) {
         //получение entity organization
-        Organization organization = this.getOrganizationByIdFromRepository(organizationUpdateRequestDto.getId());
+        Organization organization = getOrganizationByIdFromRepository(organizationUpdateRequestDto.getId());
 
         //обновление данных у entity данными которые пришли
         organizationMapper.updateModel(organizationUpdateRequestDto, organization);
 
         //сохранение entity
-        organizationRepository.updateOrganization(organization);
+        organizationRepository.save(organization);
     }
 
     /**
@@ -96,25 +100,25 @@ public class OrganizationServiceImpl implements  OrganizationService{
         Organization organization = organizationMapper.toModel(organizationSaveRequestDto);
 
         //сохронение новой записи
-        organizationRepository.saveOrganization(organization);
+        organizationRepository.save(organization);
     }
 
     /**
-     * {@link OrganizationService#getOrganizationByIdFromRepository(int)}
+     * {@link OrganizationService#getOrganizationByIdFromRepository(Integer)}
      * @param id
      * @throws NoSuchObjectException ("Нет организации с id = " + id)
      * @return
      */
     @Override
     @Transactional
-    public Organization getOrganizationByIdFromRepository(int id) {
+    public Organization getOrganizationByIdFromRepository(Integer id) {
         //Получение организации
-        Organization organization = organizationRepository.getOrganizationById(id);
+        Optional<Organization> organizationOptional = organizationRepository.findById(id);
 
-        if (organization == null){
+        if (organizationOptional.isEmpty()){
             throw new NoSuchObjectException("Нет организации с id = " + id);
         }
 
-        return organization;
+        return organizationOptional.get();
     }
 }
