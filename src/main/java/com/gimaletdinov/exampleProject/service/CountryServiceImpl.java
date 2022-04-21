@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Класс реализация интерфейса CountryService. Реализация методов получения данных с БД и преобразования данных в формат ответа
@@ -46,11 +47,11 @@ public class CountryServiceImpl implements CountryService {
      */
     @Override
     public Country getCountryById(int id) {
-        Country country = countryRepository.getById(id);
-        if (country.getId() == null){
+        Optional<Country> countryOptional = countryRepository.findById(id);
+        if (countryOptional.isEmpty()){
             throw new NoSuchObjectException("Нет страны с code = " + id);
         }
 
-        return country;
+        return countryOptional.get();
     }
 }

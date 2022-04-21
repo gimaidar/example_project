@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Класс реализация интерфейса DocumentTypeService. Реализация методов получения данных с БД и преобразования данных в формат ответа
@@ -44,10 +45,10 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
      */
     @Override
     public DocumentType getDocumentTypeById(int id) {
-        DocumentType documentType = documentTypeRepository.getById(id);
-        if (documentType == null){
+        Optional<DocumentType> documentTypeOptional = documentTypeRepository.findById(id) ;
+        if (documentTypeOptional.isEmpty()){
             throw new NoSuchObjectException("Нет типа документа с code = " + id);
         }
-        return documentType;
+        return documentTypeOptional.get();
     }
 }
