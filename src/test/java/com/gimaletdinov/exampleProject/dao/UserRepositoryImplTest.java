@@ -1,42 +1,26 @@
 package com.gimaletdinov.exampleProject.dao;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
-import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
-import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
-import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
-import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
-import com.gimaletdinov.exampleProject.model.Country;
-import com.gimaletdinov.exampleProject.model.Document;
-import com.gimaletdinov.exampleProject.model.DocumentType;
-import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_TYPE_ID;
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.getPopulateDocument;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.assertOfficesEquals;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_COUNTRY_ID;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_USER_ID;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.assertUsersEquals;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUser;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getUserForUpdate;
+import static com.gimaletdinov.exampleProject.dao.UserSpecification.userSpecification;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.assertUsersEquals;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUser;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getUserForUpdate;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class UserRepositoryImplTest {
 
-    private User newTestUser = getPopulateUser();
+    private User testUserInBD;
 
     @Autowired
     private UserRepository userRepository;
@@ -50,36 +34,34 @@ class UserRepositoryImplTest {
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
 
+    @BeforeEach
+    void saveTestUserInBD(){
+        testUserInBD = userRepository.save(getPopulateUser());
+    }
+
     @Test
     @Transactional
     void getAllUsersByPredicatByOfficeId() { //добавить с другими предикатами
-        Office office = officeRepository.getOfficeById(TEST_OFFICE_ID);
-
-        User newUser = new User();
-        newUser.setOffice(office);
-
-        List<User> usersFromBD = userRepository.getAllUsersByPredicat(newUser);
+        List<User> usersFromBD = userRepository.findAll(userSpecification(testUserInBD));
         assertFalse(usersFromBD.isEmpty());
         assertTrue(usersFromBD.size() == 1);
-        assertOfficesEquals(office, usersFromBD.get(0).getOffice());
+        assertUsersEquals(testUserInBD, usersFromBD.get(0));
     }
 
     @Test
     @Transactional
     void getUserById() {
-        User userFromBD = userRepository.getUserById(TEST_USER_ID);
+        User userFromBD = userRepository.findById(testUserInBD.getId()).get();
         assertNotNull(userFromBD);
-        assertUsersEquals(newTestUser, userFromBD);
+        assertUsersEquals(testUserInBD, userFromBD);
     }
 
     @Test
     @Transactional
     void updateUser() {
-        User user = userRepository.getUserById(TEST_USER_ID);
-        User userForUpdate = getUserForUpdate(user);
+        User userForUpdate = getUserForUpdate(testUserInBD);
 
-        userRepository.updateUser(userForUpdate);
-        User updatedUser = userRepository.getUserById(TEST_USER_ID  );
+        User updatedUser = userRepository.save(userForUpdate);
 
         assertNotNull(updatedUser);
         assertUsersEquals(userForUpdate, updatedUser);
@@ -88,24 +70,12 @@ class UserRepositoryImplTest {
     @Test
     @Transactional
     void saveUser() {
-        Office office = officeRepository.getOfficeById(TEST_OFFICE_ID);
 
-        Country country = countryRepository.getById(TEST_COUNTRY_ID);
-        DocumentType documentType = documentTypeRepository.getById(TEST_DOCUMENT_TYPE_ID);
+        User userForSave = getPopulateUser();
 
-        Document document = getPopulateDocument();
-        document.setDocumentType(documentType);
-
-        User newUser = getPopulateUser();
-        document.setUser(newUser);
-        newUser.setOffice(office);
-        newUser.setDocument(document);
-        newUser.setCountry(country);
-
-        userRepository.saveUser(newUser);
-        User savedUser = userRepository.getUserById(TEST_USER_ID + 1);
+        User savedUser = userRepository.save(userForSave);
 
         assertNotNull(savedUser);
-        assertUsersEquals(newUser, savedUser);
+        assertUsersEquals(userForSave, savedUser);
     }
 }
