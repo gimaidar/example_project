@@ -57,10 +57,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<UserListResponseDto> getAllUsersByPredicat(UserListRequestDto userListRequestDto) {
+        officeService.getOfficeByIdFromRepository(userListRequestDto.getOfficeId());
+        countryService.getCountryById(userListRequestDto.getCountryCode());
+        documentTypeService.getDocumentTypeById(userListRequestDto.getDocCode());
 
-        User user = userMapper.toModel(userListRequestDto);
-
-        List<User> userList = userRepository.findAll(userSpecification(user));
+        List<User> userList = userRepository.findAll(userSpecification(userListRequestDto));
 
         if (userList.isEmpty()){
             throw new NoSuchObjectException("Нет пользователей с такими параметрами.");
