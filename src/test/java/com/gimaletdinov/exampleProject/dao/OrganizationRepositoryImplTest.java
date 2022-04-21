@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationListRequestDto;
 import static com.gimaletdinov.exampleProject.dao.OrganizationSpecification.organizationSpecification;
 import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.assertOrganizationsEquals;
 import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getOrganizationForUpdate;
@@ -35,7 +37,7 @@ class OrganizationRepositoryImplTest {
     @Test
     @Transactional
     void getAllOrganizationsByPredicat() {
-        Organization findOrganization = getPopulateOrganization();
+        OrganizationListRequestDto findOrganization = getPopulateOrganizationListRequestDto();
         List<Organization> organizationsFromBD = organizationRepository.findAll(organizationSpecification(findOrganization));
         assertFalse(organizationsFromBD.isEmpty());
         assertTrue(organizationsFromBD.size() == 1);

@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUserListRequestDto;
 import static com.gimaletdinov.exampleProject.dao.UserSpecification.userSpecification;
 import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.assertUsersEquals;
 import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUser;
@@ -42,7 +44,8 @@ class UserRepositoryImplTest {
     @Test
     @Transactional
     void getAllUsersByPredicatByOfficeId() { //добавить с другими предикатами
-        List<User> usersFromBD = userRepository.findAll(userSpecification(testUserInBD));
+        UserListRequestDto userListRequestDto = getPopulateUserListRequestDto();
+        List<User> usersFromBD = userRepository.findAll(userSpecification(userListRequestDto));
         assertFalse(usersFromBD.isEmpty());
         assertTrue(usersFromBD.size() == 1);
         assertUsersEquals(testUserInBD, usersFromBD.get(0));

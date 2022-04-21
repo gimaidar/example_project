@@ -49,12 +49,8 @@ public class OfficeServiceImpl implements OfficeService {
         //Создание организации для добавления в атрибуты офиса
         Organization organization = organizationService.getOrganizationByIdFromRepository(officeListRequestDto.getOrgId());
 
-        Office office = officeMapper.toModel(officeListRequestDto);
-        office.setOrganization(organization);
-
-
         //Получение списка офисов
-        List<Office> officeList = officeRepository.findAll(officeSpecification(office));
+        List<Office> officeList = officeRepository.findAll(officeSpecification(officeListRequestDto));
 
         if (officeList.isEmpty()){
             throw new NoSuchObjectException("Нет офисов с такими параметрами.");

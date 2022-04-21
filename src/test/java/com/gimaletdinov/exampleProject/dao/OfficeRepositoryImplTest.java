@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOfficeListRequestDto;
 import static com.gimaletdinov.exampleProject.dao.OfficeSpecification.officeSpecification;
 import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.assertOfficesEquals;
 import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getOfficeForUpdate;
@@ -37,7 +39,8 @@ class OfficeRepositoryImplTest {
     @Test
     @Transactional
     void getAllOfficesByPredicat() {
-        List<Office> officesFtomBD = officeRepository.findAll(officeSpecification(testOfficeInBD));
+        OfficeListRequestDto officeListRequestDto = getPopulateOfficeListRequestDto();
+        List<Office> officesFtomBD = officeRepository.findAll(officeSpecification(officeListRequestDto));
         assertFalse(officesFtomBD.isEmpty());
         assertTrue(officesFtomBD.size() == 1);
         assertOfficesEquals(testOfficeInBD, officesFtomBD.get(0));

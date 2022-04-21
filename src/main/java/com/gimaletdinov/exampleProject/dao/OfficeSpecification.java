@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -20,13 +21,13 @@ public class OfficeSpecification {
      * @param findOffice
      * @return
      */
-    public static Specification<Office> officeSpecification(Office findOffice){
+    public static Specification<Office> officeSpecification(OfficeListRequestDto findOffice){
         return new Specification<Office>() {
             @Override
             public Predicate toPredicate(Root<Office> officeRoot, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
                 //orgId
-                predicates.add(criteriaBuilder.equal(officeRoot.get("organization"), findOffice.getOrganization()));
+                predicates.add(criteriaBuilder.equal(officeRoot.get("organization").get("id"), findOffice.getOrgId()));
 
                 //name
                 if (findOffice.getName() != null) {

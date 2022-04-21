@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -20,7 +21,7 @@ public class OrganizationSpecification {
      * @param findOrganization
      * @return
      */
-    public static Specification<Organization> organizationSpecification(Organization findOrganization){
+    public static Specification<Organization> organizationSpecification(OrganizationListRequestDto findOrganization){
         return new Specification<Organization>() {
             @Override
             public Predicate toPredicate(Root<Organization> organizationRoot, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {

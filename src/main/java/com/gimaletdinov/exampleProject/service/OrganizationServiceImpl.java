@@ -42,8 +42,7 @@ public class OrganizationServiceImpl implements  OrganizationService{
     @Transactional
     public List<OrganizationListResponseDto> getAllOrganizationsByPredicat(OrganizationListRequestDto organizationListRequestDto) {
         //Получение списка организаций
-        Organization findOrganization = organizationMapper.toModel(organizationListRequestDto);
-        List<Organization> organizationList = organizationRepository.findAll(organizationSpecification(findOrganization));
+        List<Organization> organizationList = organizationRepository.findAll(organizationSpecification(organizationListRequestDto));
 
         if (organizationList.isEmpty()){
             throw new NoSuchObjectException("Нет организаций с такими параметрами.");

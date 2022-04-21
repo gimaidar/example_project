@@ -1,5 +1,6 @@
 package com.gimaletdinov.exampleProject.dao;
 
+import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -20,13 +21,13 @@ public class UserSpecification {
      * @param findUser
      * @return
      */
-    public static Specification<User> userSpecification(User findUser){
+    public static Specification<User> userSpecification(UserListRequestDto findUser){
         return new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> userRoot, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
                 //officeId
-                predicates.add(criteriaBuilder.equal(userRoot.get("office").get("id"), findUser.getOffice().getId()));
+                predicates.add(criteriaBuilder.equal(userRoot.get("office").get("id"), findUser.getOfficeId()));
 
                 //firstName
                 if (findUser.getFirstName() != null) {
@@ -49,13 +50,13 @@ public class UserSpecification {
                 }
 
                 //countryCode
-                if ((findUser.getCountry() != null) && (findUser.getCountry().getId()) != null) {
-                    predicates.add(criteriaBuilder.equal(userRoot.get("country").get("id"), findUser.getCountry().getId()));
+                if (findUser.getCountryCode() != null) {
+                    predicates.add(criteriaBuilder.equal(userRoot.get("country").get("id"), findUser.getCountryCode()));
                 }
 
                 //docCode
-                if ((findUser.getDocument() != null) && (findUser.getDocument().getDocumentType() != null) && (findUser.getDocument().getDocumentType().getId() != null)) {
-                    predicates.add(criteriaBuilder.equal(userRoot.get("document").get("documentType").get("id"), findUser.getDocument().getDocumentType().getId()));
+                if (findUser.getDocCode() != null) {
+                    predicates.add(criteriaBuilder.equal(userRoot.get("document").get("documentType").get("id"), findUser.getDocCode()));
                 }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
