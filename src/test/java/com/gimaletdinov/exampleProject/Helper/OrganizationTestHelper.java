@@ -1,4 +1,4 @@
-package com.gimaletdinov.exampleProject.dao;
+package com.gimaletdinov.exampleProject.Helper;
 
 import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
@@ -29,7 +29,7 @@ public class OrganizationTestHelper {
     private final static String TEST_UPDATED_ORG_INN = "1111111111";
     private final static String TEST_UPDATED_ORG_KPP = "2222222222";
     private final static String TEST_UPDATED_ORG_ADDRESS = "test_updated_org_address";
-    private final static String TEST_UPDATED_ORG_PHONE = "333333333333";
+    private final static String TEST_UPDATED_ORG_PHONE = "33333333333";
     private final static boolean TEST_UPDATED_ORG_IS_ACTIVE = true;
 
     public static Organization getPopulateOrganization() {
