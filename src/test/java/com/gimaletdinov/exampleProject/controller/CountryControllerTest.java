@@ -2,7 +2,6 @@ package com.gimaletdinov.exampleProject.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectDataResponseDto;
 import com.gimaletdinov.exampleProject.service.CountryService;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.getPopulateDocumentTypeListResponseDtoList;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateCountryListResponseDto;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateCountryListResponseDto;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

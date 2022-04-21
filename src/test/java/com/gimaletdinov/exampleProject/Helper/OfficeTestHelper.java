@@ -1,4 +1,4 @@
-package com.gimaletdinov.exampleProject.dao;
+package com.gimaletdinov.exampleProject.Helper;
 
 import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
@@ -11,8 +11,8 @@ import com.gimaletdinov.exampleProject.model.Organization;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.TEST_ORG_ID;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganization;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 

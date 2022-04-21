@@ -4,23 +4,21 @@ import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static com.gimaletdinov.exampleProject.dao.OrganizationSpecification.organizationSpecification;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.assertOrganizationsEquals;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getOrganizationForUpdate;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.assertOrganizationsEquals;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getOrganizationForUpdate;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganization;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class OrganizationRepositoryImplTest {
 
@@ -45,6 +43,7 @@ class OrganizationRepositoryImplTest {
     }
 
     @Test
+    @Transactional
     void getOrganizationById() {
         Organization organizationFromBD = organizationRepository.findById(testOrganizationInBD.getId()).get();
         assertNotNull(organizationFromBD);
@@ -52,6 +51,7 @@ class OrganizationRepositoryImplTest {
     }
 
     @Test
+    @Transactional
     void updateOrganization() {
         Organization organizationForUpdate = getOrganizationForUpdate(testOrganizationInBD);
 
@@ -62,6 +62,7 @@ class OrganizationRepositoryImplTest {
     }
 
     @Test
+    @Transactional
     void saveOrganization() {
         Organization organizationForSave = getPopulateOrganization();
         Organization savedOrganization = organizationRepository.save(organizationForSave);

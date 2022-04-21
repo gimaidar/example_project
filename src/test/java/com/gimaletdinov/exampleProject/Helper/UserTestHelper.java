@@ -1,4 +1,4 @@
-package com.gimaletdinov.exampleProject.dao;
+package com.gimaletdinov.exampleProject.Helper;
 
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
@@ -13,12 +13,12 @@ import com.gimaletdinov.exampleProject.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_DATE;
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_NAME;
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_NUMBER;
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.TEST_DOCUMENT_TYPE_ID;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_UPDATED_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.TEST_DOCUMENT_DATE;
+import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.TEST_DOCUMENT_NAME;
+import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.TEST_DOCUMENT_NUMBER;
+import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.TEST_DOCUMENT_TYPE_ID;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOffice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -51,6 +51,12 @@ public class UserTestHelper {
         user.setPosition(TEST_USER_POSITION);
         user.setPhone(TEST_USER_PHONE);
         user.setIsIdentified(TEST_USER_IS_IDENTIFIED);
+
+        Office office = getPopulateOffice();
+        user.setOffice(office);
+
+        Country country = getPopulateCountry();
+        user.setCountry(country);
         return user;
     }
 

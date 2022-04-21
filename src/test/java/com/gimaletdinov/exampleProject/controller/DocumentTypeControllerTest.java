@@ -1,11 +1,8 @@
 package com.gimaletdinov.exampleProject.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectDataResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.service.DocumentTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.DocumentTestHelper.getPopulateDocumentTypeListResponseDtoList;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserListRequestDto;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserListResponseDtoList;
+import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.getPopulateDocumentTypeListResponseDtoList;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

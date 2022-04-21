@@ -1,16 +1,11 @@
 package com.gimaletdinov.exampleProject.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
-import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
-import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectDataResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectSuccessResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.OfficeResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserResponseDto;
 import com.gimaletdinov.exampleProject.service.UserService;
@@ -23,18 +18,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeListRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeListResponseDtoList;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeResponseDto;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeSaveRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeUpdateRequestDto;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_USER_ID;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserListRequestDto;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserListResponseDtoList;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserResponseDto;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserSaveRequestDto;
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.getPopulateUserUpdateRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.TEST_USER_ID;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUserListRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUserListResponseDtoList;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUserResponseDto;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUserSaveRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateUserUpdateRequestDto;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

@@ -1,15 +1,13 @@
-package com.gimaletdinov.exampleProject.dao;
+package com.gimaletdinov.exampleProject.Helper;
 
 import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Document;
 import com.gimaletdinov.exampleProject.model.DocumentType;
-import com.gimaletdinov.exampleProject.model.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gimaletdinov.exampleProject.dao.UserTestHelper.TEST_USER_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
