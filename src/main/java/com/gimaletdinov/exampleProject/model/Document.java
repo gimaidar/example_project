@@ -1,6 +1,7 @@
 package com.gimaletdinov.exampleProject.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 @Table(name = "Document")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "user")
 public class Document {
 
     @Id
