@@ -13,18 +13,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.TEST_OFFICE_ID;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOffice;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeListRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeSaveRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OfficeTestHelper.getPopulateOfficeUpdateRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.TEST_OFFICE_ID;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOffice;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOfficeListRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOfficeSaveRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOfficeUpdateRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganization;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -62,7 +64,7 @@ class OfficeServiceImplTest {
         testOfficeList.add(newTestOffice);
 
         OfficeListRequestDto officeListRequestDto = getPopulateOfficeListRequestDto();
-        when(officeRepository.getAllOfficesByPredicat(any())).thenReturn(testOfficeList);
+        when(officeRepository.findAll((Specification) any())).thenReturn(testOfficeList);
         when(organizationService.getOrganizationByIdFromRepository(officeListRequestDto.getOrgId())).thenReturn(newTestOrganization);
 
         //When
@@ -71,7 +73,7 @@ class OfficeServiceImplTest {
         //Then
         Office officeInService = officeMapper.toModel(officeListRequestDto);
         officeInService.setOrganization(newTestOrganization);
-        verify(officeRepository).getAllOfficesByPredicat(officeInService);
+        verify(officeRepository).findAll((Specification) any());
 
         assertFalse(officeListResponseDtoFromRepository.isEmpty());
         assertEquals(newTestOffice.getId() , officeListResponseDtoFromRepository.get(0).getId());
@@ -90,14 +92,14 @@ class OfficeServiceImplTest {
         Office newOffice = getPopulateOffice();
 
         //Given
-        when(officeRepository.getOfficeById(TEST_OFFICE_ID)).thenReturn(newOffice);
+        when(officeRepository.findById(TEST_OFFICE_ID)).thenReturn(Optional.ofNullable(newOffice));
 
         //When
         officeService.updateOffice(requestDto);
 
         //Then
         officeMapper.updateModel(requestDto, newOffice);
-        verify(officeRepository).updateOffice(newOffice);
+        verify(officeRepository).save(newOffice);
     }
 
     @Test
@@ -107,6 +109,7 @@ class OfficeServiceImplTest {
 
         //Given
         when(organizationService.getOrganizationByIdFromRepository(officeSaveRequestDto.getOrgId())).thenReturn(newTestOrganization);
+        when(officeRepository.save(newTestOffice)).thenReturn(newTestOffice);
 
         //When
         officeService.saveOffice(officeSaveRequestDto);
@@ -114,20 +117,20 @@ class OfficeServiceImplTest {
         //Then
         Office officeInService = officeMapper.toModel(officeSaveRequestDto);
         officeInService.setOrganization(newTestOrganization);
-        verify(officeRepository).saveOffice(officeInService);
+        verify(officeRepository).save(officeInService);
     }
 
     @Test
     @Transactional
     void getOfficeByIdFromRepository() {
         //Given
-        when(officeRepository.getOfficeById(TEST_OFFICE_ID)).thenReturn(newTestOffice);
+        when(officeRepository.findById(TEST_OFFICE_ID)).thenReturn(Optional.ofNullable(newTestOffice));
 
         //When
         Office officeFromService = officeService.getOfficeByIdFromRepository(TEST_OFFICE_ID);
 
         //Then
-        verify(officeRepository).getOfficeById(TEST_OFFICE_ID);
+        verify(officeRepository).findById(TEST_OFFICE_ID);
         assertNotNull(officeFromService);
         assertEquals(officeFromService, officeFromService);
         }
