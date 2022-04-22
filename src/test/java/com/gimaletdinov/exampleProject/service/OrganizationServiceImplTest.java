@@ -11,24 +11,27 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.TEST_ORG_ID;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.assertOrganizationsEquals;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganization;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationListRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationSaveRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OrganizationTestHelper.getPopulateOrganizationUpdateRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.TEST_ORG_ID;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.assertOrganizationsEquals;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganization;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationListRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationSaveRequestDto;
+import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationUpdateRequestDto;
+import static com.gimaletdinov.exampleProject.dao.OrganizationSpecification.organizationSpecification;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
@@ -53,13 +56,13 @@ class OrganizationServiceImplTest {
         testOrganizationList.add(newTestOrganization);
         //Given
         OrganizationListRequestDto organizationListRequestDto = getPopulateOrganizationListRequestDto();
-        when(organizationRepository.getAllOrganizationsByPredicat(organizationMapper.toModel(organizationListRequestDto))).thenReturn(testOrganizationList);
+        when(organizationRepository.findAll((Specification) any())).thenReturn(testOrganizationList);
 
         //When
         List<OrganizationListResponseDto> organizationListResponseDtoFromService = organizationService.getAllOrganizationsByPredicat(organizationListRequestDto);
 
         //Then
-        verify(organizationRepository).getAllOrganizationsByPredicat(organizationMapper.toModel(organizationListRequestDto));
+        verify(organizationRepository).findAll((Specification) any());
         assertFalse(organizationListResponseDtoFromService.isEmpty());
         assertEquals(newTestOrganization.getId() , organizationListResponseDtoFromService.get(0).getId());
     }
@@ -73,15 +76,18 @@ class OrganizationServiceImplTest {
     @Transactional
     void updateOrganization() {
         //Given
+        Organization organizationForUpdate = getPopulateOrganization();
+        when(organizationRepository.findById(TEST_ORG_ID)).thenReturn(Optional.ofNullable(organizationForUpdate));
+
         OrganizationUpdateRequestDto organizationUpdateRequestDto = getPopulateOrganizationUpdateRequestDto();
-        Organization organization = getPopulateOrganization();
-        when(organizationRepository.getOrganizationById(TEST_ORG_ID)).thenReturn(organization);
+        organizationMapper.updateModel(organizationUpdateRequestDto, organizationForUpdate);
+        when(organizationRepository.save(organizationForUpdate)).thenReturn(organizationForUpdate);
 
         //When
         organizationService.updateOrganization(organizationUpdateRequestDto);
 
         //Then
-        verify(organizationRepository).updateOrganization(organization);
+        verify(organizationRepository).save(organizationForUpdate);
     }
 
     @Test
@@ -89,25 +95,26 @@ class OrganizationServiceImplTest {
     void saveOrganization() {
         //Given
         OrganizationSaveRequestDto organizationSaveRequestDto = getPopulateOrganizationSaveRequestDto();
+        when(organizationRepository.save(any())).thenReturn(newTestOrganization);
 
         //When
         organizationService.saveOrganization(organizationSaveRequestDto);
 
         //Then
-        verify(organizationRepository).saveOrganization(organizationMapper.toModel(organizationSaveRequestDto));
+        verify(organizationRepository).save(organizationMapper.toModel(organizationSaveRequestDto));
     }
 
     @Test
     @Transactional
     void getOrganizationByIdFromRepository() {
         //Given
-        when(organizationRepository.getOrganizationById(TEST_ORG_ID)).thenReturn(newTestOrganization);
+        when(organizationRepository.findById(TEST_ORG_ID)).thenReturn(Optional.ofNullable(newTestOrganization));
 
         //When
         Organization organizationFromService = organizationService.getOrganizationByIdFromRepository(TEST_ORG_ID);
 
         //Then
-        verify(organizationRepository).getOrganizationById(TEST_ORG_ID);
+        verify(organizationRepository).findById(TEST_ORG_ID);
         assertNotNull(organizationFromService);
         assertOrganizationsEquals(newTestOrganization, organizationFromService);
     }
