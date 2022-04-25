@@ -9,5 +9,5 @@ import java.util.List;
 /**
  * Интерфейс репозитория для сущности Организация
  */
-public interface OrganizationRepository extends JpaRepository<Organization, Integer>, JpaSpecificationExecutor {
+public interface OrganizationRepository extends JpaRepository<Organization, Integer>, JpaSpecificationExecutor<Organization> {
 }
