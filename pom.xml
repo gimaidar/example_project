@@ -19,7 +19,6 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <lombok.version>1.18.20</lombok.version>
-        <javax-validation.version>2.0.1.Final</javax-validation.version>
         <liquibase.version>4.6.2</liquibase.version>
 
     </properties>
@@ -27,13 +26,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -50,12 +42,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${javax-validation.version}</version>
         </dependency>
 
         <dependency>
@@ -107,6 +93,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
             </plugin>
 
             <plugin>
