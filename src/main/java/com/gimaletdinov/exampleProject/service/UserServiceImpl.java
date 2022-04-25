@@ -1,8 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
-import com.gimaletdinov.exampleProject.dao.DocumentRepository;
-import com.gimaletdinov.exampleProject.dao.DocumentTypeRepository;
 import com.gimaletdinov.exampleProject.dao.UserRepository;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
@@ -58,8 +56,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<UserListResponseDto> getAllUsersByPredicat(UserListRequestDto userListRequestDto) {
         officeService.getOfficeByIdFromRepository(userListRequestDto.getOfficeId());
-        countryService.getCountryById(userListRequestDto.getCountryCode());
-        documentTypeService.getDocumentTypeById(userListRequestDto.getDocCode());
+        countryService.getCountryByCode(userListRequestDto.getCountryCode());
+        documentTypeService.getDocumentTypeByCode(userListRequestDto.getDocCode());
 
         List<User> userList = userRepository.findAll(userSpecification(userListRequestDto));
 
@@ -98,10 +96,10 @@ public class UserServiceImpl implements UserService {
 
         userMapper.updateModel(userUpdateRequestDto, user);
 
-        Office office = officeService.getOfficeByIdFromRepository(userUpdateRequestDto.getId());
+        Office office = officeService.getOfficeByIdFromRepository(userUpdateRequestDto.getOfficeId());
         user.setOffice(office);
 
-        Country country = countryService.getCountryById(userUpdateRequestDto.getCountryCode());
+        Country country = countryService.getCountryByCode(userUpdateRequestDto.getCountryCode());
         user.setCountry(country);
 
         userRepository.save(user);
@@ -121,10 +119,10 @@ public class UserServiceImpl implements UserService {
         Office office = officeService.getOfficeByIdFromRepository(userSaveRequestDto.getOfficeId());
         user.setOffice(office);
 
-        Country country = countryService.getCountryById(userSaveRequestDto.getCountryCode());
+        Country country = countryService.getCountryByCode(userSaveRequestDto.getCountryCode());
         user.setCountry(country);
 
-        DocumentType documentType = documentTypeService.getDocumentTypeById(userSaveRequestDto.getDocCode());
+        DocumentType documentType = documentTypeService.getDocumentTypeByCode(userSaveRequestDto.getDocCode());
         Document document = user.getDocument();
         document.setDocumentType(documentType);
         document.setUser(user);

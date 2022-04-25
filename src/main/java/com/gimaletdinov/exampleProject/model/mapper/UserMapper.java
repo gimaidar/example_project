@@ -29,9 +29,9 @@ public interface UserMapper {
     @Mapping(source = "officeId", target = "office.id")
     @Mapping(source = "docNumber", target = "document.number")
     @Mapping(source = "docDate", target = "document.date")
-    @Mapping(source = "docCode", target = "document.documentType.id")
+    @Mapping(source = "docCode", target = "document.documentType.code")
     @Mapping(source = "docName", target = "document.documentType.name")
-    @Mapping(source = "countryCode", target = "country.id")
+    @Mapping(source = "countryCode", target = "country.code")
     User toModel(UserSaveRequestDto userSaveRequestDto);
 
     /**
@@ -40,8 +40,8 @@ public interface UserMapper {
      * @return User
      */
     @Mapping(source = "officeId", target = "office.id")
-    @Mapping(source = "docCode", target = "document.documentType.id")
-    @Mapping(source = "countryCode", target = "country.id")
+    @Mapping(source = "docCode", target = "document.documentType.code")
+    @Mapping(source = "countryCode", target = "country.code")
     User toModel(UserListRequestDto userListRequestDto);
 
     /**
@@ -53,7 +53,7 @@ public interface UserMapper {
     @Mapping(source = "document.number", target = "docNumber")
     @Mapping(source = "document.date", target = "docDate")
     @Mapping(source = "document.documentType.name", target = "docName")
-    @Mapping(source = "country.id", target = "countryCode")
+    @Mapping(source = "country.code", target = "countryCode")
     @Mapping(source = "country.name", target = "countryName")
     UserResponseDto toResponseDto(User user);
 
@@ -66,7 +66,7 @@ public interface UserMapper {
     @Mapping(source = "docNumber", target = "document.number")
     @Mapping(source = "docDate", target = "document.date")
     @Mapping(source = "docName", target = "document.documentType.name")
-    @Mapping(source = "countryCode", target = "country.id")
+    @Mapping(source = "countryCode", target = "country.code")
     void updateModel(UserUpdateRequestDto userUpdateRequestDto, @MappingTarget User user);
 
     /**

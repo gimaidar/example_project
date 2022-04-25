@@ -51,12 +51,12 @@ public class UserSpecification {
 
                 //countryCode
                 if (findUser.getCountryCode() != null) {
-                    predicates.add(criteriaBuilder.equal(userRoot.get("country").get("id"), findUser.getCountryCode()));
+                    predicates.add(criteriaBuilder.equal(userRoot.get("country").get("code"), findUser.getCountryCode()));
                 }
 
                 //docCode
                 if (findUser.getDocCode() != null) {
-                    predicates.add(criteriaBuilder.equal(userRoot.get("document").get("documentType").get("id"), findUser.getDocCode()));
+                    predicates.add(criteriaBuilder.equal(userRoot.get("document").get("documentType").get("code"), findUser.getDocCode()));
                 }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }

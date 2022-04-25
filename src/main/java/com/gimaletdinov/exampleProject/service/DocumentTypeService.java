@@ -17,9 +17,9 @@ public interface DocumentTypeService {
     List<DocumentTypeListResponseDto> getAllDocumentTypes();
 
     /**
-     * Метод для получения типа документа по id
-     * @param id
+     * Метод для получения типа документа по code
+     * @param code
      * @return тип документа
      */
-    DocumentType getDocumentTypeById(int id);
+    DocumentType getDocumentTypeByCode(String code);
 }

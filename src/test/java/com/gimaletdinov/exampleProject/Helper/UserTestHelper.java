@@ -32,7 +32,7 @@ public class UserTestHelper {
     private final static String TEST_USER_PHONE = "99999999999";
     private final static boolean TEST_USER_IS_IDENTIFIED = true;
 
-    public final static Integer TEST_COUNTRY_ID = 643;
+    public final static String TEST_COUNTRY_CODE = "643";
     public final static String TEST_COUNTRY_NAME = "Российская Федерация";
 
     private final static String TEST_UPDATED_USER_FIRST_NAME = "test_updared_user_first_name";
@@ -89,7 +89,7 @@ public class UserTestHelper {
         userListRequestDto.setMiddleName(TEST_USER_MIDDLE_NAME);
         userListRequestDto.setPosition(TEST_USER_POSITION);
         userListRequestDto.setDocCode(TEST_DOCUMENT_TYPE_ID);
-        userListRequestDto.setCountryCode(TEST_COUNTRY_ID);
+        userListRequestDto.setCountryCode(TEST_COUNTRY_CODE);
         return userListRequestDto;
     }
 
@@ -106,7 +106,7 @@ public class UserTestHelper {
         userUpdateRequestDto.setDocName(TEST_DOCUMENT_NAME);
         userUpdateRequestDto.setDocNumber(TEST_DOCUMENT_NUMBER);
         userUpdateRequestDto.setDocDate(TEST_DOCUMENT_DATE);
-        userUpdateRequestDto.setCountryCode(TEST_COUNTRY_ID);
+        userUpdateRequestDto.setCountryCode(TEST_COUNTRY_CODE);
         userUpdateRequestDto.setCountryName(TEST_COUNTRY_NAME);
         return userUpdateRequestDto;
     }
@@ -124,7 +124,7 @@ public class UserTestHelper {
         userSaveRequestDto.setDocName(TEST_DOCUMENT_NAME);
         userSaveRequestDto.setDocNumber(TEST_DOCUMENT_NUMBER);
         userSaveRequestDto.setDocDate(TEST_DOCUMENT_DATE);
-        userSaveRequestDto.setCountryCode(TEST_COUNTRY_ID);
+        userSaveRequestDto.setCountryCode(TEST_COUNTRY_CODE);
         userSaveRequestDto.setCountryName(TEST_COUNTRY_NAME);
         return userSaveRequestDto;
     }
@@ -155,21 +155,21 @@ public class UserTestHelper {
         userResponseDto.setDocName(TEST_DOCUMENT_NAME);
         userResponseDto.setDocNumber(TEST_DOCUMENT_NUMBER);
         userResponseDto.setDocDate(TEST_DOCUMENT_DATE);
-        userResponseDto.setCountryCode(TEST_COUNTRY_ID);
+        userResponseDto.setCountryCode(TEST_COUNTRY_CODE);
         userResponseDto.setCountryName(TEST_COUNTRY_NAME);
         return userResponseDto;
     }
 
     public static Country getPopulateCountry(){
         Country country = new Country();
-        country.setId(TEST_COUNTRY_ID);
+        country.setCode(TEST_COUNTRY_CODE);
         country.setName(TEST_COUNTRY_NAME);
         return country;
     }
 
     public static List<CountryListResponseDto> getPopulateCountryListResponseDto(){
         CountryListResponseDto countryListResponseDto = new CountryListResponseDto();
-        countryListResponseDto.setCode(TEST_COUNTRY_ID);
+        countryListResponseDto.setCode(TEST_COUNTRY_CODE);
         countryListResponseDto.setName(TEST_COUNTRY_NAME);
 
         List<CountryListResponseDto> countryListResponseDtoList = new ArrayList<>();

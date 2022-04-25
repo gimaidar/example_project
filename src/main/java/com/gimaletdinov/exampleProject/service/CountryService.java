@@ -17,9 +17,9 @@ public interface CountryService {
     List<CountryListResponseDto> getAllCountries();
 
     /**
-     * Метод для получения страны по id
-     * @param id
+     * Метод для получения страны по code
+     * @param code
      * @return страна
      */
-    Country getCountryById(int id);
+    Country getCountryByCode(String code);
 }

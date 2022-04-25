@@ -9,5 +9,5 @@ public class DocumentTypeListResponseDto {
 
     private String name;
 
-    private Integer code;
+    private String code;
 }

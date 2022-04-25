@@ -39,17 +39,17 @@ public class CountryServiceImpl implements CountryService {
     }
 
     /**
-     * @see CountryService#getCountryById(int)
-     * @param id
+     * @see CountryService#getCountryByCode(String)
+     * @param code
      * @throws NoSuchObjectException ("Нет страны с code = " + id);
      * @return
      *
      */
     @Override
-    public Country getCountryById(int id) {
-        Optional<Country> countryOptional = countryRepository.findById(id);
+    public Country getCountryByCode(String code) {
+        Optional<Country> countryOptional = countryRepository.findByCode(code);
         if (countryOptional.isEmpty()){
-            throw new NoSuchObjectException("Нет страны с code = " + id);
+            throw new NoSuchObjectException("Нет страны с code = " + code);
         }
 
         return countryOptional.get();

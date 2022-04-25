@@ -41,5 +41,5 @@ public class UserUpdateRequestDto {
 
     private String countryName;
 
-    private Integer countryCode;
+    private String countryCode;
 }

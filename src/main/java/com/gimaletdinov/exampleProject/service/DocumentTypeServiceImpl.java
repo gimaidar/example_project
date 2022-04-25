@@ -39,15 +39,16 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     }
 
     /**
-     * @see DocumentTypeService#getDocumentTypeById(int)
+     * @see DocumentTypeService#getDocumentTypeByCode(String)
      * @throws NoSuchObjectException ("Нет типа документа с code = " + id)
      * @return
+     * @param code
      */
     @Override
-    public DocumentType getDocumentTypeById(int id) {
-        Optional<DocumentType> documentTypeOptional = documentTypeRepository.findById(id) ;
+    public DocumentType getDocumentTypeByCode(String code) {
+        Optional<DocumentType> documentTypeOptional = documentTypeRepository.findByCode(code) ;
         if (documentTypeOptional.isEmpty()){
-            throw new NoSuchObjectException("Нет типа документа с code = " + id);
+            throw new NoSuchObjectException("Нет типа документа с code = " + code);
         }
         return documentTypeOptional.get();
     }

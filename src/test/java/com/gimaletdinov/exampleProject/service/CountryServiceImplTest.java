@@ -1,11 +1,8 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.CountryRepository;
 import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
-import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
-import com.gimaletdinov.exampleProject.model.DocumentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,12 +10,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.TEST_COUNTRY_ID;
+import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.TEST_COUNTRY_CODE;
 import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateCountry;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -55,13 +51,13 @@ class CountryServiceImplTest {
     @Transactional
     void getCountryById() {
         //Given
-        when(countryRepository.findById(TEST_COUNTRY_ID)).thenReturn(Optional.ofNullable(newTestCountry));
+        when(countryRepository.findByCode(TEST_COUNTRY_CODE)).thenReturn(Optional.ofNullable(newTestCountry));
 
         //When
-        Country countryFromService = countryService.getCountryById(TEST_COUNTRY_ID);
+        Country countryFromService = countryService.getCountryByCode(TEST_COUNTRY_CODE);
 
         //Then
-        assertEquals(TEST_COUNTRY_ID, countryFromService.getId());
+        assertEquals(TEST_COUNTRY_CODE, countryFromService.getId());
         assertNotNull(countryFromService);
     }
 }

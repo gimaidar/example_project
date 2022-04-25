@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.TEST_DOCUMENT_TYPE_ID;
 import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.getPopulateDocumentType;
-import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.getPopulateDocumentTypeListResponseDtoList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -52,10 +51,10 @@ class DocumentTypeServiceImplTest {
     @Transactional
     void getDocumentTypeById() {
         //Given
-        when(documentTypeRepository.findById(TEST_DOCUMENT_TYPE_ID)).thenReturn(Optional.ofNullable(newTestDocumaentType));
+        when(documentTypeRepository.findByCode(TEST_DOCUMENT_TYPE_ID)).thenReturn(Optional.ofNullable(newTestDocumaentType));
 
         //When
-        DocumentType documentTypeFromService = documentTypeService.getDocumentTypeById(TEST_DOCUMENT_TYPE_ID);
+        DocumentType documentTypeFromService = documentTypeService.getDocumentTypeByCode(TEST_DOCUMENT_TYPE_ID);
 
         //Then
         assertEquals(TEST_DOCUMENT_TYPE_ID, documentTypeFromService.getId());

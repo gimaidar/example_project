@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DocumentTestHelper {
     // Проверь файл data.sql данные должны совпадать
-        public final static Integer TEST_DOCUMENT_TYPE_ID = 21;
+        public final static String TEST_DOCUMENT_TYPE_ID = "21";
 
     public final static String TEST_DOCUMENT_NAME = "Паспорт";
 
@@ -29,7 +29,7 @@ public class DocumentTestHelper {
 
     public static DocumentType getPopulateDocumentType() {
         DocumentType documentType = new DocumentType();
-        documentType.setId(TEST_DOCUMENT_TYPE_ID);
+        documentType.setCode(TEST_DOCUMENT_TYPE_ID);
         documentType.setName(TEST_DOCUMENT_NAME);
         return documentType;
     }

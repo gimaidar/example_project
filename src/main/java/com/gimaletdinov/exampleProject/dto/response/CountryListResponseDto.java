@@ -9,5 +9,5 @@ public class CountryListResponseDto {
 
     private String name;
 
-    private Integer code;
+    private String code;
 }

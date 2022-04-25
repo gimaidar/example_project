@@ -31,7 +31,7 @@ public class UserSaveRequestDto {
 
     private Boolean isIdentified;
 
-    private Integer docCode;
+    private String docCode;
 
     private String docName;
 
@@ -41,5 +41,5 @@ public class UserSaveRequestDto {
 
     private String countryName;
 
-    private Integer countryCode;
+    private String countryCode;
 }

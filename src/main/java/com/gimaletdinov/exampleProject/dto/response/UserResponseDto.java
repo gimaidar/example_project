@@ -35,5 +35,5 @@ public class UserResponseDto {
 
     private String countryName;
 
-    private Integer countryCode;
+    private String countryCode;
 }

@@ -22,7 +22,7 @@ public class UserListRequestDto {
 
     private Integer position;
 
-    private Integer docCode;
+    private String docCode;
 
-    private Integer countryCode;
+    private String countryCode;
 }

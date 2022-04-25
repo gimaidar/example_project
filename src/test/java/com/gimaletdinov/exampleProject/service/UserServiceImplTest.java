@@ -1,6 +1,5 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.UserRepository;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
@@ -12,23 +11,19 @@ import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
 import com.gimaletdinov.exampleProject.model.mapper.UserMapper;
-import liquibase.pro.packaged.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.gimaletdinov.exampleProject.Helper.DocumentTestHelper.getPopulateDocumentType;
-import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.TEST_OFFICE_ID;
 import static com.gimaletdinov.exampleProject.Helper.OfficeTestHelper.getPopulateOffice;
 import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.TEST_USER_ID;
 import static com.gimaletdinov.exampleProject.Helper.UserTestHelper.getPopulateCountry;
@@ -78,8 +73,8 @@ class UserServiceImplTest {
         UserListRequestDto userListRequestDto = getPopulateUserListRequestDto();
         when(userRepository.findAll((Specification) any())).thenReturn(testUsetList);
         when(officeService.getOfficeByIdFromRepository(userListRequestDto.getOfficeId())).thenReturn(null);
-        when(countryService.getCountryById(userListRequestDto.getCountryCode())).thenReturn(null);
-        when(documentTypeService.getDocumentTypeById(userListRequestDto.getDocCode())).thenReturn(null);
+        when(countryService.getCountryByCode(userListRequestDto.getCountryCode())).thenReturn(null);
+        when(documentTypeService.getDocumentTypeByCode(userListRequestDto.getDocCode())).thenReturn(null);
 
 
         //When
@@ -105,7 +100,7 @@ class UserServiceImplTest {
         User newUser = getPopulateUser();
         when(userRepository.findById(userUpdateRequestDto.getId())).thenReturn(Optional.of(newUser));
         when(officeService.getOfficeByIdFromRepository(userUpdateRequestDto.getOfficeId())).thenReturn(newOffice);
-        when(countryService.getCountryById(userUpdateRequestDto.getCountryCode())).thenReturn(newCountry);
+        when(countryService.getCountryByCode(userUpdateRequestDto.getCountryCode())).thenReturn(newCountry);
 
         //When
         userService.updateUser(userUpdateRequestDto);
@@ -128,8 +123,8 @@ class UserServiceImplTest {
         DocumentType newDocumentType = getPopulateDocumentType();
 
         when(officeService.getOfficeByIdFromRepository(userSaveRequestDto.getOfficeId())).thenReturn(newOffice);
-        when(countryService.getCountryById(userSaveRequestDto.getCountryCode())).thenReturn(newCountry);
-        when(documentTypeService.getDocumentTypeById(userSaveRequestDto.getDocCode())).thenReturn(newDocumentType);
+        when(countryService.getCountryByCode(userSaveRequestDto.getCountryCode())).thenReturn(newCountry);
+        when(documentTypeService.getDocumentTypeByCode(userSaveRequestDto.getDocCode())).thenReturn(newDocumentType);
 
         User userInService = userMapper.toModel(userSaveRequestDto);
         userInService.setOffice(newOffice);

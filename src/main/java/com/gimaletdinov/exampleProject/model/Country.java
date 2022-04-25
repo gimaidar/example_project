@@ -14,18 +14,18 @@ import javax.persistence.Version;
  * Сущность Страна
  */
 @Entity
-@Table(name = "Country")
 @Data
 @NoArgsConstructor
 public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
     @Version
     private Integer version;
+
+    private String code;
 
     @Column(name = "country_name")
     private String name;
