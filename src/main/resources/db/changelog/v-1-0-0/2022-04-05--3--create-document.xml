@@ -6,25 +6,35 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <changeSet id="2022-04-05--3" author="Aidar">
-        <createTable tableName="document">
-            <column name="id" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_document"/>
+        <createTable tableName="document" remarks="Документ">
+            <column name="id" type="int" remarks="Уникальный идентификатор">
+                <constraints primaryKey="true" primaryKeyName="document_pk"/>
             </column>
-            <column name="version" type="INT"/>
-            <column name="doc_number" type="INT"/>
-            <column name="doc_date" type="DATE"/>
-            <column name="doc_type_id" type="INT"/>
+
+            <column name="version" type="int" remarks="Служебное поле hibernate"/>
+
+            <column name="number" type="int" remarks="Номер документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date" type="date" remarks="Дата окончания действия документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="doc_type_id" type="int" remarks="Тип документа">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="2022-04-05--3.1" author="Aidar">
         <addForeignKeyConstraint baseColumnNames="doc_type_id" baseTableName="document"
-                                 constraintName="FK_DOCUMENT_ON_DOC_TYPE" referencedColumnNames="id"
+                                 constraintName="doc_type_fk_doc_type_id" referencedColumnNames="id"
                                  referencedTableName="document_type"/>
     </changeSet>
 
     <changeSet id="2022-04-05--3.2" author="Aidar">
-        <createIndex indexName="IX_Document_Id" tableName="document">
+        <createIndex indexName="document_ix_id" tableName="document">
             <column name="id"/>
         </createIndex>
     </changeSet>

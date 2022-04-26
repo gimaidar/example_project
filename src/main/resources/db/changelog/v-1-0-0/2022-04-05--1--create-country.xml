@@ -6,17 +6,25 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <changeSet id="2022-04-05--1" author="Aidar">
-        <createTable tableName="country">
-            <column autoIncrement="true" name="id" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_country"/>
+        <createTable tableName="country" remarks="Страна">
+            <column autoIncrement="true" name="id" type="int" remarks="Уникальный идентификатор">
+                <constraints primaryKey="true" primaryKeyName="country_pk"/>
             </column>
-            <column name="version" type="INT"/>
-            <column name="country_name" type="VARCHAR(255)"/>
+
+            <column name="version" type="int" remarks="Служебное поле hibernate"/>
+
+            <column name="code" type="varchar(3)" remarks="Код страны">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(25)" remarks="Название страны">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="2022-04-05--1.1" author="Aidar">
-        <createIndex indexName="IX_Country_Id" tableName="country">
+        <createIndex indexName="country_ix_id" tableName="country">
             <column name="id"/>
         </createIndex>
     </changeSet>

@@ -7,7 +7,8 @@
 
     <changeSet id="2022-04-05--8" author="Aidar">
         <insert tableName="document_type">
-            <column name="id" value="21"/>
+            <column name="id" value="1"/>
+            <column name="code" value="21"/>
             <column name="name" value="Паспорт"/>
         </insert>
     </changeSet>

@@ -6,23 +6,45 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <changeSet id="2022-04-05--4" author="Aidar">
-        <createTable tableName="organization">
-            <column autoIncrement="true" name="id" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_organization"/>
+        <createTable tableName="organization" remarks="Организация">
+            <column autoIncrement="true" name="id" type="int" remarks="Уникальный идентификатор">
+                <constraints primaryKey="true" primaryKeyName="organization_pk"/>
             </column>
-            <column name="version" type="INT"/>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="full_name" type="VARCHAR(255)"/>
-            <column name="inn" type="VARCHAR(255)"/>
-            <column name="kpp" type="VARCHAR(255)"/>
-            <column name="address" type="VARCHAR(255)"/>
-            <column name="phone" type="VARCHAR(255)"/>
-            <column name="is_active" type="BOOLEAN"/>
+
+            <column name="version" type="int" remarks="Служебное поле hibernate"/>
+
+            <column name="name" type="varchar(25)" remarks="Имя организациии">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="full_name" type="varchar(50)" remarks="Полное имя организации">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="inn" type="varchar(12)" remarks="Номер ИНН">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="kpp" type="varchar(12)" remarks="Номер КПП">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address" type="varchar(50)" remarks="Адрес организации">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="phone" type="varchar(11)" remarks="Телефон организации">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_active" type="boolean" remarks="Статус активности">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="2022-04-05--4.1" author="Aidar">
-        <createIndex indexName="IX_Organization_Id" tableName="organization">
+        <createIndex indexName="organization_ix_id" tableName="organization">
             <column name="id"/>
         </createIndex>
     </changeSet>

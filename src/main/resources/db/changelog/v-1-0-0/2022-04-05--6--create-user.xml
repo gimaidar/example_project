@@ -6,65 +6,83 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <changeSet id="2022-04-05--6" author="Aidar">
-        <createTable tableName="user" >
-            <column autoIncrement="true" name="id" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user"/>
+        <createTable tableName="user" remarks="Пользователь">
+            <column autoIncrement="true" name="id" type="INT" remarks="Уникальный идентификатор">
+                <constraints primaryKey="true" primaryKeyName="user_pk"/>
             </column>
-            <column name="version" type="INT"/>
-            <column name="first_name" type="VARCHAR(255)"/>
-            <column name="second_name" type="VARCHAR(255)"/>
-            <column name="middle_name" type="VARCHAR(255)"/>
-            <column name="position" type="INT"/>
-            <column name="phone" type="VARCHAR(255)"/>
-            <column name="is_identified" type="BOOLEAN"/>
-            <column name="office_id" type="INT"/>
-            <column name="country_id" type="INT">
+
+            <column name="version" type="int" remarks="Служебное поле hibernate"/>
+
+            <column name="first_name" type="varchar(25)" remarks="Имя пользователя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="second_name" type="varchar(25)" remarks="Фамилия пользователя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="middle_name" type="varchar(25)" remarks="Среднее имя пользователя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="position" type="int" remarks="Позиция пользователя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="phone" type="varchar(11)" remarks="Телефон пользователя">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_identified" type="boolean" remarks="Статус идентификации">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="office_id" type="int" remarks="Уникальный идентификатор офиса">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="country_id" type="int" remarks="Уникальный идентификатор гражданства">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
-<!--    <changeSet id="2022-04-05&#45;&#45;6.1" author="Aidar">-->
-<!--        <addForeignKeyConstraint baseColumnNames="id" baseTableName="document" constraintName="FK_DOCUMENT_ON_ID"-->
-<!--                                 referencedColumnNames="id" referencedTableName="user"/>-->
-<!--    </changeSet>-->
-
     <changeSet id="2022-04-05--6.2" author="Aidar">
-        <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="user" constraintName="FK_USER_ON_COUNTRY"
+        <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="user" constraintName="country_fk_id"
                                  referencedColumnNames="id" referencedTableName="country"/>
     </changeSet>
 
     <changeSet id="2022-04-05--6.3" author="Aidar">
-        <addForeignKeyConstraint baseColumnNames="office_id" baseTableName="user" constraintName="FK_USER_ON_OFFICE"
+        <addForeignKeyConstraint baseColumnNames="office_id" baseTableName="user" constraintName="office_fk_id"
                                  referencedColumnNames="id" referencedTableName="office"/>
     </changeSet>
 
     <changeSet id="2022-04-05--6.4" author="Aidar">
-        <createIndex indexName="IX_User_Id" tableName="user">
+        <createIndex indexName="user_ix_id" tableName="user">
             <column name="id"/>
         </createIndex>
     </changeSet>
 
     <changeSet id="2022-04-05--6.5" author="Aidar">
-        <createIndex indexName="IX_User_First_name" tableName="user">
+        <createIndex indexName="user_ix_first_name" tableName="user">
             <column name="first_name"/>
         </createIndex>
     </changeSet>
 
     <changeSet id="2022-04-05--6.6" author="Aidar">
-        <createIndex indexName="IX_User_Second_name" tableName="user">
+        <createIndex indexName="user_ix_second_name" tableName="user">
             <column name="second_name"/>
         </createIndex>
     </changeSet>
 
     <changeSet id="2022-04-05--6.7" author="Aidar">
-        <createIndex indexName="IX_User_Middle_name" tableName="user">
+        <createIndex indexName="user_ix_middle_name" tableName="user">
             <column name="middle_name"/>
         </createIndex>
     </changeSet>
 
     <changeSet id="2022-04-05--6.8" author="Aidar">
-        <createIndex indexName="IX_User_Position" tableName="user">
+        <createIndex indexName="user_ix_position" tableName="user">
             <column name="position"/>
         </createIndex>
     </changeSet>

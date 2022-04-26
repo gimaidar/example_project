@@ -12,10 +12,10 @@
             <column name="second_name" value="Айдар"/>
             <column name="middle_name" value="Ильмирович"/>
             <column name="position" value="1"/>
-            <column name="phone" value="79177481998"/>
+            <column name="phone" value="79171111111"/>
             <column name="is_identified" value="true"/>
             <column name="office_id" value="1"/>
-            <column name="country_id" value="643"/>
+            <column name="country_id" value="1"/>
         </insert>
     </changeSet>
 
@@ -26,10 +26,10 @@
             <column name="second_name" value="Иван"/>
             <column name="middle_name" value="Иванович"/>
             <column name="position" value="1"/>
-            <column name="phone" value="79177481998"/>
+            <column name="phone" value="79171111111"/>
             <column name="is_identified" value="true"/>
             <column name="office_id" value="2"/>
-            <column name="country_id" value="643"/>
+            <column name="country_id" value="1"/>
         </insert>
     </changeSet>
 

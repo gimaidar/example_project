@@ -6,16 +6,23 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <changeSet id="2022-04-05--2" author="Aidar">
-        <createTable tableName="document_type">
-            <column name="id" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_document_type"/>
+        <createTable tableName="document_type" remarks="Тип документа">
+            <column autoIncrement="true" name="id" type="int" remarks="Уникальный идентификатор">
+                <constraints primaryKey="true" primaryKeyName="document_type_pk"/>
             </column>
-            <column name="name" type="VARCHAR(255)"/>
+
+            <column name="code" type="varchar(3)" remarks="Код типа документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(25)" remarks="Имя типа документа">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="2022-04-05--2.1" author="Aidar">
-        <createIndex indexName="IX_Document_type_ID" tableName="document_type">
+        <createIndex indexName="document_type_ix_id" tableName="document_type">
             <column name="id"/>
         </createIndex>
     </changeSet>

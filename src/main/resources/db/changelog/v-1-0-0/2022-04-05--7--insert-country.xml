@@ -7,9 +7,10 @@
 
     <changeSet id="2022-04-05--7" author="Aidar">
         <insert tableName="country">
-            <column name="id" value="643"/>
+            <column name="id" value="1"/>
             <column name="version" value="1"/>
-            <column name="country_name" value="Российская Федерация"/>
+            <column name="code" value="643"/>
+            <column name="name" value="Российская Федерация"/>
         </insert>
     </changeSet>
 

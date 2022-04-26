@@ -9,8 +9,9 @@
         <insert tableName="document">
             <column name="id" value="1"/>
             <column name="version" value="1"/>
-            <column name="doc_number" value="123456"/>
-            <column name="doc_type_id" value="21"/>
+            <column name="number" value="123456"/>
+            <column name="date" value="2022-04-26"/>
+            <column name="doc_type_id" value="1"/>
         </insert>
     </changeSet>
 
@@ -18,8 +19,9 @@
         <insert tableName="document">
             <column name="id" value="2"/>
             <column name="version" value="1"/>
-            <column name="doc_number" value="123456"/>
-            <column name="doc_type_id" value="21"/>
+            <column name="number" value="123456"/>
+            <column name="date" value="2022-04-26"/>
+            <column name="doc_type_id" value="1"/>
         </insert>
     </changeSet>
 
