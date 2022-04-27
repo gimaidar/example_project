@@ -49,7 +49,7 @@ class CountryServiceImplTest {
 
     @Test
     @Transactional
-    void getCountryById() {
+    void getCountryByCode() {
         //Given
         when(countryRepository.findByCode(TEST_COUNTRY_CODE)).thenReturn(Optional.ofNullable(newTestCountry));
 
@@ -57,7 +57,7 @@ class CountryServiceImplTest {
         Country countryFromService = countryService.getCountryByCode(TEST_COUNTRY_CODE);
 
         //Then
-        assertEquals(TEST_COUNTRY_CODE, countryFromService.getId());
+        assertEquals(TEST_COUNTRY_CODE, countryFromService.getCode());
         assertNotNull(countryFromService);
     }
 }

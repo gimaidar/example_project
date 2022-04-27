@@ -49,7 +49,7 @@ class DocumentTypeServiceImplTest {
 
     @Test
     @Transactional
-    void getDocumentTypeById() {
+    void getDocumentTypeByCode() {
         //Given
         when(documentTypeRepository.findByCode(TEST_DOCUMENT_TYPE_ID)).thenReturn(Optional.ofNullable(newTestDocumaentType));
 
@@ -57,7 +57,7 @@ class DocumentTypeServiceImplTest {
         DocumentType documentTypeFromService = documentTypeService.getDocumentTypeByCode(TEST_DOCUMENT_TYPE_ID);
 
         //Then
-        assertEquals(TEST_DOCUMENT_TYPE_ID, documentTypeFromService.getId());
+        assertEquals(TEST_DOCUMENT_TYPE_ID, documentTypeFromService.getCode());
         assertNotNull(documentTypeFromService);
     }
 }
