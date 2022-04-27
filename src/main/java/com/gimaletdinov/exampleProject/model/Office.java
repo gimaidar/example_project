@@ -3,6 +3,7 @@ package com.gimaletdinov.exampleProject.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Сущность Офис
@@ -20,6 +24,7 @@ import javax.persistence.Version;
 @Entity
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
 public class Office {
 
@@ -30,12 +35,18 @@ public class Office {
     @Version
     private Integer version;
 
+    @NotBlank
+    @Size(max = 25)
     private String name;
 
+    @NotBlank
+    @Size(max = 50)
     private String address;
 
+    @Size(max = 11)
     private String phone;
 
+    @NotNull
     private Boolean isActive;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

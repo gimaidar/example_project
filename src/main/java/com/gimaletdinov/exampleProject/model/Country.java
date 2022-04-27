@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * Сущность Страна
@@ -26,7 +28,11 @@ public class Country {
     @Version
     private Integer version;
 
+    @NotBlank
+    @Size(max = 3)
     private String code;
 
+    @NotBlank
+    @Size(max = 25)
     private String name;
 }
