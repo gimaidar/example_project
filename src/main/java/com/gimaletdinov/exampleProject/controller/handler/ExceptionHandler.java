@@ -3,19 +3,13 @@ package com.gimaletdinov.exampleProject.controller.handler;
 import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dto.response.ObjectErrorResponseDto;
 import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,14 +19,14 @@ import java.util.stream.Collectors;
  */
 @RestControllerAdvice
 @Log4j2
-public class ExceptionHandlerController {
+public class ExceptionHandler {
 
     /**
      * Обработчик исключения NoSuchObjectException
      * @param exception
      * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
      */
-    @ExceptionHandler
+    @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<ObjectErrorResponseDto> handleException(NoSuchObjectException exception) {
         ObjectErrorResponseDto objectErrorResponseDto = new ObjectErrorResponseDto();
         objectErrorResponseDto.setError(exception.getMessage());
@@ -46,7 +40,7 @@ public class ExceptionHandlerController {
      * @param exception
      * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
      */
-    @ExceptionHandler
+    @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<ObjectErrorResponseDto> handleException(MethodArgumentNotValidException exception) {
         ObjectErrorResponseDto objectErrorResponseDto = new ObjectErrorResponseDto();
 
@@ -68,7 +62,7 @@ public class ExceptionHandlerController {
      * @param exception
      * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
      */
-    @ExceptionHandler
+    @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<ObjectErrorResponseDto> handleException(Exception exception) {
 
         //генерация кода ошибки и получение времени ошибки
