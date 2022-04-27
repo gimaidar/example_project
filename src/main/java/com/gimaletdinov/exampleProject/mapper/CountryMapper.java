@@ -1,4 +1,4 @@
-package com.gimaletdinov.exampleProject.model.mapper;
+package com.gimaletdinov.exampleProject.mapper;
 
 import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;

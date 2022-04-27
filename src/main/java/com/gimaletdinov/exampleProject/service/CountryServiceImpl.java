@@ -1,10 +1,10 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.CountryRepository;
 import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
-import com.gimaletdinov.exampleProject.model.mapper.CountryMapper;
+import com.gimaletdinov.exampleProject.mapper.CountryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

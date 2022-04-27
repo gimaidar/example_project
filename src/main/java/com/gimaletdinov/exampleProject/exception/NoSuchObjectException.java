@@ -1,4 +1,4 @@
-package com.gimaletdinov.exampleProject.controller.handler.exceptions;
+package com.gimaletdinov.exampleProject.exception;
 
 /**
  * Исключение, генерируемое в программе для несуществующих данных в БД и отправляемое пользователю

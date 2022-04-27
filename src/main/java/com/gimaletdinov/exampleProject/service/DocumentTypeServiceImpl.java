@@ -1,10 +1,10 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.DocumentTypeRepository;
 import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.model.DocumentType;
-import com.gimaletdinov.exampleProject.model.mapper.DocumentTypeMapper;
+import com.gimaletdinov.exampleProject.mapper.DocumentTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

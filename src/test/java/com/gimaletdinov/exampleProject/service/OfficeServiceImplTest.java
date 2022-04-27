@@ -1,6 +1,5 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.OfficeRepository;
 import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
@@ -8,7 +7,7 @@ import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
-import com.gimaletdinov.exampleProject.model.mapper.OfficeMapper;
+import com.gimaletdinov.exampleProject.mapper.OfficeMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

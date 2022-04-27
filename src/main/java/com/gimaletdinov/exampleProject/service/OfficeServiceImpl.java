@@ -1,6 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.OfficeRepository;
 import com.gimaletdinov.exampleProject.dto.request.OfficeListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
@@ -9,7 +9,7 @@ import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeResponseDto;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
-import com.gimaletdinov.exampleProject.model.mapper.OfficeMapper;
+import com.gimaletdinov.exampleProject.mapper.OfficeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

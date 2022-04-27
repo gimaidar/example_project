@@ -6,7 +6,7 @@ import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
-import com.gimaletdinov.exampleProject.model.mapper.OrganizationMapper;
+import com.gimaletdinov.exampleProject.mapper.OrganizationMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +25,6 @@ import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getP
 import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationListRequestDto;
 import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationSaveRequestDto;
 import static com.gimaletdinov.exampleProject.Helper.OrganizationTestHelper.getPopulateOrganizationUpdateRequestDto;
-import static com.gimaletdinov.exampleProject.dao.OrganizationSpecification.organizationSpecification;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

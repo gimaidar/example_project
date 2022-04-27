@@ -10,7 +10,7 @@ import com.gimaletdinov.exampleProject.model.Document;
 import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
-import com.gimaletdinov.exampleProject.model.mapper.UserMapper;
+import com.gimaletdinov.exampleProject.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,6 @@
 package com.gimaletdinov.exampleProject.controller.handler;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dto.response.ObjectErrorResponseDto;
 import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
 import lombok.extern.log4j.Log4j2;

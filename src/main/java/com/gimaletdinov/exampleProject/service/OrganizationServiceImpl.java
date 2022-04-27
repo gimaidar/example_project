@@ -1,6 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.OrganizationRepository;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
@@ -8,7 +8,7 @@ import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
-import com.gimaletdinov.exampleProject.model.mapper.OrganizationMapper;
+import com.gimaletdinov.exampleProject.mapper.OrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

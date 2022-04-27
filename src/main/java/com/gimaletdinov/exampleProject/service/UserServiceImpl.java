@@ -1,6 +1,6 @@
 package com.gimaletdinov.exampleProject.service;
 
-import com.gimaletdinov.exampleProject.controller.handler.exceptions.NoSuchObjectException;
+import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
 import com.gimaletdinov.exampleProject.dao.UserRepository;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
@@ -12,7 +12,7 @@ import com.gimaletdinov.exampleProject.model.Document;
 import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
-import com.gimaletdinov.exampleProject.model.mapper.UserMapper;
+import com.gimaletdinov.exampleProject.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
