@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <include file="db/changelog/v-1-0-0/2022-04-05--1--create-country.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--1--create-country.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--2--create-document-type.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--3--create-document.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--4--create-organization.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--5--create-office.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--6--create-user.xml"/>
+
+</databaseChangeLog>
