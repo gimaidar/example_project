@@ -25,13 +25,6 @@ public interface OrganizationMapper {
     Organization toModel(OrganizationSaveRequestDto organizationSaveRequestDto);
 
     /**
-     * Метод для маппинга запроса - OrganizationListRequestDto в Organization
-     * @param organizationListRequestDto
-     * @return Organization
-     */
-    Organization toModel(OrganizationListRequestDto organizationListRequestDto);
-
-    /**
      * Метод для маппинга Organization в формат ответа OrganizationResponseDto
      * @param organization
      * @return OrganizationResponseDto

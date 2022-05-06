@@ -32,16 +32,6 @@ public interface UserMapper {
     User toModel(UserSaveRequestDto userSaveRequestDto);
 
     /**
-     * Метод для маппинга запроса - UserListRequestDto в User
-     * @param userListRequestDto
-     * @return User
-     */
-    @Mapping(source = "officeId", target = "office.id")
-    @Mapping(source = "docCode", target = "document.documentType.code")
-    @Mapping(source = "countryCode", target = "country.code")
-    User toModel(UserListRequestDto userListRequestDto);
-
-    /**
      * Метод для маппинга User в формат ответа UserResponseDto
      * @param user
      * @return UserResponseDto

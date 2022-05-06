@@ -32,19 +32,6 @@ public interface OfficeMapper {
     Office toModel(OfficeSaveRequestDto officeSaveRequestDto);
 
     /**
-     * Метод для маппинга запроса - OfficeListRequestDto в Office
-     * @param officeListRequestDto
-     * @return Office
-     */
-    @Mapping(source = "officeListRequestDto.name", target = "name")
-    @Mapping(source = "officeListRequestDto.phone", target = "phone")
-    @Mapping(source = "officeListRequestDto.isActive", target = "isActive")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "version", ignore = true)
-    @Mapping(target = "address", ignore = true)
-    Office toModel(OfficeListRequestDto officeListRequestDto);
-
-    /**
      * Метод для маппинга Office в формат ответа OfficeResponseDto
      * @param office
      * @return OfficeResponseDto
