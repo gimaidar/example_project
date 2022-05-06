@@ -3,6 +3,7 @@ package com.gimaletdinov.exampleProject.service;
 import com.gimaletdinov.exampleProject.dao.DocumentTypeRepository;
 import com.gimaletdinov.exampleProject.dto.response.DocumentTypeListResponseDto;
 import com.gimaletdinov.exampleProject.model.DocumentType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 import static com.gimaletdinov.exampleProject.helper.DocumentDtoTestHelper.TEST_DOCUMENT_TYPE_CODE;
 import static com.gimaletdinov.exampleProject.helper.DocumentDtoTestHelper.getPopulateDocumentType;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,6 +37,7 @@ class DocumentTypeServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: getAllDocumentTypes (Найти все типы документов)")
     void getAllDocumentTypes() {
         //Given
         DocumentType newDocumentType = getPopulateDocumentType();
@@ -46,11 +49,12 @@ class DocumentTypeServiceImplTest {
         List<DocumentTypeListResponseDto> resultList = documentTypeService.getAllDocumentTypes();
 
         //Then
-        assertTrue(resultList.size() > 0);
+        assertThat(resultList).hasSizeGreaterThan(0);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: getDocumentTypeByCode (Найти тип документа по коду)")
     void getDocumentTypeByCode() {
         //Given
         when(documentTypeRepository.findByCode(TEST_DOCUMENT_TYPE_CODE)).thenReturn(Optional.ofNullable(newTestDocumaentType));
@@ -59,7 +63,7 @@ class DocumentTypeServiceImplTest {
         DocumentType documentTypeFromService = documentTypeService.getDocumentTypeByCode(TEST_DOCUMENT_TYPE_CODE);
 
         //Then
-        assertEquals(TEST_DOCUMENT_TYPE_CODE, documentTypeFromService.getCode());
-        assertNotNull(documentTypeFromService);
+        assertThat(documentTypeFromService).isNotNull();
+        assertThat(documentTypeFromService).isEqualTo(newTestDocumaentType);
     }
 }

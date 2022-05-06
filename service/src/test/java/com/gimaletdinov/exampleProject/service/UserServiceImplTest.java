@@ -1,4 +1,4 @@
-package service.service;
+package com.gimaletdinov.exampleProject.service;
 
 import com.gimaletdinov.exampleProject.dao.UserRepository;
 import com.gimaletdinov.exampleProject.dto.request.UserListRequestDto;
@@ -11,11 +11,7 @@ import com.gimaletdinov.exampleProject.model.Document;
 import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
-import com.gimaletdinov.exampleProject.service.CountryService;
-import com.gimaletdinov.exampleProject.service.DocumentTypeService;
-import com.gimaletdinov.exampleProject.service.OfficeService;
-import com.gimaletdinov.exampleProject.service.UserService;
-import com.gimaletdinov.exampleProject.service.UserServiceImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,8 +32,7 @@ import static com.gimaletdinov.exampleProject.helper.UserDtoTestHelper.getPopula
 import static com.gimaletdinov.exampleProject.helper.UserDtoTestHelper.getPopulateUserListRequestDto;
 import static com.gimaletdinov.exampleProject.helper.UserDtoTestHelper.getPopulateUserSaveRequestDto;
 import static com.gimaletdinov.exampleProject.helper.UserDtoTestHelper.getPopulateUserUpdateRequestDto;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -68,6 +63,7 @@ class UserServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: getAllUsersByPredicat (Найти пользователей по предикату)")
     void getAllUsersByPredicat() {
         List<User> testUsetList = new ArrayList<>();
         testUsetList.add(newTestUser);
@@ -85,16 +81,25 @@ class UserServiceImplTest {
 
         //Then
         verify(userRepository).findAll((Specification) any());
+
+        assertThat(resultList).isNotEmpty();
+        assertThat(resultList.get(0).getId()).isEqualTo(newTestUser.getId());
+        assertThat(resultList.get(0).getFirstName()).isEqualTo(newTestUser.getFirstName());
+        assertThat(resultList.get(0).getSecondName()).isEqualTo(newTestUser.getSecondName());
+        assertThat(resultList.get(0).getMiddleName()).isEqualTo(newTestUser.getMiddleName());
+        assertThat(resultList.get(0).getPosition()).isEqualTo(newTestUser.getPosition());
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: getUserById (Найти пользователя по id)")
     void getUserById() {
         getUserByIdFromRepository();
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: updateUser (Обновить данные пользователя)")
     void updateUser() {
         //Given
         UserUpdateRequestDto userUpdateRequestDto = getPopulateUserUpdateRequestDto();
@@ -118,6 +123,7 @@ class UserServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: saveUser (Сохранить нового пользователя)")
     void saveUser() {
         //Given
         UserSaveRequestDto userSaveRequestDto = getPopulateUserSaveRequestDto();
@@ -146,6 +152,7 @@ class UserServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: getUserByIdFromRepository (Найти пользователя по id из репозитория)")
     void getUserByIdFromRepository() {
         //Given
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.ofNullable(newTestUser));
@@ -155,7 +162,7 @@ class UserServiceImplTest {
 
         //Then
         verify(userRepository).findById(TEST_USER_ID);
-        assertNotNull(userFromService);
-        assertEquals(userFromService.getId(), newTestUser.getId());
+        assertThat(userFromService).isNotNull();
+        assertThat(userFromService).isEqualTo(newTestUser);
     }
 }

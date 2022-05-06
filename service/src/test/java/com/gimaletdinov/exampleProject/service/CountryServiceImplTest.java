@@ -3,6 +3,7 @@ package com.gimaletdinov.exampleProject.service;
 import com.gimaletdinov.exampleProject.dao.CountryRepository;
 import com.gimaletdinov.exampleProject.dto.response.CountryListResponseDto;
 import com.gimaletdinov.exampleProject.model.Country;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 import static com.gimaletdinov.exampleProject.helper.CountryDtoTestHelper.TEST_COUNTRY_CODE;
 import static com.gimaletdinov.exampleProject.helper.CountryDtoTestHelper.getPopulateCountry;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,6 +37,7 @@ class CountryServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: getAllCountries (Найти все страны)")
     void getAllCountries() {
         //Given
         Country newCountry = getPopulateCountry();
@@ -46,11 +49,12 @@ class CountryServiceImplTest {
         List<CountryListResponseDto> resultList = countryService.getAllCountries();
 
         //Then
-        assertTrue(resultList.size() > 0);
+        assertThat(resultList).hasSizeGreaterThan(0);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: getCountryByCode (Найти страну по коду)")
     void getCountryByCode() {
         //Given
         when(countryRepository.findByCode(TEST_COUNTRY_CODE)).thenReturn(Optional.ofNullable(newTestCountry));
@@ -59,7 +63,7 @@ class CountryServiceImplTest {
         Country countryFromService = countryService.getCountryByCode(TEST_COUNTRY_CODE);
 
         //Then
-        assertEquals(TEST_COUNTRY_CODE, countryFromService.getCode());
-        assertNotNull(countryFromService);
+        assertThat(countryFromService).isNotNull();
+        assertThat(countryFromService).isEqualTo(newTestCountry);
     }
 }

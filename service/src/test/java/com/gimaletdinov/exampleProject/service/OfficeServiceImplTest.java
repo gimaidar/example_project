@@ -8,6 +8,7 @@ import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.mapper.OfficeMapper;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,7 @@ import static com.gimaletdinov.exampleProject.helper.OfficeDtoTestHelper.getPopu
 import static com.gimaletdinov.exampleProject.helper.OfficeDtoTestHelper.getPopulateOfficeSaveRequestDto;
 import static com.gimaletdinov.exampleProject.helper.OfficeDtoTestHelper.getPopulateOfficeUpdateRequestDto;
 import static com.gimaletdinov.exampleProject.helper.OrganizationDtoTestHelper.getPopulateOrganization;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -55,6 +57,7 @@ class OfficeServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: getAllOfficesByPredicat (Найти офисы по предикату)")
     void getAllOfficesByPredicat() {
         //Given
         List<Office> testOfficeList = new ArrayList<>();
@@ -68,22 +71,24 @@ class OfficeServiceImplTest {
         List<OfficeListResponseDto> officeListResponseDtoFromRepository = officeService.getAllOfficesByPredicat(officeListRequestDto);
 
         //Then
-        Office officeInService = officeMapper.toModel(officeListRequestDto);
-        officeInService.setOrganization(newTestOrganization);
         verify(officeRepository).findAll((Specification) any());
 
-        assertFalse(officeListResponseDtoFromRepository.isEmpty());
-        assertEquals(newTestOffice.getId() , officeListResponseDtoFromRepository.get(0).getId());
+        assertThat(officeListResponseDtoFromRepository).isNotEmpty();
+        assertThat(officeListResponseDtoFromRepository.get(0).getId()).isEqualTo(newTestOffice.getId());
+        assertThat(officeListResponseDtoFromRepository.get(0).getName()).isEqualTo(newTestOffice.getName());
+        assertThat(officeListResponseDtoFromRepository.get(0).getIsActive()).isEqualTo(newTestOffice.getIsActive());
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: getOfficeByIdFromRepository (Найти офис по id)")
     void getOfficeById() {
         getOfficeByIdFromRepository();
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: updateOffice (Обновить данные офиса)")
     void updateOffice() {
         OfficeUpdateRequestDto requestDto = getPopulateOfficeUpdateRequestDto();
         Office newOffice = getPopulateOffice();
@@ -101,6 +106,7 @@ class OfficeServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: saveOffice (Сохранить новый офис)")
     void saveOffice() {
         OfficeSaveRequestDto officeSaveRequestDto = getPopulateOfficeSaveRequestDto();
 
@@ -119,6 +125,7 @@ class OfficeServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: getOfficeByIdFromRepository (Найти офис по id из репозитория)")
     void getOfficeByIdFromRepository() {
         //Given
         when(officeRepository.findById(TEST_OFFICE_ID)).thenReturn(Optional.ofNullable(newTestOffice));
@@ -128,7 +135,7 @@ class OfficeServiceImplTest {
 
         //Then
         verify(officeRepository).findById(TEST_OFFICE_ID);
-        assertNotNull(officeFromService);
-        assertEquals(officeFromService, officeFromService);
+        assertThat(officeFromService).isNotNull();
+        assertThat(officeFromService).isEqualTo(newTestOffice);
         }
 }
