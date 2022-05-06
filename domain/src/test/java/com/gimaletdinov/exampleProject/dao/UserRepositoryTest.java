@@ -4,6 +4,7 @@ import com.gimaletdinov.exampleProject.model.Country;
 import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,12 +22,9 @@ import static com.gimaletdinov.exampleProject.helper.UserTestHelper.TEST_USER_FI
 import static com.gimaletdinov.exampleProject.helper.UserTestHelper.TEST_USER_MIDDLE_NAME;
 import static com.gimaletdinov.exampleProject.helper.UserTestHelper.TEST_USER_POSITION;
 import static com.gimaletdinov.exampleProject.helper.UserTestHelper.TEST_USER_SECOND_NAME;
-import static com.gimaletdinov.exampleProject.helper.UserTestHelper.assertUsersEquals;
 import static com.gimaletdinov.exampleProject.helper.UserTestHelper.getPopulateUser;
 import static com.gimaletdinov.exampleProject.helper.UserTestHelper.getUserForUpdate;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
@@ -60,34 +58,38 @@ class UserRepositoryTest {
 
     @Test
     @Transactional
-    void getAllUsersByPredicatByOfficeId() { //добавить с другими предикатами
+    @DisplayName("Тест: findAll(userSpecification()) (Найти пользователей по предикату)")
+    void findAllUsersByPredicatByOfficeId() { //добавить с другими предикатами
         List<User> usersFromBD = userRepository.findAll(userSpecification());
-        assertFalse(usersFromBD.isEmpty());
-        assertTrue(usersFromBD.size() == 1);
-        assertUsersEquals(testUserInBD, usersFromBD.get(0));
+        assertThat(usersFromBD).isNotEmpty();
+        assertThat(usersFromBD).hasSize(1);
+        assertThat(usersFromBD.get(0)).isEqualTo(testUserInBD);
     }
 
     @Test
     @Transactional
-    void getUserById() {
+    @DisplayName("Тест: findById (Найти пользователя по id)")
+    void findById() {
         User userFromBD = userRepository.findById(testUserInBD.getId()).get();
-        assertNotNull(userFromBD);
-        assertUsersEquals(testUserInBD, userFromBD);
+        assertThat(userFromBD).isNotNull();
+        assertThat(userFromBD).isEqualTo(testUserInBD);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: updateUser (Обновить данные пользователя)")
     void updateUser() {
         User userForUpdate = getUserForUpdate(testUserInBD);
 
         User updatedUser = userRepository.save(userForUpdate);
 
-        assertNotNull(updatedUser);
-        assertUsersEquals(userForUpdate, updatedUser);
+        assertThat(updatedUser).isNotNull();
+        assertThat(updatedUser).isEqualTo(userForUpdate);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: saveUser (Сохранить нового пользователя)")
     void saveUser() {
         User userForSave = getPopulateUser();
         userForSave.setCountry(testCountryInBD);
@@ -95,8 +97,8 @@ class UserRepositoryTest {
 
         User savedUser = userRepository.save(userForSave);
 
-        assertNotNull(savedUser);
-        assertUsersEquals(userForSave, savedUser);
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser).isEqualTo(userForSave);
     }
 
     private Specification<User> userSpecification() {

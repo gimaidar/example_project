@@ -2,6 +2,7 @@ package com.gimaletdinov.exampleProject.dao;
 
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,18 +10,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 
 import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.TEST_ORG_INN;
 import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.TEST_ORG_IS_ACTIVE;
 import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.TEST_ORG_NAME;
-import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.assertOrganizationsEquals;
 import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.getOrganizationForUpdate;
 import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.getPopulateOrganization;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //@SpringJUnitConfig
 //@EnableAutoConfiguration
@@ -43,40 +40,44 @@ class OrganizationRepositoryTest {
 
     @Test
     @Transactional
-    void getAllOrganizationsByPredicat() {
+    @DisplayName("Тест: findAll(organizationSpecification()) (Найти организации по предикату)")
+    void findAllOrganizationsByPredicat() {
         List<Organization> organizationsFromBD = organizationRepository.findAll(organizationSpecification());
-        assertFalse(organizationsFromBD.isEmpty());
-        assertTrue(organizationsFromBD.size() == 1);
-        assertOrganizationsEquals(testOrganizationInBD, organizationsFromBD.get(0));
+        assertThat(organizationsFromBD).isNotEmpty();
+        assertThat(organizationsFromBD).hasSize(1);
+        assertThat(organizationsFromBD.get(0)).isEqualTo(testOrganizationInBD);
     }
 
     @Test
     @Transactional
-    void getOrganizationById() {
+    @DisplayName("Тест: findById (Найти организацию по id)")
+    void findById() {
         Organization organizationFromBD = organizationRepository.findById(testOrganizationInBD.getId()).get();
-        assertNotNull(organizationFromBD);
-        assertOrganizationsEquals(testOrganizationInBD, organizationFromBD);
+        assertThat(organizationFromBD).isNotNull();
+        assertThat(organizationFromBD).isEqualTo(testOrganizationInBD);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: updateOrganization (Обновить данные организации)")
     void updateOrganization() {
         Organization organizationForUpdate = getOrganizationForUpdate(testOrganizationInBD);
 
         Organization updatedOrganization = organizationRepository.save(organizationForUpdate);
 
-        assertNotNull(updatedOrganization);
-        assertOrganizationsEquals(organizationForUpdate, updatedOrganization);
+        assertThat(updatedOrganization).isNotNull();
+        assertThat(updatedOrganization).isEqualTo(organizationForUpdate);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: save (Сохранить новую организацию)")
     void saveOrganization() {
         Organization organizationForSave = getPopulateOrganization();
         Organization savedOrganization = organizationRepository.save(organizationForSave);
 
-        assertNotNull(savedOrganization);
-        assertOrganizationsEquals(organizationForSave, savedOrganization);
+        assertThat(savedOrganization).isNotNull();
+        assertThat(savedOrganization).isEqualTo(organizationForSave);
     }
 
     private Specification<Organization> organizationSpecification() {

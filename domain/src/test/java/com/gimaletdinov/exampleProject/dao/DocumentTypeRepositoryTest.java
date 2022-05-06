@@ -2,6 +2,7 @@ package com.gimaletdinov.exampleProject.dao;
 
 import com.gimaletdinov.exampleProject.model.DocumentType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.gimaletdinov.exampleProject.helper.DocumentTestHelper.getPopulateDocumentType;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,19 +34,21 @@ class DocumentTypeRepositoryTest {
 
     @Test
     @Transactional
+    @DisplayName("Тест: findAll (Найти все типы документов)")
     void findAll(){
         List<DocumentType>  documentTypesFromBd = documentTypeRepository.findAll();
-        assertFalse(documentTypesFromBd.isEmpty());
-        assertTrue(documentTypesFromBd.size() == 1);
-        assertEquals(testDocumentTypeInBD, documentTypesFromBd.get(0));
+        assertThat(documentTypesFromBd).isNotEmpty();
+        assertThat(documentTypesFromBd).hasSize(1);
+        assertThat(documentTypesFromBd.get(0)).isEqualTo(testDocumentTypeInBD);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: findByCode (Найти тип документа по коду)")
     void findByCode(){
         DocumentType documentTypeFromBd = documentTypeRepository.findByCode(testDocumentTypeInBD.getCode()).get();
-        assertNotNull(documentTypeFromBd);
-        assertEquals(testDocumentTypeInBD, documentTypeFromBd);
+        assertThat(documentTypeFromBd).isNotNull();
+        assertThat(documentTypeFromBd).isEqualTo(testDocumentTypeInBD);
     }
 
 }

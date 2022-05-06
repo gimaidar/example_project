@@ -2,6 +2,7 @@ package com.gimaletdinov.exampleProject.dao;
 
 import com.gimaletdinov.exampleProject.model.Office;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,12 +15,9 @@ import java.util.List;
 import static com.gimaletdinov.exampleProject.helper.OfficeTestHelper.TEST_OFFICE_IS_ACTIVE;
 import static com.gimaletdinov.exampleProject.helper.OfficeTestHelper.TEST_OFFICE_NAME;
 import static com.gimaletdinov.exampleProject.helper.OfficeTestHelper.TEST_OFFICE_PHONE;
-import static com.gimaletdinov.exampleProject.helper.OfficeTestHelper.assertOfficesEquals;
 import static com.gimaletdinov.exampleProject.helper.OfficeTestHelper.getOfficeForUpdate;
 import static com.gimaletdinov.exampleProject.helper.OfficeTestHelper.getPopulateOffice;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
@@ -41,41 +39,45 @@ class OfficeRepositoryTest {
 
     @Test
     @Transactional
-    void getAllOfficesByPredicat() {
+    @DisplayName("Тест: findAll(officeSpecification()) (Найти офисы по предикату)")
+    void findAllOfficesByPredicat() {
         List<Office> officesFtomBD = officeRepository.findAll(officeSpecification());
-        assertFalse(officesFtomBD.isEmpty());
-        assertTrue(officesFtomBD.size() == 1);
-        assertOfficesEquals(testOfficeInBD, officesFtomBD.get(0));
+        assertThat(officesFtomBD).isNotEmpty();
+        assertThat(officesFtomBD).hasSize(1);
+        assertThat(officesFtomBD.get(0)).isEqualTo(testOfficeInBD);
     }
 
     @Test
     @Transactional
-    void getOfficeById() {
+    @DisplayName("Тест: findById (Найти офис по id)")
+    void findById() {
         Office officeFromBD = officeRepository.findById(testOfficeInBD.getId()).get();
-        assertNotNull(officeFromBD);
-        assertOfficesEquals(testOfficeInBD, officeFromBD);
+        assertThat(officeFromBD).isNotNull();
+        assertThat(officeFromBD).isEqualTo(testOfficeInBD);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: updateOffice (Обновить данные офиса)")
     void updateOffice() {
         Office officeForUpdate = getOfficeForUpdate(testOfficeInBD);
 
         Office updatedOffice = officeRepository.save(officeForUpdate);
 
-        assertNotNull(updatedOffice);
-        assertOfficesEquals(officeForUpdate, updatedOffice);
+        assertThat(updatedOffice).isNotNull();
+        assertThat(updatedOffice).isEqualTo(officeForUpdate);
     }
 
     @Test
     @Transactional
+    @DisplayName("Тест: saveOffice (Сохранить новый офис)")
     void saveOffice() {
         Office officeForSave = getPopulateOffice();
 
         Office savedOffice = officeRepository.save(officeForSave);
 
-        assertNotNull(savedOffice);
-        assertOfficesEquals(officeForSave, savedOffice);
+        assertThat(savedOffice).isNotNull();
+        assertThat(savedOffice).isEqualTo(officeForSave);
     }
 
     private Specification<Office> officeSpecification() {
