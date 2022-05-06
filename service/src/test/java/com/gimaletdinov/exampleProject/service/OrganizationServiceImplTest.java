@@ -6,6 +6,7 @@ import com.gimaletdinov.exampleProject.dto.request.OrganizationSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OrganizationUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.mapper.OrganizationMapper;
+import com.gimaletdinov.exampleProject.mapper.OrganizationMapperImpl;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@TestPropertySource("classpath:application-test.properties")
+@SpringBootTest(classes = {OrganizationServiceImpl.class, OrganizationMapperImpl.class})
 class OrganizationServiceImplTest {
 
     private Organization newTestOrganization = getPopulateOrganization();
@@ -43,10 +41,10 @@ class OrganizationServiceImplTest {
     private OrganizationMapper organizationMapper;
 
     @Autowired
-    private OrganizationService organizationService = new OrganizationServiceImpl(organizationRepository, organizationMapper);
+    private OrganizationService organizationService;
 
 
-     @Test
+    @Test
     @DisplayName("Тест: getAllOrganizationsByPredicat (Найти организации по предикату)")
     void getAllOrganizationsByPredicat() {
         List<Organization> testOrganizationList = new ArrayList<>();

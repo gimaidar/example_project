@@ -6,6 +6,7 @@ import com.gimaletdinov.exampleProject.dto.request.OfficeSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.OfficeUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.OfficeListResponseDto;
 import com.gimaletdinov.exampleProject.mapper.OfficeMapper;
+import com.gimaletdinov.exampleProject.mapper.OfficeMapperImpl;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +27,11 @@ import static com.gimaletdinov.exampleProject.helper.OfficeDtoTestHelper.getPopu
 import static com.gimaletdinov.exampleProject.helper.OfficeDtoTestHelper.getPopulateOfficeUpdateRequestDto;
 import static com.gimaletdinov.exampleProject.helper.OrganizationDtoTestHelper.getPopulateOrganization;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@TestPropertySource("classpath:application-test.properties")
+@SpringBootTest(classes = {OfficeServiceImpl.class, OfficeMapperImpl.class})
 class OfficeServiceImplTest {
 
     private Office newTestOffice = getPopulateOffice();
@@ -53,10 +48,9 @@ class OfficeServiceImplTest {
     private OrganizationService organizationService;
 
     @Autowired
-    private OfficeService officeService = new OfficeServiceImpl(officeRepository, organizationService, officeMapper);
+    private OfficeService officeService;
 
     @Test
-    @Transactional
     @DisplayName("Тест: getAllOfficesByPredicat (Найти офисы по предикату)")
     void getAllOfficesByPredicat() {
         //Given
@@ -80,14 +74,12 @@ class OfficeServiceImplTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: getOfficeByIdFromRepository (Найти офис по id)")
     void getOfficeById() {
         getOfficeByIdFromRepository();
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: updateOffice (Обновить данные офиса)")
     void updateOffice() {
         OfficeUpdateRequestDto requestDto = getPopulateOfficeUpdateRequestDto();
@@ -105,7 +97,6 @@ class OfficeServiceImplTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: saveOffice (Сохранить новый офис)")
     void saveOffice() {
         OfficeSaveRequestDto officeSaveRequestDto = getPopulateOfficeSaveRequestDto();
@@ -124,7 +115,6 @@ class OfficeServiceImplTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: getOfficeByIdFromRepository (Найти офис по id из репозитория)")
     void getOfficeByIdFromRepository() {
         //Given

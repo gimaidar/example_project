@@ -6,6 +6,7 @@ import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.mapper.UserMapper;
+import com.gimaletdinov.exampleProject.mapper.UserMapperImpl;
 import com.gimaletdinov.exampleProject.model.Country;
 import com.gimaletdinov.exampleProject.model.Document;
 import com.gimaletdinov.exampleProject.model.DocumentType;
@@ -37,8 +38,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@TestPropertySource("classpath:application-test.properties")
+@SpringBootTest(classes = {UserServiceImpl.class, UserMapperImpl.class})
 class UserServiceImplTest {
 
     private User newTestUser = getPopulateUser();
@@ -59,10 +59,9 @@ class UserServiceImplTest {
     private UserMapper userMapper;
 
     @Autowired
-    private UserService userService = new UserServiceImpl(userRepository, officeService, countryService, documentTypeService, userMapper);
+    private UserService userService;
 
     @Test
-    @Transactional
     @DisplayName("Тест: getAllUsersByPredicat (Найти пользователей по предикату)")
     void getAllUsersByPredicat() {
         List<User> testUsetList = new ArrayList<>();
@@ -91,14 +90,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: getUserById (Найти пользователя по id)")
     void getUserById() {
         getUserByIdFromRepository();
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: updateUser (Обновить данные пользователя)")
     void updateUser() {
         //Given
@@ -122,7 +119,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: saveUser (Сохранить нового пользователя)")
     void saveUser() {
         //Given
@@ -151,7 +147,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("Тест: getUserByIdFromRepository (Найти пользователя по id из репозитория)")
     void getUserByIdFromRepository() {
         //Given
