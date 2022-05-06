@@ -29,6 +29,7 @@ public interface UserMapper {
     @Mapping(source = "docCode", target = "document.documentType.code")
     @Mapping(source = "docName", target = "document.documentType.name")
     @Mapping(source = "countryCode", target = "country.code")
+    @Mapping(source = "countryName", target = "country.name")
     User toModel(UserSaveRequestDto userSaveRequestDto);
 
     /**
@@ -54,6 +55,7 @@ public interface UserMapper {
     @Mapping(source = "docDate", target = "document.date")
     @Mapping(source = "docName", target = "document.documentType.name")
     @Mapping(source = "countryCode", target = "country.code")
+    @Mapping(source = "countryName", target = "country.name")
     void updateModel(UserUpdateRequestDto userUpdateRequestDto, @MappingTarget User user);
 
     /**

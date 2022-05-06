@@ -5,7 +5,9 @@ import com.gimaletdinov.exampleProject.dto.request.UserSaveRequestDto;
 import com.gimaletdinov.exampleProject.dto.request.UserUpdateRequestDto;
 import com.gimaletdinov.exampleProject.dto.response.UserListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.UserResponseDto;
+import com.gimaletdinov.exampleProject.model.Country;
 import com.gimaletdinov.exampleProject.model.Document;
+import com.gimaletdinov.exampleProject.model.DocumentType;
 import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.User;
 
@@ -13,7 +15,9 @@ import com.gimaletdinov.exampleProject.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gimaletdinov.exampleProject.helper.CountryDtoTestHelper.getPopulateCountry;
 import static com.gimaletdinov.exampleProject.helper.DocumentDtoTestHelper.getPopulateDocument;
+import static com.gimaletdinov.exampleProject.helper.DocumentDtoTestHelper.getPopulateDocumentType;
 import static com.gimaletdinov.exampleProject.helper.OfficeDtoTestHelper.getPopulateOffice;
 
 
@@ -47,8 +51,14 @@ public class UserDtoTestHelper {
         user.setOffice(office);
 
         Document document = getPopulateDocument();
+        DocumentType documentType = getPopulateDocumentType();
+        document.setDocumentType(documentType);
+
         document.setUser(user);
         user.setDocument(document);
+
+        Country country = getPopulateCountry();
+        user.setCountry(country);
         return user;
     }
 
