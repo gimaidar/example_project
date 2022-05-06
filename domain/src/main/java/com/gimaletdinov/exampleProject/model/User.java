@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Getter
 @Setter
-//@Table(name = "\"user\"")
+@Table(name = "\"user\"")
 @EqualsAndHashCode
 public class User {
 
