@@ -2,8 +2,6 @@ package com.gimaletdinov.exampleProject.helper;
 
 import com.gimaletdinov.exampleProject.model.Organization;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class OrganizationTestHelper {
     public final static Integer TEST_ORG_ID = 1;
@@ -46,16 +44,4 @@ public class OrganizationTestHelper {
         organization.setIsActive(TEST_UPDATED_ORG_IS_ACTIVE);
         return organization;
     }
-    
-    public static void assertOrganizationsEquals(Organization expected, Organization actual){
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getFullName(), actual.getFullName());
-        assertEquals(expected.getInn(), actual.getInn());
-        assertEquals(expected.getKpp(), actual.getKpp());
-        assertEquals(expected.getAddress(), actual.getAddress());
-        assertEquals(expected.getPhone(), actual.getPhone());
-        assertEquals(expected.getIsActive(), actual.getIsActive());
-    }
-
 }

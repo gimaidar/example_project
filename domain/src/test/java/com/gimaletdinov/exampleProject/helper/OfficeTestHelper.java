@@ -4,7 +4,6 @@ import com.gimaletdinov.exampleProject.model.Office;
 import com.gimaletdinov.exampleProject.model.Organization;
 
 import static com.gimaletdinov.exampleProject.helper.OrganizationTestHelper.getPopulateOrganization;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class OfficeTestHelper {
@@ -41,13 +40,5 @@ public class OfficeTestHelper {
         office.setIsActive(TEST_UPDATED_OFFICE_IS_ACTIVE);
 
         return office;
-    }
-    
-    public static void assertOfficesEquals(Office expected, Office actual){
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getAddress(), actual.getAddress());
-        assertEquals(expected.getPhone(), actual.getPhone());
-        assertEquals(expected.getIsActive(), actual.getIsActive());
     }
 }

@@ -57,14 +57,4 @@ public class UserTestHelper {
         user.setIsIdentified(TEST_UPDATED_USER_IS_IDENTIFIED);
         return user;
     }
-    
-    public static void assertUsersEquals(User expected, User actual){
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getFirstName(), actual.getFirstName());
-        assertEquals(expected.getSecondName(), actual.getSecondName());
-        assertEquals(expected.getMiddleName(), actual.getMiddleName());
-        assertEquals(expected.getPosition(), actual.getPosition());
-        assertEquals(expected.getPhone(), actual.getPhone());
-        assertEquals(expected.getIsIdentified(), actual.getIsIdentified());
-    }
 }
