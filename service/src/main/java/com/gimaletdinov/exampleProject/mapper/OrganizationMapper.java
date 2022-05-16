@@ -7,6 +7,7 @@ import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import com.gimaletdinov.exampleProject.model.Organization;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface OrganizationMapper {
      * @param organizationSaveRequestDto
      * @return Organization
      */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
     Organization toModel(OrganizationSaveRequestDto organizationSaveRequestDto);
 
     /**
@@ -36,6 +39,7 @@ public interface OrganizationMapper {
      * @param organizationUpdateRequestDto
      * @param organization
      */
+    @Mapping(target = "version", ignore = true)
     void updateModel(OrganizationUpdateRequestDto organizationUpdateRequestDto, @MappingTarget Organization organization);
 
     /**

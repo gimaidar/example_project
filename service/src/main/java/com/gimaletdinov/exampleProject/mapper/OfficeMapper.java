@@ -29,6 +29,7 @@ public interface OfficeMapper {
     @Mapping(source = "officeSaveRequestDto.isActive", target = "isActive")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "version", ignore = true)
+    @Mapping(target = "organization", ignore = true)
     Office toModel(OfficeSaveRequestDto officeSaveRequestDto);
 
     /**
@@ -43,6 +44,8 @@ public interface OfficeMapper {
      * @param officeUpdateRequestDto
      * @param office
      */
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "organization", ignore = true)
     void updateModel(OfficeUpdateRequestDto officeUpdateRequestDto, @MappingTarget Office office);
 
     /**

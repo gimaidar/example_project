@@ -1,7 +1,7 @@
 package com.gimaletdinov.exampleProject.controller.handler;
 
 import com.gimaletdinov.exampleProject.exception.NoSuchObjectException;
-import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
