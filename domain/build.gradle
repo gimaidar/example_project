@@ -7,11 +7,10 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.postgresql:postgresql:42.3.4'
-    implementation 'org.liquibase:liquibase-core:4.10.0'
-    implementation 'org.liquibase:liquibase-maven-plugin:4.10.0'
+    implementation libs.org.postgresql
+    implementation libs.org.liquibase.core
 
-    testImplementation 'com.h2database:h2:1.4.200'
+    testImplementation libs.com.h2database
 }
 
 description = 'domain'

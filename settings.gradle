@@ -5,3 +5,38 @@
 rootProject.name = 'exampleProject'
 include(':service')
 include(':domain')
+enableFeaturePreview('VERSION_CATALOGS')
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            version('springframeworkBootVersion', '2.6.4')
+            alias('spring.boot.starter.validation').to('org.springframework.boot', 'spring-boot-starter-validation').versionRef('springframeworkBootVersion')
+            alias('spring.boot.starter.data.jpa').to('org.springframework.boot', 'spring-boot-starter-data-jpa').versionRef('springframeworkBootVersion')
+            alias('spring.boot.starter.test').to('org.springframework.boot', 'spring-boot-starter-test').versionRef('springframeworkBootVersion')
+            alias('spring.boot.starter.web').to('org.springframework.boot', 'spring-boot-starter-web').versionRef('springframeworkBootVersion')
+
+            version('projectlombokVersion', '1.18.24')
+            alias('lombok.main').to('org.projectlombok', 'lombok').versionRef('projectlombokVersion')
+
+            version('lombokMapstructBindingVersion', '0.2.0')
+            alias('lombok.mapstruct.binding').to('org.projectlombok', 'lombok-mapstruct-binding').versionRef('lombokMapstructBindingVersion')
+
+            version('mapstructVersion', '1.4.2.Final')
+            alias('mapstruct.main').to('org.mapstruct', 'mapstruct').versionRef('mapstructVersion')
+            alias('mapstruct.processor').to('org.mapstruct', 'mapstruct-processor').versionRef('mapstructVersion')
+
+            version('apacheCommonsLang3Version', '3.12.0')
+            alias('org.apache.commons.lang3').to('org.apache.commons', 'commons-lang3').versionRef('apacheCommonsLang3Version')
+
+            version('postgresqlVersion', '42.3.4')
+            alias('org.postgresql').to('org.postgresql', 'postgresql').versionRef('postgresqlVersion')
+
+            version('liquibaseVersion', '4.10.0')
+            alias('org.liquibase.core').to('org.liquibase', 'liquibase-core').versionRef('liquibaseVersion')
+
+            version('h2databaseVersion', '1.4.200')
+            alias('com.h2database').to('com.h2database', 'h2').versionRef('h2databaseVersion')
+
+        }
+    }
+}
