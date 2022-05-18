@@ -14,6 +14,7 @@ dependencyResolutionManagement {
             alias('spring.boot.starter.data.jpa').to('org.springframework.boot', 'spring-boot-starter-data-jpa').versionRef('springframeworkBootVersion')
             alias('spring.boot.starter.test').to('org.springframework.boot', 'spring-boot-starter-test').versionRef('springframeworkBootVersion')
             alias('spring.boot.starter.web').to('org.springframework.boot', 'spring-boot-starter-web').versionRef('springframeworkBootVersion')
+            alias('spring.boot.starter.amqp').to('org.springframework.boot', 'spring-boot-starter-amqp').versionRef('springframeworkBootVersion')
 
             version('projectlombokVersion', '1.18.24')
             alias('lombok.main').to('org.projectlombok', 'lombok').versionRef('projectlombokVersion')

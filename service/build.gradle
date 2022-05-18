@@ -9,6 +9,7 @@ plugins {
 dependencies {
     implementation project(':domain')
     implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.amqp
     implementation libs.lombok.mapstruct.binding
     implementation libs.mapstruct.main
     implementation libs.org.apache.commons.lang3
