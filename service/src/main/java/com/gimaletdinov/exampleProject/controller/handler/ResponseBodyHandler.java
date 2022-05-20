@@ -1,12 +1,8 @@
 package com.gimaletdinov.exampleProject.controller.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gimaletdinov.exampleProject.dto.response.ObjectDataResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectErrorResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.ObjectSuccessResponseDto;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -20,12 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  */
 @RestControllerAdvice
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
-
-    @Autowired
-    private AmqpTemplate rabbitTemplate;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -49,13 +39,6 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
         //Если ответ "ошибка" или "успешно" то ответ отправляется напрямую
         if ((body instanceof ObjectErrorResponseDto) || (body instanceof ObjectSuccessResponseDto)){
             return body;
-        }
-
-        //Отправка данных в очередь сообщений
-        try {
-            rabbitTemplate.convertAndSend("queue1", objectMapper.writeValueAsString(body));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Ошибка при преобразование в JSON перед отправкой в очередь Rabbit" + e);
         }
 
         //другие ответы оборачиваются в в data
