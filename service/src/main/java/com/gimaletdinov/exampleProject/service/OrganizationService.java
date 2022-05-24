@@ -38,7 +38,7 @@ public interface OrganizationService {
      * Метод для сохранения новой организации
      * @param organizationSaveRequestDto
      */
-    void saveOrganization(OrganizationSaveRequestDto organizationSaveRequestDto);
+    Organization saveOrganization(OrganizationSaveRequestDto organizationSaveRequestDto);
 
     /**
      * Метод возвращает организацию по id

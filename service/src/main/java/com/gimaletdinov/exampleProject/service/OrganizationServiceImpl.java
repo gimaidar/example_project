@@ -95,12 +95,12 @@ public class OrganizationServiceImpl implements  OrganizationService{
      */
     @Override
     @Transactional
-    public void saveOrganization(OrganizationSaveRequestDto organizationSaveRequestDto) {
+    public Organization saveOrganization(OrganizationSaveRequestDto organizationSaveRequestDto) {
         //Преобразование из формата запроса в entity
         Organization organization = organizationMapper.toModel(organizationSaveRequestDto);
 
         //сохронение новой записи
-        organizationRepository.save(organization);
+        return organizationRepository.save(organization);
     }
 
     /**

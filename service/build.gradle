@@ -12,6 +12,7 @@ dependencies {
     implementation libs.lombok.mapstruct.binding
     implementation libs.mapstruct.main
     implementation libs.org.apache.commons.lang3
+    implementation 'org.springframework.kafka:spring-kafka:2.8.6'
     annotationProcessor libs.mapstruct.processor
 
 }
