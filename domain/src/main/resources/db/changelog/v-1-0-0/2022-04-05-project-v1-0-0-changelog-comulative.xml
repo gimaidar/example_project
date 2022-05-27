@@ -12,6 +12,7 @@
     <include file="db/changelog/v-1-0-0/2022-04-05--4--create-organization.xml"/>
     <include file="db/changelog/v-1-0-0/2022-04-05--5--create-office.xml"/>
     <include file="db/changelog/v-1-0-0/2022-04-05--6--create-user.xml"/>
+    <include file="db/changelog/v-1-0-0/2022-04-05--6.1--create-authorization_user.xml"/>
     <include file="db/changelog/v-1-0-0/2022-04-05--7--insert-country.xml"/>
     <include file="db/changelog/v-1-0-0/2022-04-05--8--insert-document_type.xml"/>
     <include file="db/changelog/v-1-0-0/2022-04-05--9--insert-organization.xml"/>

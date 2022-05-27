@@ -6,6 +6,7 @@ import com.gimaletdinov.exampleProject.dto.response.ObjectSuccessResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationListResponseDto;
 import com.gimaletdinov.exampleProject.dto.response.OrganizationResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,7 @@ public class OrganizationController {
      * @return организация
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('developers:read')")
     public OrganizationResponseDto getOrganizationById(@PathVariable Integer id) {
         return organizationService.getOrganizationById(id);
     }
@@ -68,6 +70,7 @@ public class OrganizationController {
      * @return ObjectSuccessResponseDto [result : success]
      */
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('developers:write')")
     public ObjectSuccessResponseDto saveOrganization(@Valid @RequestBody OrganizationSaveRequestDto organizationSaveRequestDto) {
         organizationService.saveOrganization(organizationSaveRequestDto);
         return new ObjectSuccessResponseDto();

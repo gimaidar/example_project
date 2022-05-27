@@ -5,6 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.gimaletdinov.exampleProject.dto.response.ObjectErrorResponseDto;
@@ -53,6 +54,20 @@ public class ExceptionHandler {
         objectErrorResponseDto.setError(errors.toString());
 
         return new ResponseEntity<>(objectErrorResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Обработчик исключения MethodArgumentNotValidException, возникающий при валидации DTO, используемые при запросе
+     * В методе фильтруется текст ошибки, для отправки ошибки в удобном для пользователя виде
+     * @param exception
+     * @return ResponseEntity<>(objectErrorResponseDto, HttpStatus.NOT_FOUND)
+     */
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<ObjectErrorResponseDto> handleException(AccessDeniedException exception) {
+        ObjectErrorResponseDto objectErrorResponseDto = new ObjectErrorResponseDto();
+        objectErrorResponseDto.setError(exception.getMessage());
+
+        return new ResponseEntity<>(objectErrorResponseDto, HttpStatus.FORBIDDEN);
     }
 
     /**

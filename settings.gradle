@@ -14,6 +14,10 @@ dependencyResolutionManagement {
             alias('spring.boot.starter.data.jpa').to('org.springframework.boot', 'spring-boot-starter-data-jpa').versionRef('springframeworkBootVersion')
             alias('spring.boot.starter.test').to('org.springframework.boot', 'spring-boot-starter-test').versionRef('springframeworkBootVersion')
             alias('spring.boot.starter.web').to('org.springframework.boot', 'spring-boot-starter-web').versionRef('springframeworkBootVersion')
+            alias('spring.boot.starter.security').to('org.springframework.boot', 'spring-boot-starter-security').versionRef('springframeworkBootVersion')
+
+            version('jsonwebtokenVersion', '0.9.1')
+            alias('io.jsonwebtoken').to('io.jsonwebtoken', 'jjwt').versionRef('jsonwebtokenVersion')
 
             version('projectlombokVersion', '1.18.24')
             alias('lombok.main').to('org.projectlombok', 'lombok').versionRef('projectlombokVersion')
