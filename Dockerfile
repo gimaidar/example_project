@@ -1,10 +1,7 @@
-FROM openjdk
+FROM openjdk:11
 
-WORKDIR /exampleApp
+ARG JAR_FILE=service/build/libs/service-0.0.1-SNAPSHOT.jar
 
-COPY . .
-
-#порт
-EXPOSE 3000
-
-CMD["openjdk", ""]
+WORKDIR /opt/app
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
